@@ -1,0 +1,58 @@
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	fullname VARCHAR UNIQUE NOT NULL,
+	contact VARCHAR NOT NULL,
+	role VARCHAR NOT NULL,
+	email VARCHAR NOT NULL,
+	password VARCHAR NOT NULL,
+	firebase_token VARCHAR,
+	is_expired BOOLEAN NOT NULL DEFAULT FALSE,
+	is_credentials_none_expired BOOLEAN NOT NULL DEFAULT FALSE,
+	is_locked BOOLEAN NOT NULL DEFAULT FALSE,
+	is_enabled BOOLEAN NOT NULL DEFAULT FALSE,
+	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP
+);
+CREATE TABLE jobs (
+	id serial PRIMARY KEY,
+	user_id_fk INTEGER NOT NULL,
+	job_category_id_fk INTEGER NOT NULL,
+	title VARCHAR NOT NULL,
+	description VARCHAR NOT NULL,
+    salary DECIMAL NOT NULL,
+    longitude DECIMAL NOT NULL,
+    latitude DECIMAL NOT NULL,
+    job_start_time VARCHAR,
+    job_end_time VARCHAR,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP
+);
+CREATE TABLE settings (
+	id serial PRIMARY KEY,
+	username VARCHAR UNIQUE NOT NULL,
+	password VARCHAR NOT NULL,
+	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
+	member_role VARCHAR NOT NULL,
+	member_start_time DATE,
+	email VARCHAR UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	last_login TIMESTAMP
+);
+
+CREATE TABLE job_applications (
+	id serial PRIMARY KEY,
+	username VARCHAR UNIQUE NOT NULL,
+	password VARCHAR NOT NULL,
+	email VARCHAR UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	last_login TIMESTAMP
+);
+
+CREATE TABLE job_categories (
+	id serial PRIMARY KEY,
+	username VARCHAR UNIQUE NOT NULL,
+	password VARCHAR NOT NULL,
+	email VARCHAR UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	last_login TIMESTAMP
+);
