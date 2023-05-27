@@ -15,13 +15,13 @@ import java.util.List;
 @Repository
 public interface JobApplicationRepository extends JpaRepository<JobApplicationEntity, Integer> {
 
-    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.account_email, u.contact FROM job_applications ja" +
+    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.email, u.contact FROM job_applications ja" +
             " INNER JOIN jobs j ON ja.job_id = j.id" +
             " INNER JOIN users u ON ja.user_id = u.id" +
             " WHERE j.user_id=?1 AND ja.is_approved=FALSE", nativeQuery = true)
     List<JobApplicationDTO> findCandidates(@Param("user_id") int userId);
 
-    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.account_email, j.longitude, j.latitude, u.contact FROM job_applications ja" +
+    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.email, j.longitude, j.latitude, u.contact FROM job_applications ja" +
             " INNER JOIN jobs j ON ja.job_id = j.id" +
             " INNER JOIN users u ON ja.user_id = u.id" +
             " WHERE ja.user_id=?1 AND ja.is_approved=FALSE", nativeQuery = true)
@@ -31,7 +31,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplicationEn
             "WHERE ja.user_id=?1 AND ja.job_id=?2", nativeQuery = true)
     List<JobApplicationEntity> existJobByUserId(@Param("user_id") int userId, @Param("job_id") int jobId);
 
-    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.account_email, j.longitude, j.latitude, u.contact FROM job_applications ja" +
+    @Query(value="SELECT ja.id, j.title, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.email, j.longitude, j.latitude, u.contact FROM job_applications ja" +
             " INNER JOIN jobs j ON ja.job_id = j.id" +
             " INNER JOIN users u ON ja.user_id = u.id" +
             " WHERE ja.id=?1 AND ja.is_approved=FALSE", nativeQuery = true)
@@ -62,7 +62,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplicationEn
     @Query(value="DELETE FROM job_applications ja WHERE ja.job_id=?1", nativeQuery = true)
     void deleteAllByJobId(@Param("job_id") Integer id);
 
-    @Query(value="SELECT ja.id, j.title, ja.contact, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.account_email, u.contact FROM job_applications ja" +
+    @Query(value="SELECT ja.id, j.title, ja.contact, j.description, j.salary, ja.created_at, ja.updated_at, ja.job_id, ja.user_id, u.email, u.contact FROM job_applications ja" +
             " INNER JOIN jobs j ON ja.job_id = j.id" +
             " INNER JOIN users u ON ja.user_id = u.id" +
             " WHERE j.user_id=?1 AND ja.is_approved=FALSE AND j.title=?2", nativeQuery = true)
