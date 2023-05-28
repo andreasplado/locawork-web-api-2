@@ -1,6 +1,6 @@
 CREATE TABLE users (
-	id UUID NOT NULL,
-	fullname VARCHAR UNIQUE NOT NULL,
+    id INTEGER PRIMARY KEY,
+	fullname VARCHAR NOT NULL,
 	contact VARCHAR NOT NULL,
 	role VARCHAR NOT NULL,
 	email VARCHAR NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE users (
 	updated_at TIMESTAMP
 );
 CREATE TABLE jobs (
-	id UUID NOT NULL,
+    id INTEGER PRIMARY KEY,
 	user_id_fk INTEGER NOT NULL,
 	job_category_id_fk INTEGER NOT NULL,
 	title VARCHAR NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE jobs (
 	updated_at TIMESTAMP
 );
 CREATE TABLE settings (
-	id UUID NOT NULL,
+    id INTEGER PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
@@ -40,7 +40,7 @@ CREATE TABLE settings (
 );
 
 CREATE TABLE job_applications (
-	id UUID NOT NULL,
+    id INTEGER PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE job_applications (
 );
 
 CREATE TABLE job_categories (
-	id UUID NOT NULL,
+    id INTEGER PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
