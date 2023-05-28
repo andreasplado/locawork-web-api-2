@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
 	fullname VARCHAR NOT NULL,
 	contact VARCHAR NOT NULL,
 	role VARCHAR NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE jobs (
-    id INTEGER PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
 	user_id_fk INTEGER NOT NULL,
 	job_category_id_fk INTEGER NOT NULL,
 	title VARCHAR NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE jobs (
 );
 
 CREATE TABLE settings (
-    id INTEGER PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
@@ -42,7 +42,7 @@ CREATE TABLE settings (
 );
 
 CREATE TABLE job_applications (
-    id INTEGER PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE job_applications (
 );
 
 CREATE TABLE job_categories (
-    id INTEGER PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
