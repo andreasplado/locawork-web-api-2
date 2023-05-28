@@ -1,0 +1,2 @@
+ALTER TABLE settings
+ADD COLUMN ask_permissions_before_deleting_a_job BOOLEAN DEFAULT FALSE;
