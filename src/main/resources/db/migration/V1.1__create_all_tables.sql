@@ -16,7 +16,7 @@ CREATE TABLE users (
 
 CREATE TABLE jobs (
     id BIGINT PRIMARY KEY,
-	user_id_fk INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
 	job_category_id_fk INTEGER NOT NULL,
 	title VARCHAR NOT NULL,
 	description VARCHAR NOT NULL,
