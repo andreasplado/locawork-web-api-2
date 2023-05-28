@@ -71,6 +71,11 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setContact(user.getContact());
         user.setRole("admin");
+        user.setExpired(true);
+        user.setCredentialsNonExpired(true);
+        user.setLocked(false);
+        user.setEnabled(true);
+        user.setCreatedAt(new Date());
 
         if(!userDataService.existByEmail(user.getEmail())){
             userDataService.save(user);
