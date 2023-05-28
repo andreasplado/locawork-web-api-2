@@ -31,6 +31,7 @@ CREATE TABLE jobs (
 
 CREATE TABLE settings (
     id BIGINT PRIMARY KEY,
+    user_id INTEGER NOT NULL,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
