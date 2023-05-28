@@ -36,6 +36,7 @@ CREATE TABLE settings (
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
 	member_role VARCHAR NOT NULL,
+	view_by_default VARCHAR,
 	currency VARCHAR,
 	radius INTEGER,
 	member_start_time DATE,
