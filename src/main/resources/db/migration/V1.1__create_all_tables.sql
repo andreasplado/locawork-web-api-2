@@ -11,7 +11,7 @@ CREATE TABLE users (
 	is_locked BOOLEAN NOT NULL DEFAULT FALSE,
 	is_enabled BOOLEAN NOT NULL DEFAULT FALSE,
 	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP
+	updated_at TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE jobs (
@@ -26,7 +26,7 @@ CREATE TABLE jobs (
     job_start_time VARCHAR,
     job_end_time VARCHAR,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP
+	updated_at TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE settings (
@@ -37,8 +37,10 @@ CREATE TABLE settings (
 	member_role VARCHAR NOT NULL,
 	member_start_time DATE,
 	email VARCHAR UNIQUE NOT NULL,
-	created_on TIMESTAMP NOT NULL,
-	last_login TIMESTAMP
+	ask_permissions_before_deleting_a_job BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE,
+	last_login TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE job_applications (
@@ -46,8 +48,9 @@ CREATE TABLE job_applications (
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
-	created_on TIMESTAMP NOT NULL,
-	last_login TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE,
+	last_login TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE job_categories (
@@ -55,6 +58,9 @@ CREATE TABLE job_categories (
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	email VARCHAR UNIQUE NOT NULL,
-	created_on TIMESTAMP NOT NULL,
-	last_login TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE,
+	last_login TIMESTAMP WITH TIME ZONE
 );
+
+CREATE SEQUENCE hibernate_sequence START 1;
