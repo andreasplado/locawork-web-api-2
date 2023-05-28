@@ -41,7 +41,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Override
+    public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
