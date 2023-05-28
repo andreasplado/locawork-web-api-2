@@ -40,6 +40,7 @@ CREATE TABLE settings (
 	member_start_time DATE,
 	email VARCHAR UNIQUE NOT NULL,
 	ask_permissions_before_deleting_a_job BOOLEAN DEFAULT FALSE,
+	show_information_on_startup BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE,
 	last_login TIMESTAMP WITH TIME ZONE
