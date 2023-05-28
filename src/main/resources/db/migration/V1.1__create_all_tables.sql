@@ -32,7 +32,6 @@ CREATE TABLE jobs (
 CREATE TABLE settings (
     id BIGINT PRIMARY KEY,
     user_id INTEGER NOT NULL,
-	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
 	member_role VARCHAR NOT NULL,
@@ -40,7 +39,6 @@ CREATE TABLE settings (
 	currency VARCHAR,
 	radius INTEGER,
 	member_start_time DATE,
-	email VARCHAR UNIQUE NOT NULL,
 	ask_permissions_before_deleting_a_job BOOLEAN DEFAULT FALSE,
 	show_information_on_startup BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
