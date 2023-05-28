@@ -80,7 +80,7 @@ public class UserController {
             settingsEntity.setCreatedAt(new Date());
             settingsEntity.setCurrency("euro");
             settingsEntity.setUserId(userId);
-            settingsEntity.setMemberRole("");
+            settingsEntity.setMemberRole("admin");
             settingsEntity.setRadius(0.0);
             settingsEntity.setViewByDefault("available");
             settingsEntity.setAskPermissionsBeforeDeletingAJob(true);
