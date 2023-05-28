@@ -35,6 +35,7 @@ CREATE TABLE settings (
 	password VARCHAR NOT NULL,
 	is_biometric BOOLEAN NOT NULL DEFAULT FALSE,
 	member_role VARCHAR NOT NULL,
+	currency VARCHAR,
 	member_start_time DATE,
 	email VARCHAR UNIQUE NOT NULL,
 	ask_permissions_before_deleting_a_job BOOLEAN DEFAULT FALSE,
