@@ -16,9 +16,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,9 +44,9 @@ public class AuthenticationController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
 
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), authenticationRequest.getPassword());
         if(userExists){
-            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getUsername()));
+            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.setEmail()));
             return ResponseEntity.ok(new AuthenticationResponse(token));
         }else{
             return new ResponseEntity<>("You have no access to locawork!",
