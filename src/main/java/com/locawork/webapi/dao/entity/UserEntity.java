@@ -1,13 +1,9 @@
 package com.locawork.webapi.dao.entity;
 
 import com.locawork.webapi.util.AttributeEncryptor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -57,7 +53,7 @@ public class UserEntity {
     private Boolean isCredentialsNonExpired;
 
     @Column(name = "is_non_locked")
-    private Boolean isLocked;
+    private Boolean isNonLocked;
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
@@ -159,11 +155,11 @@ public class UserEntity {
     }
 
     public Boolean getLocked() {
-        return isLocked;
+        return isNonLocked;
     }
 
     public void setLocked(Boolean locked) {
-        isLocked = locked;
+        isNonLocked = locked;
     }
 
     public Boolean getEnabled() {
