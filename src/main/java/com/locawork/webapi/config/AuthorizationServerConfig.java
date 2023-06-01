@@ -18,13 +18,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients
                 .inMemory()
                 .withClient("client_a")
-                .secret(passwordEncoder().encode("password_a"))
                 .authorities("ROLE_A")
                 .scopes("all")
                 .authorizedGrantTypes("client_credentials")
                 .and()
                 .withClient("client_b")
-                .secret(passwordEncoder().encode("password_b"))
                 .authorities("ROLE_B")
                 .scopes("all")
                 .authorizedGrantTypes("client_credentials").accessTokenValiditySeconds(24 * 365 * 60 * 60);
@@ -33,10 +31,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
     }
 }
