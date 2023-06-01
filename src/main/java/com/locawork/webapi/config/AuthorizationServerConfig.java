@@ -37,6 +37,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(4);
+        return new BCryptPasswordEncoder();
     }
 }

@@ -62,11 +62,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.parentAuthenticationManager(authenticationManagerBean())
                 .userDetailsService(userAuthService);
     }
-
-    @Bean
-    public static BCryptPasswordEncoder bcryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
     @Qualifier(value="cors")
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
