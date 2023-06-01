@@ -30,7 +30,7 @@ public class UserAuthService implements UserDetailsService {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
+                user.getRole();
             }
 
             @Override
