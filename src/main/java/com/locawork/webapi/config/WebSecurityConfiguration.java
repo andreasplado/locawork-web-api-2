@@ -29,20 +29,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserAuthService userAuthService;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public void setUserDetailsService(UserAuthService userAuthService) {
         this.userAuthService = userAuthService;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers().hasAnyRole("admin")
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
