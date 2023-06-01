@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) {
         String token = Jwts.builder()
                 .setSubject(((User) authentication.getPrincipal()).getUsername())
@@ -66,5 +68,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader("radius", String.valueOf(settingsService
                 .getUserSettings(userDataService.findId(((User) authentication.getPrincipal()).getUsername()))
                 .getRadius()));
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        logger.debug("failed authentication while attempting to access ");
+
+        //Add more descriptive message
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                "Authentication Failed");
     }
 }
