@@ -56,7 +56,7 @@ public class UserEntity {
     @Column(name = "is_credentials_none_expired")
     private Boolean isCredentialsNonExpired;
 
-    @Column(name = "is_locked")
+    @Column(name = "is_non_locked")
     private Boolean isLocked;
 
     @Column(name = "is_enabled")
