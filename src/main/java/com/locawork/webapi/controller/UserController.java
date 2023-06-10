@@ -62,8 +62,7 @@ public class UserController {
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
         user.setEmail(user.getEmail());
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         user.setContact(user.getContact());
         user.setRole("admin");
         user.setExpired(true);
