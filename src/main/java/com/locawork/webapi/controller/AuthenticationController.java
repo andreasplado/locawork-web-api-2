@@ -46,7 +46,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), bCryptPasswordEncoder.encode(authenticationRequest.getPassword()));
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), bCryptPasswordEncoder.(authenticationRequest.getPassword()));
         if(userExists){
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.setEmail()));
             return ResponseEntity.ok(new AuthenticationResponse(token));
