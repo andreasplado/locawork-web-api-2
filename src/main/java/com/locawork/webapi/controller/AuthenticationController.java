@@ -53,7 +53,6 @@ public class AuthenticationController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), authenticationRequest.getPassword());
         if(userExists){
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.setEmail()));

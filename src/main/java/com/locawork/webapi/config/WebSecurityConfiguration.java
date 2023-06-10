@@ -29,11 +29,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserAuthService userAuthService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Autowired
     public void setUserDetailsService(UserAuthService userAuthService) {
         this.userAuthService = userAuthService;
@@ -66,7 +61,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userAuthService).passwordEncoder(new BCryptPasswordEncoder());
+        authenticationManagerBuilder.userDetailsService(userAuthService);
         authenticationManagerBuilder.parentAuthenticationManager(authenticationManagerBean())
                 .userDetailsService(userAuthService);
     }

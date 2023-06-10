@@ -14,9 +14,4 @@ public class WebApiApplication {
 		SpringApplication.run(WebApiApplication.class, args);
 	}
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 }
