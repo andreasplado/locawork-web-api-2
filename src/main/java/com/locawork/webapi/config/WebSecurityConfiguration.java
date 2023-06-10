@@ -39,6 +39,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.userAuthService = userAuthService;
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return new DummyAuthenticationManager();
+    }
+
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
