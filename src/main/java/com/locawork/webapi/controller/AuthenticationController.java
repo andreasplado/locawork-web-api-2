@@ -3,14 +3,18 @@ package com.locawork.webapi.controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.locawork.webapi.WebApiApplication;
 import com.locawork.webapi.model.AuthenticationRequest;
 import com.locawork.webapi.model.AuthenticationResponse;
 import com.locawork.webapi.service.UserDataService;
 import com.locawork.webapi.service.UserAuthService;
 import com.locawork.webapi.util.JwtUtil;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -58,8 +62,8 @@ public class AuthenticationController {
             UsernamePasswordAuthenticationToken authReq
                     = new UsernamePasswordAuthenticationToken(authenticationRequest.setEmail(), authenticationRequest.getPassword());
             Authentication auth = authenticationManager.authenticate(authReq);
-            SecurityContext sc = SecurityContextHolder.getContext();
-            sc.setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
 
             return ResponseEntity.ok(new AuthenticationResponse(token));
         }else{
