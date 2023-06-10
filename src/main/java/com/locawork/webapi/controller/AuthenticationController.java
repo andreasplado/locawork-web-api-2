@@ -16,6 +16,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +53,14 @@ public class AuthenticationController {
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), bCryptPasswordEncoder.encode(authenticationRequest.getPassword()));
         if(userExists){
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.setEmail()));
+
+
+            UsernamePasswordAuthenticationToken authReq
+                    = new UsernamePasswordAuthenticationToken(authenticationRequest.setEmail(), authenticationRequest.getPassword());
+            Authentication auth = authenticationManager.authenticate(authReq);
+            SecurityContext sc = SecurityContextHolder.getContext();
+            sc.setAuthentication(auth);
+
             return ResponseEntity.ok(new AuthenticationResponse(token));
         }else{
             return new ResponseEntity<>("You have no access to locawork!",
