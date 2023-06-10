@@ -26,12 +26,6 @@ public class UserController {
     @Autowired
     private SettingsService settingsService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
     @GetMapping
     public ResponseEntity<?> getAll() {
         List<UserEntity> userEntities = userDataService.findAll();
@@ -68,6 +62,7 @@ public class UserController {
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
         user.setEmail(user.getEmail());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setContact(user.getContact());
         user.setRole("admin");
