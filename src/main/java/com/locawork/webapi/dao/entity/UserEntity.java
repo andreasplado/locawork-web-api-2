@@ -28,7 +28,6 @@ public class UserEntity {
     private String email;
 
     @Column(name = "password")
-    @Convert(converter = AttributeEncryptor.class)
     private String password;
 
     @Column(name = "contact")
