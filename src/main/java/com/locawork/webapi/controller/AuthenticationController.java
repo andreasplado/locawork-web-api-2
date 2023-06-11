@@ -85,6 +85,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
 
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        System.out.println(userExists);
         if(userExists){
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
 
