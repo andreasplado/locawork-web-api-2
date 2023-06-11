@@ -57,7 +57,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
             throws Exception {
         try {
-            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
+            String token = jwtUtil.generateToken(userAuthService.loadUserByCustomUsername(authenticationRequest.getEmail()));
 
 
             UsernamePasswordAuthenticationToken authReq
@@ -73,7 +73,7 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
-        final UserEntity userDetails = userAuthService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserEntity userDetails = userAuthService.loadUserByCustomUsername(authenticationRequest.getEmail());
 
         final String token = jwtUtil.generateToken(userDetails);
 

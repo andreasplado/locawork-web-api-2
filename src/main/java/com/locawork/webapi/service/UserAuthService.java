@@ -23,7 +23,7 @@ public class UserAuthService implements UserDetailsService {
     @Autowired
     UserAuthRepository userAuthRepository;
 
-    public UserEntity loadUserByUsername(String s) {
+    public UserEntity loadUserByCustomUsername(String s) {
 
         UserEntity user = userAuthRepository.existsByName(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
