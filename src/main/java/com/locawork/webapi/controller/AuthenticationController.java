@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +50,7 @@ public class AuthenticationController {
     private JwtUtil jwtUtil;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
 
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), authenticationRequest.getPassword());
         if(userExists){
@@ -59,7 +60,12 @@ public class AuthenticationController {
             UsernamePasswordAuthenticationToken authReq
                     = new UsernamePasswordAuthenticationToken(authenticationRequest.setEmail(), authenticationRequest.getPassword());
             Authentication auth = authenticationManager.authenticate(authReq);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(auth);
+
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
 
             return ResponseEntity.ok(new AuthenticationResponse(token));
