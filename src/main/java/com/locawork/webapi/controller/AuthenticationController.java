@@ -53,7 +53,7 @@ public class AuthenticationController {
     private JwtUtil jwtUtil;
 
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+   /*@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
             throws Exception {
         try {
@@ -78,10 +78,10 @@ public class AuthenticationController {
         final String token = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(token));
-    }
+    }*/
 
 
-    /*@RequestMapping(value = "/authenticater", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
 
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
@@ -108,7 +108,7 @@ public class AuthenticationController {
         }
 
 
-    }*/
+    }
 
     @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
