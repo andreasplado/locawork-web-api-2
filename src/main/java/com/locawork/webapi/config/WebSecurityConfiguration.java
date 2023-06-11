@@ -23,16 +23,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserAuthService userAuthService;
 
     @Autowired
     UserDetailsService userDetailsService;
 
-    @Autowired
-    public void setUserDetailsService(UserAuthService userAuthService) {
-        this.userAuthService = userAuthService;
-    }
 
     @Bean
     @Override
@@ -61,9 +55,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userAuthService);
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
         authenticationManagerBuilder.parentAuthenticationManager(authenticationManagerBean())
-                .userDetailsService(userAuthService);
+                .userDetailsService(userDetailsService);
     }
 
     @Qualifier(value="cors")
