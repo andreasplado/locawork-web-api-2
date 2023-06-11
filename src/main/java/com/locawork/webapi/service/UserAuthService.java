@@ -28,7 +28,7 @@ public class UserAuthService implements UserDetailsService {
 
         UserEntity user = userAuthRepository.existsByName(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(user.getEmail());
+        System.out.println(user.getPassword());
 
         return new UserDetails() {
             @Override
