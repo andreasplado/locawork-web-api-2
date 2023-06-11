@@ -33,10 +33,12 @@ public class UserAuthService implements UserDetailsService {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new GrantedAuthority("ROLE_admin"));
 
-                return authentication.getAuthorities();
+                List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+                list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+                return list;
             }
 
             @Override
