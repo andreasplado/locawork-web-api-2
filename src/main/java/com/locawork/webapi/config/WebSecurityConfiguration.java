@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
-    private UserDetailsService userDetailsService;
+    private UserAuthService userAuthService;
 
 
     @Bean
@@ -50,9 +50,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService);
-        authenticationManagerBuilder.parentAuthenticationManager(authenticationManagerBean())
-                .userDetailsService(userDetailsService);
+        authenticationManagerBuilder.userDetailsService(userAuthService);
     }
 
     @Qualifier(value="cors")
