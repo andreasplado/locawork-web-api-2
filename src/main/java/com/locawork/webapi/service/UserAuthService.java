@@ -2,6 +2,7 @@ package com.locawork.webapi.service;
 
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.respository.UserAuthRepository;
+import com.locawork.webapi.respository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -21,12 +22,12 @@ import java.util.List;
 public class UserAuthService implements UserDetailsService {
 
     @Autowired
-    UserDataService userDataService;
+    UserDataRepository userDataRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        UserEntity user = userDataService.findByEmail(s);
+        UserEntity user = userDataRepository.findByEmail(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(user.getPassword());
 
