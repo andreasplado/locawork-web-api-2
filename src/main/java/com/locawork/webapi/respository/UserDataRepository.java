@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+@Repository
 public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT CASE WHEN COUNT(u)> 0 then true else false end FROM users u WHERE u.email=?1", nativeQuery = true)
     boolean existsByEmail(@Param("email") String accountEmail);
