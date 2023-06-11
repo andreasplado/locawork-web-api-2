@@ -46,7 +46,6 @@ public class AuthenticationController {
     private UserDataService userDataService;
 
     @Autowired
-    @Lazy
     private UserAuthService userAuthService;
 
     @Autowired
