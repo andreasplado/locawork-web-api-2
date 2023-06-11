@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.locawork.webapi.WebApiApplication;
+import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthenticationRequest;
 import com.locawork.webapi.model.AuthenticationResponse;
 import com.locawork.webapi.service.UserDataService;
@@ -72,7 +73,7 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
-        final UserDetails userDetails = userAuthService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserEntity userDetails = userAuthService.loadUserByUsername(authenticationRequest.getEmail());
 
         final String token = jwtUtil.generateToken(userDetails);
 
