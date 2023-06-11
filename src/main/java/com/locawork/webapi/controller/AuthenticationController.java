@@ -75,13 +75,13 @@ public class AuthenticationController {
     @RequestMapping(value = "/authenticater", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
 
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.setEmail(), authenticationRequest.getPassword());
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         if(userExists){
-            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.setEmail()));
+            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
 
 
             UsernamePasswordAuthenticationToken authReq
-                    = new UsernamePasswordAuthenticationToken(authenticationRequest.setEmail(), authenticationRequest.getPassword());
+                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword());
             Authentication auth = authenticationManager.authenticate(authReq);
 
             SecurityContext securityContext = SecurityContextHolder.getContext();
