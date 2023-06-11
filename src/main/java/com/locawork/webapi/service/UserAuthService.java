@@ -18,15 +18,58 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserAuthService {
+public class UserAuthService implements UserDetailsService {
 
     @Autowired
     UserAuthRepository userAuthRepository;
 
-    public UserEntity loadUserByCustomUsername(String s) {
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
         UserEntity user = userAuthRepository.existsByName(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return user;
+
+        return new UserDetails() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+                list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+                return list;
+            }
+
+            @Override
+            public String getPassword() {
+                return user.getPassword();
+            }
+
+            @Override
+            public String getUsername() {
+                return user.getEmail();
+            }
+
+            @Override
+            public boolean isAccountNonExpired() {
+                return user.getExpired();
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return user.getLocked();
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return user.getCredentialsNonExpired();
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return user.getEnabled();
+            }
+        };
     }
 }
