@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public interface UserAuthRepository extends JpaRepository<UserEntity, String> {
 
     @Query(value="SELECT CASE WHEN COUNT(s)> 0 then true else false end FROM users u WHERE u.email=?1 AND u.password=?2", nativeQuery = true)
