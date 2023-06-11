@@ -73,7 +73,7 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
-        final UserEntity userDetails = userAuthService.loadUserByCustomUsername(authenticationRequest.getEmail());
+        final UserDetails userDetails = userAuthService.loadUserByUsername(authenticationRequest.getEmail());
 
         final String token = jwtUtil.generateToken(userDetails);
 
