@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.locawork.webapi.dao.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,19 +46,13 @@ public class JwtUtil {
         this.refreshExpirationDateInMs = refreshExpirationDateInMs;
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
-        Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            claims.put("isAdmin", true);
-        }
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            claims.put("isUser", true);
-        }
+        claims.put("isAdmin", true);
 
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(claims, userDetails.getEmail());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
