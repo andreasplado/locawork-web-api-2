@@ -19,13 +19,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.annotation.Resource;
+
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired
-    UserDetailsService userDetailsService;
+    @Resource
+    private UserDetailsService userDetailsService;
 
 
     @Bean
@@ -45,12 +46,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
-
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return userDetailsService;
     }
 
     @Override
