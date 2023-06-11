@@ -57,7 +57,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
             throws Exception {
         try {
-            String token = jwtUtil.generateToken(userAuthService.loadUserByCustomUsername(authenticationRequest.getEmail()));
+            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
 
 
             UsernamePasswordAuthenticationToken authReq
