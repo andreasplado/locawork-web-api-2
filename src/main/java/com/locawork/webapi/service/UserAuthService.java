@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserAuthService implements UserDetailsService {
+public class UserAuthService {
 
     @Autowired
     UserAuthRepository userAuthRepository;
