@@ -22,7 +22,7 @@ import java.util.List;
 public class UserAuthService implements UserDetailsService {
 
     @Autowired
-    UserDataRepository userDataRepository;
+    private UserDataRepository userDataRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
