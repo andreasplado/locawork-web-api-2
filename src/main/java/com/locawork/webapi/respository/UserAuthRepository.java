@@ -15,5 +15,5 @@ public interface UserAuthRepository extends JpaRepository<UserEntity, String> {
     boolean isAuthenticated(@Param("username") String username, @Param("password") String password);
 
     @Query(value="SELECT * FROM users u WHERE u.email=?1", nativeQuery = true)
-    UserEntity existsByName(@Param("username") String username);
+    UserEntity existsByName(@Param("email") String email);
 }
