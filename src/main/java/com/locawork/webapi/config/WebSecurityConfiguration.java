@@ -27,6 +27,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserAuthService userAuthService;
 
     @Autowired
+    UserDetailsService userDetailsService;
+
+    @Autowired
     public void setUserDetailsService(UserAuthService userAuthService) {
         this.userAuthService = userAuthService;
     }
@@ -39,6 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.userDetailsService(userDetailsService());
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers().hasAnyRole("admin")
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
@@ -51,9 +55,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    @Qualifier(value="user-details")
     public UserDetailsService userDetailsService() {
-        return super.userDetailsService();
+        return userDetailsService;
     }
 
     @Override
@@ -62,6 +65,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.parentAuthenticationManager(authenticationManagerBean())
                 .userDetailsService(userAuthService);
     }
+
     @Qualifier(value="cors")
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
