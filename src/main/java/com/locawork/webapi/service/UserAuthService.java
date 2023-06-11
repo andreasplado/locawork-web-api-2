@@ -21,12 +21,12 @@ import java.util.List;
 public class UserAuthService implements UserDetailsService {
 
     @Autowired
-    UserAuthRepository userAuthRepository;
+    UserDataService userDataService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        UserEntity user = userAuthRepository.existsByName(s);
+        UserEntity user = userDataService.findByEmail(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(user.getPassword());
 
