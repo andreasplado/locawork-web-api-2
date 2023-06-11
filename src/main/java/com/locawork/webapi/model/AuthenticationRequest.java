@@ -4,7 +4,7 @@ public class AuthenticationRequest {
     private String email;
     private String password;
 
-    public String setEmail() {
+    public String getEmail() {
         return email;
     }
 
