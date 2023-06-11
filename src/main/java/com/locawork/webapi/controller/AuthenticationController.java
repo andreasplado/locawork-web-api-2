@@ -54,11 +54,20 @@ public class AuthenticationController {
 
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
             throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
+
+
+            UsernamePasswordAuthenticationToken authReq
+                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+            Authentication auth = authenticationManager.authenticate(authReq);
+
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
@@ -72,7 +81,7 @@ public class AuthenticationController {
     }
 
 
-    @RequestMapping(value = "/authenticater", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/authenticater", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
 
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
@@ -99,7 +108,7 @@ public class AuthenticationController {
         }
 
 
-    }
+    }*/
 
     @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
