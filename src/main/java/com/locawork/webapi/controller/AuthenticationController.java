@@ -60,6 +60,7 @@ public class AuthenticationController {
             UsernamePasswordAuthenticationToken authReq
                     = new UsernamePasswordAuthenticationToken(authenticationRequest.setEmail(), authenticationRequest.getPassword());
             Authentication auth = authenticationManager.authenticate(authReq);
+
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(auth);
 
