@@ -20,7 +20,6 @@ import java.util.List;
 public class UserAuthService implements UserDetailsService {
 
     @Autowired
-    @Lazy
     UserAuthRepository userAuthRepository;
 
     @Override
