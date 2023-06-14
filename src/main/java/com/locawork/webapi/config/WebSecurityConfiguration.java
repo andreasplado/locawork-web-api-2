@@ -40,7 +40,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.userDetailsService(userDetailsService());
-        httpSecurity.exceptionHandling().accessDeniedPage("/403.html");
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers().hasAnyRole("admin")
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
