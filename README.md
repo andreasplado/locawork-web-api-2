@@ -1,4 +1,44 @@
 
+# Locawork
+
+Location based job finding and offering solution.
+
+
+## External references
+
+- [Endpoint server location](https://locawork-web-api.herokuapp.com/)
+
+## How to log server
+
+Download [Heroku CLI](https://locawork-web-api.herokuapp.com/)
+
+Login to your account
+
+```
+heroku login
+```
+View server logs
+```
+heroku logs --tail -a locawork-web-api
+```
+
+View database
+```
+heroku pg:psql postgresql-curved-17907 --app locawork-web-api
+```
+
+## The format
+
+The backend is secured using Jason Web Token.
+The token validity is defined in application configuration file programmatically.
+
+The data structure is application/json
+
+Must give token with header, to maintain the user validity in the session.
+
+
+
+
 ## Adding database extensions
 
 ```
