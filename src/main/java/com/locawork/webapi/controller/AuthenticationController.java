@@ -89,6 +89,7 @@ public class AuthenticationController {
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         System.out.println(userExists);
         if(userExists){
+            System.out.println("User exists");
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
 
 
