@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,6 +26,9 @@ import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserDataService userDataService;
@@ -46,7 +50,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UserEntity creds = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), bCryptPasswordEncoder.encode(creds.getPassword()), new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);
         }
