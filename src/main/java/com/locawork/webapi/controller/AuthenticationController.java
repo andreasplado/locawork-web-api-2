@@ -18,6 +18,7 @@ import com.locawork.webapi.util.JwtUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -89,6 +90,8 @@ public class AuthenticationController {
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         System.out.println(userExists);
         if(userExists){
+            int userId = userDataService.findId(authenticationRequest.getEmail());
+
             System.out.println("User exists");
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
 
@@ -104,8 +107,13 @@ public class AuthenticationController {
             HttpSession session = request.getSession(true);
             session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("user_id", "" + userId);
 
-            return ResponseEntity.ok(new AuthenticationResponse(token));
+            responseHeaders.set("token", token);
+            responseHeaders.set("email", authenticationRequest.getEmail());
+
+            return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
         }else{
             return new ResponseEntity<>("You have no access to locawork!",
                     HttpStatus.UNAUTHORIZED);
