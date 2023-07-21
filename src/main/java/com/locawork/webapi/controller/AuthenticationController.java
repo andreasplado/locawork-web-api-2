@@ -98,8 +98,8 @@ public class AuthenticationController {
             securityContext.setAuthentication(auth);
 
 
-            HttpSession session = request.getSession(true);
-            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+            //HttpSession session = request.getSession(true);
+            //session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
 
             return ResponseEntity.ok(new AuthenticationResponse(token));
