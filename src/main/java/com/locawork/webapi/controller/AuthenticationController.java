@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.locawork.webapi.WebApiApplication;
+import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthenticationRequest;
 import com.locawork.webapi.model.AuthenticationResponse;
+import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import com.locawork.webapi.service.UserAuthService;
 import com.locawork.webapi.util.JwtUtil;
@@ -48,6 +50,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserDataService userDataService;
+
+    @Autowired
+    private SettingsService settingsService;
 
     @Autowired
     private UserAuthService userAuthService;
@@ -91,6 +96,7 @@ public class AuthenticationController {
         System.out.println(userExists);
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
+            SettingsEntity settings = settingsService.getUserSettings(userId);
 
             System.out.println("User exists");
             String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
@@ -112,6 +118,7 @@ public class AuthenticationController {
             responseHeaders.set("Authorization", token);
             responseHeaders.set("Firebase_token" ,"lol");
             responseHeaders.set("email", authenticationRequest.getEmail());
+            responseHeaders.set("Radius", "" + settings.getRadius());
 
             return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
         }else{
