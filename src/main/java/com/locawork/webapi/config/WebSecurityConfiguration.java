@@ -1,6 +1,7 @@
 package com.locawork.webapi.config;
 
 import com.locawork.webapi.service.UserAuthService;
+import com.locawork.webapi.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,6 +31,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
     private UserAuthService userAuthService;
+
+
+    private UserDataService userDataService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public WebSecurityConfiguration(UserDataService userDataService,
+                                    BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userDataService =userDataService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
+    }
 
 
     @Bean
@@ -51,7 +64,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userAuthService);
+        authenticationManagerBuilder.userDetailsService(userAuthService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Qualifier(value="cors")
@@ -61,6 +74,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
+
 
     /*@Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

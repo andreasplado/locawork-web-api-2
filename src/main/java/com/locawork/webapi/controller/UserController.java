@@ -8,6 +8,7 @@ import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserDataService userDataService;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private SettingsService settingsService;
@@ -61,7 +64,8 @@ public class UserController {
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
         user.setEmail(user.getEmail());
-        user.setPassword(user.getPassword());
+        user.setPassword(bCryptPasswordEncoder
+                .encode(user.getPassword()));
         user.setContact(user.getContact());
         user.setRole("admin");
         user.setExpired(true);
