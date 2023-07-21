@@ -36,6 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.impl.DefaultClaims;
 
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+
 @RequestMapping("/auth-controller")
 @RestController
 public class AuthenticationController {
@@ -98,8 +100,8 @@ public class AuthenticationController {
             securityContext.setAuthentication(auth);
 
 
-            //HttpSession session = request.getSession(true);
-            //session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+            HttpSession session = request.getSession(true);
+            session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
 
             return ResponseEntity.ok(new AuthenticationResponse(token));
