@@ -5,8 +5,10 @@ import com.locawork.webapi.respository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,14 +18,27 @@ public class UserDataService implements IUserService {
     @Autowired
     private UserDataRepository repository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public List<UserEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public UserEntity save(UserEntity userEntity) {
-        return repository.save(userEntity);
+    public UserEntity save(UserEntity user) {
+        user.setEmail(user.getEmail());
+        user.setPassword(bCryptPasswordEncoder
+                .encode(user.getPassword()));
+        user.setContact(user.getContact());
+        user.setRole("admin");
+        user.setExpired(true);
+        user.setCredentialsNonExpired(true);
+        user.setLocked(false);
+        user.setEnabled(true);
+        user.setCreatedAt(new Date());
+        return repository.save(user);
     }
 
     @Override

@@ -23,8 +23,6 @@ public class UserController {
     @Autowired
     private UserDataService userDataService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
     private SettingsService settingsService;
 
@@ -63,17 +61,6 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
-        user.setEmail(user.getEmail());
-        user.setPassword(bCryptPasswordEncoder
-                .encode(user.getPassword()));
-        user.setContact(user.getContact());
-        user.setRole("admin");
-        user.setExpired(true);
-        user.setCredentialsNonExpired(true);
-        user.setLocked(false);
-        user.setEnabled(true);
-        user.setCreatedAt(new Date());
-
         if(!userDataService.existByEmail(user.getEmail())){
             userDataService.save(user);
 
