@@ -109,8 +109,8 @@ public class AuthenticationController {
 
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("user_id", "" + userId);
-
-            responseHeaders.set("token", token);
+            responseHeaders.set("Authorization", token);
+            responseHeaders.set("Firebase_token" ,"lol");
             responseHeaders.set("email", authenticationRequest.getEmail());
 
             return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
