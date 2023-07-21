@@ -52,7 +52,7 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT u.password FROM users u WHERE u.email=?1", nativeQuery = true)
     String getUserPassword(@Param("id") String username);
 
-    @Query(value="SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM users u WHERE u.email=:email AND u.password=:password)", nativeQuery = true)
+    @Query(value="SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM users u WHERE u.email=:email AND u.password=:password", nativeQuery = true)
     boolean userAuthenticated(@Param("email") String email, @Param("password") String password);
 
 }
