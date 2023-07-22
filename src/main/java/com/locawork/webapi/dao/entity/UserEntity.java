@@ -51,8 +51,8 @@ public class UserEntity {
     @Column(name = "is_credentials_none_expired")
     private Boolean isCredentialsNonExpired;
 
-    @Column(name = "is_non_locked")
-    private Boolean isNonLocked;
+    @Column(name = "is_account_non_locked")
+    private Boolean isAccountNonLocked;
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
@@ -153,12 +153,12 @@ public class UserEntity {
         isExpired = expired;
     }
 
-    public Boolean getLocked() {
-        return isNonLocked;
+    public Boolean getIsAccountNonLocked() {
+        return isAccountNonLocked;
     }
 
-    public void setLocked(Boolean locked) {
-        isNonLocked = locked;
+    public void setIsAccountNonLocked(Boolean locked) {
+        isAccountNonLocked = locked;
     }
 
     public Boolean getEnabled() {

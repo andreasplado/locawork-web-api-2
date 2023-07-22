@@ -35,7 +35,7 @@ public class UserDataService implements IUserService {
         user.setRole("admin");
         user.setExpired(true);
         user.setCredentialsNonExpired(true);
-        user.setLocked(false);
+        user.setIsAccountNonLocked(false);
         user.setEnabled(true);
         user.setCreatedAt(new Date());
         return repository.save(user);
