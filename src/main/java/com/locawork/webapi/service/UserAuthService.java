@@ -31,6 +31,10 @@ public class UserAuthService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(user.getIsAccountNonLocked());
 
+
+        if(!authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("Username not found");
+        }
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
