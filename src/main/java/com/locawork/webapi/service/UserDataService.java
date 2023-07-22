@@ -32,7 +32,7 @@ public class UserDataService implements IUserService {
         user.setPassword(bCryptPasswordEncoder
                 .encode(user.getPassword()));
         user.setContact(user.getContact());
-        user.setRole("admin");
+        user.setRole("ROLE_ADMIN");
         user.setExpired(true);
         user.setCredentialsNonExpired(true);
         user.setIsAccountNonLocked(true);
