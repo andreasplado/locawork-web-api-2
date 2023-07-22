@@ -49,10 +49,17 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserEntity creds = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword()));
+            UserEntity creds = new ObjectMapper()
+                    .readValue(request.getInputStream(), UserEntity.class);
+
+            return authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            creds.getEmail(),
+                            creds.getPassword(),
+                            new ArrayList<>())
+            );
         } catch (IOException e) {
-            throw new RuntimeException("Could not read request" + e);
+            throw new RuntimeException(e);
         }
     }
 
