@@ -29,7 +29,7 @@ public class UserAuthService implements UserDetailsService {
 
         UserEntity user = userDataRepository.findByEmail(s);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(user);
+        System.out.println(user.getIsAccountNonLocked());
 
         return new UserDetails() {
             @Override
