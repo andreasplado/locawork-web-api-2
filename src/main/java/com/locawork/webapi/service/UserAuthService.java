@@ -60,7 +60,7 @@ public class UserAuthService implements UserDetailsService {
 
             @Override
             public boolean isAccountNonLocked() {
-                return user.getLocked();
+                return user.getIsAccountNonLocked();
             }
 
             @Override
