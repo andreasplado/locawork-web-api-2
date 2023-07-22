@@ -54,7 +54,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.userDetailsService(userDetailsService());
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/**").hasAnyRole()
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .anyRequest().authenticated()
