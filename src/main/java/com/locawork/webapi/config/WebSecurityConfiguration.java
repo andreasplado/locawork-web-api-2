@@ -1,90 +1,57 @@
-package com.locawork.webapi.config;
+package com.contacts.webapi.config;
 
-import com.locawork.webapi.service.UserAuthService;
-import com.locawork.webapi.service.UserDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.locawork.webapi.config.AuthenticationFilter;
+import com.locawork.webapi.config.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import javax.annotation.Resource;
 
 @EnableWebSecurity
-@Configuration
-@ComponentScan("com.locawork.webapi.service")
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Resource
-    private UserAuthService userAuthService;
-
-
-    private UserDataService userDataService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserDetailsService userDetailsService;
+    private static final String[] AUTH_WHITELIST = {
+            "/users/signup",
+            "/api/login",
+            "/logout?**",
+    };
 
-    public WebSecurityConfiguration(UserDataService userDataService,
-                                    BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.userDataService =userDataService;
+    public WebSecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-
+        this.userDetailsService = userDetailsService;
     }
 
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return new DummyAuthenticationManager();
-    }
-
-    @Override
-    public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.userDetailsService(userDetailsService());
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers("/**").hasAnyRole()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Override
+
+    @Bean
+    @Qualifier(value="user-details")
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
+
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userAuthService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    @Qualifier(value="cors")
+    @Override
+    @Qualifier(value="auth")
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-
-
-    /*@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }*/
 }
