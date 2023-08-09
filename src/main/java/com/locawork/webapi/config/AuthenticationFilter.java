@@ -1,6 +1,7 @@
 package com.locawork.webapi.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthToken;
 import com.locawork.webapi.service.CustomUserDetailsService;
 import io.jsonwebtoken.Jwts;
@@ -42,7 +43,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UserEntity creds = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);
         }
