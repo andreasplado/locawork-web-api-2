@@ -16,6 +16,8 @@ public class WebApiApplication {
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
+		System.out.println("Password encoder");
 		return new BCryptPasswordEncoder();
 	}
 
