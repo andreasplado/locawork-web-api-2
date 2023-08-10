@@ -1,1 +1,1 @@
-mvn spring-boot:run
+web java -Dserver.port=$PORT $JAVA_OPTS -jar target/web-api-0.0.1-SN

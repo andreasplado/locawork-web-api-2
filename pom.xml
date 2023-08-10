@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.locawork</groupId>
     <artifactId>web-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-SN</version>
     <name>web-api</name>
     <description>Spring Boot locawork api</description>
 
