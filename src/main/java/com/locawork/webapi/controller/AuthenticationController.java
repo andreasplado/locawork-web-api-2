@@ -35,6 +35,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,8 +96,8 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
-
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), encoder.encode(authenticationRequest.getPassword()));
         System.out.println(userExists);
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
