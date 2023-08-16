@@ -20,7 +20,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private static final String[] AUTH_WHITELIST = {
             "/users/signup",
-            "/api/login",
+            "/auth-controller/authenticate",
             "/logout?**",
     };
 
