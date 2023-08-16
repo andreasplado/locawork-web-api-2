@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.locawork.webapi.WebApiApplication;
+import com.locawork.webapi.config.DummyAuthenticationManager;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthenticationRequest;
@@ -19,6 +20,7 @@ import com.locawork.webapi.service.UserAuthService;
 import com.locawork.webapi.util.JwtUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +50,7 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
 public class AuthenticationController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private DummyAuthenticationManager authenticationManager;
 
     @Autowired
     private UserDataService userDataService;
