@@ -26,13 +26,12 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Service
 public class JwtUtil {
 
-
-    private byte[] secret;
+    private String secret;
     private int jwtExpirationInMs;
     private int refreshExpirationDateInMs;
 
     @Value("${jwt.secret}")
-    public void setSecret(byte[] secret) {
+    public void setSecret(String secret) {
         this.secret = secret;
     }
 
