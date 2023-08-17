@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter  {
 
-    @Autowired
-    private JwtUtil jwtUtil;
     private String secret = "efjnewjwfejiwefjiwfewfjiefweijwfejiwfeijfweskdkodqwkoqdwkqdwkoqwdkoqwd";
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -48,6 +46,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter  {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
+            JwtUtil jwtUtil = new JwtUtil();
             String user = jwtUtil.getUsernameFromToken(token);
             boolean isTokenValidated = jwtUtil.validateToken(token);
             if (user != null && isTokenValidated) {

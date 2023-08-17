@@ -51,8 +51,6 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @Autowired
     private  BCryptPasswordEncoder passwordEncoder;
@@ -96,6 +94,7 @@ public class AuthenticationController {
             if(isPasswordCorrect) {
                 System.out.println("User pass is correct");
                 int userId = userDataService.findId(authenticationRequest.getEmail());
+                JwtUtil jwtUtil = new JwtUtil();
                 SettingsEntity settings = settingsService.getUserSettings(userId);
                 String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
                 UsernamePasswordAuthenticationToken authReq
