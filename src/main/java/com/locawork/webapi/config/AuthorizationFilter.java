@@ -3,6 +3,7 @@ package com.locawork.webapi.config;
 import com.locawork.webapi.util.JwtUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter  {
 
+    @Autowired
+    private JwtUtil jwtUtil;
     private String secret = "efjnewjwfejiwefjiwfewfjiefweijwfejiwfeijfweskdkodqwkoqdwkqdwkoqwdkoqwd";
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -45,7 +48,6 @@ public class AuthorizationFilter extends BasicAuthenticationFilter  {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-            JwtUtil jwtUtil = new JwtUtil();
             String user = jwtUtil.getUsernameFromToken(token);
             boolean isTokenValidated = jwtUtil.validateToken(token);
             if (user != null && isTokenValidated) {
