@@ -30,7 +30,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().authorizeRequests()
-                .antMatchers("/users/signup").permitAll()
+                .antMatchers("/users/signup**").permitAll()
                 .antMatchers("/api/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
