@@ -18,7 +18,7 @@ public class SecurityCipher {
     @Value("${user.passwordDecryptKey}")
     private static final String KEYVALUE = "";
     private static SecretKeySpec secretKey;
-    private static byte[] key;
+    private static byte[] key  = new byte[2];
 
     private SecurityCipher() {
         throw new AssertionError("Static!");
