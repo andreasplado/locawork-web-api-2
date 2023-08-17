@@ -39,13 +39,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-
-    @Bean
-    @Qualifier(value="user-details")
-    public UserDetailsService userDetailsService() {
-        return super.userDetailsService();
-    }
-
     @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder
