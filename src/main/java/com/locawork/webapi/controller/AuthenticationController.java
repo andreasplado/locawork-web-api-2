@@ -89,7 +89,6 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
-        SecurityCipher.setKey();
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
         System.out.println("Authenticating...");
         if(userExists){
