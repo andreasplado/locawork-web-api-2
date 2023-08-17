@@ -108,7 +108,6 @@ public class UserDataService implements IUserService {
 
     @Override
     public boolean userAuthenticated(String username, String password) {
-        System.out.println("Username: " + username + " Password: "+ password );
         return repository.userAuthenticated(username, password);
     }
 

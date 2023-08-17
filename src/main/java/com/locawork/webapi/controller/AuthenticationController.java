@@ -53,6 +53,10 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
    /*@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
@@ -86,8 +90,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-        System.out.println("Authenticating...");
+        boolean userExists = userDataService.existByEmail(authenticationRequest.getEmail());
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
             SettingsEntity settings = settingsService.getUserSettings(userId);
@@ -97,7 +100,7 @@ public class AuthenticationController {
 
 
             UsernamePasswordAuthenticationToken authReq
-                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), bCryptPasswordEncoder.encode(authenticationRequest.getPassword()));
             Authentication auth = authenticationManager.authenticate(authReq);
 
             SecurityContext securityContext = SecurityContextHolder.getContext();
