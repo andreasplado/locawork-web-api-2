@@ -16,6 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +26,13 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Component
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.secret}")
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+
 
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
