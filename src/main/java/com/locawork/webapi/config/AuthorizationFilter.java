@@ -18,12 +18,8 @@ import java.util.ArrayList;
 
 
 public class AuthorizationFilter extends BasicAuthenticationFilter  {
-
-    private String secret;
     @Value("${jwt.secret}")
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+    private String secret;
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
