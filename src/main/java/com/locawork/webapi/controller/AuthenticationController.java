@@ -54,11 +54,6 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Value("${jwt.secret}")
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
     @Autowired
     private  BCryptPasswordEncoder passwordEncoder;
 
