@@ -34,12 +34,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable().authorizeRequests()
+        httpSecurity.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new AuthenticationFilter(authenticationManager(), getApplicationContext()), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new AuthorizationFilter())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.cors().and().csrf().disable();
     }
 
 
