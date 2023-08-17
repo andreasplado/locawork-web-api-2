@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class AuthorizationFilter extends BasicAuthenticationFilter {
+public class AuthorizationFilter extends OncePerRequestFilter {
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
