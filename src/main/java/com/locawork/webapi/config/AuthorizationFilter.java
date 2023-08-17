@@ -17,10 +17,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-@Component
 public class AuthorizationFilter extends BasicAuthenticationFilter  {
-    @Value("${jwt.secret}")
-    private String secret;
+
+    private String secret = "efjnewjwfejiwefjiwfewfjiefweijwfejiwfeijfweskdkodqwkoqdwkqdwkoqwdkoqwd";
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -45,8 +44,8 @@ public class AuthorizationFilter extends BasicAuthenticationFilter  {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-
-            String user = Jwts.parser().setSigningKey(secret.getBytes())
+            byte[] byteSecret = secret.getBytes();
+            String user = Jwts.parser().setSigningKey(byteSecret)
                     .parseClaimsJws(token.replace("Bearer", ""))
                     .getBody()
                     .getSubject();

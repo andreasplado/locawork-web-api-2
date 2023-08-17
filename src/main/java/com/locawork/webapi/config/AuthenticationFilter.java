@@ -26,13 +26,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Component
+
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-    @Value("${jwt.secret}")
-    private String secret;
-
-
+    private String secret = "efjnewjwfejiwefjiwfewfjiefweijwfejiwfeijfweskdkodqwkoqdwkqdwkoqwdkoqwd";
 
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
