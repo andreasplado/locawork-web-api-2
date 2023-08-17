@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class AuthorizationFilter extends OncePerRequestFilter {
+public class AuthorizationFilter extends BasicAuthenticationFilter  {
+
+    public AuthorizationFilter(AuthenticationManager authenticationManager) {
+        super(authenticationManager);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
