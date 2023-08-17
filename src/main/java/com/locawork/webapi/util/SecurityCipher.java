@@ -1,5 +1,7 @@
 package com.locawork.webapi.util;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +17,7 @@ import java.util.Base64;
 public class SecurityCipher {
     private static final String KEYVALUE = "secureKey";
     private static SecretKeySpec secretKey;
+    @Value("${user.passwordDecryptKey}")
     private static byte[] key;
 
     private SecurityCipher() {
