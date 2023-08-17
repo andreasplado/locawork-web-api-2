@@ -48,7 +48,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException {
         String token = Jwts.builder()
-                .setSubject(((User) authentication.getPrincipal()).getUsername())
+                .setSubject(((UserEntity) authentication.getPrincipal()).getEmail())
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
                 .signWith(SignatureAlgorithm.HS512, "uhhudwquhwdquhdqwuhdqwuhdqwhuuhduhdwuhdqwuhdwquhdqwuhdqwudqwhuqdwuhqdwuhqduhqwduhquwqduhwqduhqdwhudqwuudqwdaaaaaaaaaaw".getBytes())
                 .compact();
