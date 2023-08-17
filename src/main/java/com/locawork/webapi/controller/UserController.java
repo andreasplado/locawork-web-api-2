@@ -63,7 +63,7 @@ public class UserController {
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
         if(!userDataService.existByEmail(user.getEmail())){
-            user.setPassword(SecurityCipher.encrypt(user.getPassword()));
+            user.setPassword(user.getPassword()));
             userDataService.save(user);
 
             int userId = userDataService.findId(user.getEmail());
