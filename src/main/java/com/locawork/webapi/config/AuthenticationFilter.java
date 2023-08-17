@@ -27,8 +27,12 @@ import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-
     private String secret;
+
+    @Value("${jwt.secret}")
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
@@ -48,10 +52,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException {
+        byte[] byteSecret = secret.getBytes();
         String token = Jwts.builder()
                 .setSubject(((UserEntity) authentication.getPrincipal()).getEmail())
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
-                .signWith(SignatureAlgorithm.HS512, "test123".getBytes())
+                .signWith(SignatureAlgorithm.HS512, byteSecret)
                 .compact();
         response.addHeader("Authorization", "Bearer " + token);
         AuthToken authToken = new AuthToken();
