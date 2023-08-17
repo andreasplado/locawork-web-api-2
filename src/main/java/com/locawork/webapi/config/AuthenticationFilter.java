@@ -33,7 +33,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/api/login");
+        setFilterProcessesUrl("/auth/authenticate");
     }
 
     @Override

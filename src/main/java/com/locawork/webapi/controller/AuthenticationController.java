@@ -34,7 +34,7 @@ import io.jsonwebtoken.impl.DefaultClaims;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
-@RequestMapping("/auth-controller")
+@RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
 
