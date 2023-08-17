@@ -85,8 +85,9 @@ public class AuthenticationController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), encoder.encode(authenticationRequest.getPassword()));
-        System.out.println(userExists);
+        System.out.println("Authenticating...");
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
             SettingsEntity settings = settingsService.getUserSettings(userId);
