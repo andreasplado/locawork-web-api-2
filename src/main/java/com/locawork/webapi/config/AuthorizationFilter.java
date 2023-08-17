@@ -17,10 +17,7 @@ import java.util.ArrayList;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    public AuthorizationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
-
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         String header = request.getHeader("Authorization");
