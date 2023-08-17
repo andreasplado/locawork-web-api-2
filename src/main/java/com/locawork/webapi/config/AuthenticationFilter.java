@@ -36,7 +36,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
         this.userDataService = ctx.getBean(CustomUserDetailsService.class);
-        setFilterProcessesUrl("/login");
     }
 
     @Override
