@@ -36,6 +36,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
         this.userDataService = ctx.getBean(CustomUserDetailsService.class);
+        setFilterProcessesUrl("/api/login");
     }
 
     @Override
@@ -47,7 +48,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throw new RuntimeException("Could not read request" + e);
         }
     }
-
+    @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException {
         String token = Jwts.builder()
                 .setSubject(((User) authentication.getPrincipal()).getUsername())
