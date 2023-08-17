@@ -16,6 +16,7 @@ import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import com.locawork.webapi.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,11 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Value("${jwt.secret}")
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
     @Autowired
     private  BCryptPasswordEncoder passwordEncoder;
 
@@ -87,8 +93,6 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
         boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), passwordEncoder.encode(authenticationRequest.getPassword()));
         System.out.println("Authenticating...");
         if(userExists){

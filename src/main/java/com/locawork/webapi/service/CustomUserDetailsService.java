@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -21,6 +22,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserDataRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Returning dummy user, use your own logic for example load from
@@ -28,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(("ROLE_USER")));
         UserEntity userEntity = userRepository.findByEmail(username);
         if(userEntity != null) {
-            User user = new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
+            User user = new User(userEntity.getEmail(), bCryptPasswordEncoder.encode(userEntity.getPassword()), authorities);
             System.out.println("user : " + user.getUsername());
             return user;
         }else{

@@ -1,6 +1,6 @@
 package com.locawork.webapi.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.locawork.webapi.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,16 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
     private static final String[] AUTH_WHITELIST = {
             "/users/signup",
             "/api/login",
             "/logout",
     };
 
-    public WebSecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurityConfiguration(CustomUserDetailsService customUserDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userDetailsService = userDetailsService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
 
@@ -52,7 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder
-                .userDetailsService(userDetailsService)
+                .userDetailsService(customUserDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
     @Bean

@@ -6,6 +6,7 @@ import com.locawork.webapi.data.Note;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
+import com.locawork.webapi.util.SecurityCipher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -62,6 +63,7 @@ public class UserController {
     public ResponseEntity<?> signUp(@RequestBody UserEntity user)
     {
         if(!userDataService.existByEmail(user.getEmail())){
+            user.setPassword(SecurityCipher.encrypt(user.getPassword()));
             userDataService.save(user);
 
             int userId = userDataService.findId(user.getEmail());
