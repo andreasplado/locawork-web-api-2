@@ -46,6 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().regexMatchers("/users/signup");
+        web.ignoring().regexMatchers("/api/login");
     }
 
     @Override
