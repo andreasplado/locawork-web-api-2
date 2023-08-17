@@ -10,15 +10,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
-/**
- * @Author: TCMALTUNKAN - MEHMET ANIL ALTUNKAN
- * @Date: 30.12.2019:09:46, Pzt
- **/
 public class SecurityCipher {
     @Value("${user.passwordDecryptKey}")
     private static final String KEYVALUE = "wqweeewwewewe";
     private static SecretKeySpec secretKey;
-    private static byte[] key  = new byte[2];
+    private static byte[] key;
 
     private SecurityCipher() {
         throw new AssertionError("Static!");
@@ -27,6 +23,9 @@ public class SecurityCipher {
     public static void setKey() {
         MessageDigest sha;
         try {
+            key = new byte[2];
+            key[0] = 2;
+            key[0] = 26;
             key = KEYVALUE.getBytes(StandardCharsets.UTF_8);
             sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
