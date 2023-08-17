@@ -25,8 +25,6 @@ import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private CustomUserDetailsService userDataService;
 
     @Value("${jwt.secret}")
