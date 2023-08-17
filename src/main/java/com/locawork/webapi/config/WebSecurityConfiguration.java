@@ -20,7 +20,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private static final String[] AUTH_WHITELIST = {
             "/users/signup",
-            "/api/auth/login",
+            "/login",
             "/logout?**",
     };
 
@@ -35,15 +35,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
-                .and().addFilter(getAuthenticationFilter())
-                .addFilter(new AuthorizationFilter(authenticationManager())).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
-
-    public AuthenticationFilter getAuthenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager(), getApplicationContext());
-        filter.setFilterProcessesUrl("/api/auth/login");
-        return filter;
+                .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
+                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 
