@@ -37,7 +37,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
-                .and().addFilterBefore(new AuthenticationFilter(authenticationManager(), getApplicationContext()), UsernamePasswordAuthenticationFilter.class)
+                .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
                 .addFilter(new AuthorizationFilter())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.cors().and().csrf().disable();
