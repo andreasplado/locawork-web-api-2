@@ -35,11 +35,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
-                .and().addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
+                .and().addFilter(getAuthenticationFilter())
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .formLogin()
-                .loginProcessingUrl("/login").permitAll();
+                .loginProcessingUrl("/api/auth/login").permitAll();
                 //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    public AuthenticationFilter getAuthenticationFilter() throws Exception {
+        final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager(), getApplicationContext()));
+        filter.setFilterProcessesUrl("/api/auth/login");
+        return filter;
     }
 
 
