@@ -1,6 +1,7 @@
 package com.locawork.webapi.config;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,12 @@ import java.util.ArrayList;
 
 
 public class AuthorizationFilter extends BasicAuthenticationFilter  {
+
+    private String secret;
+    @Value("${jwt.secret}")
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -39,7 +46,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter  {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-            String user = Jwts.parser().setSigningKey("SecretKeyToGenJWTs".getBytes())
+            String user = Jwts.parser().setSigningKey("uhhudwquhwdquhdqwuhdqwuhdqwhuuhduhdwuhdqwuhdwquhdqwuhdqwudqwhuqdwuhqdwuhqduhqwduhquwqduhwqduhqdwhudqwuudqwdaaaaaaaaaaw".getBytes())
                     .parseClaimsJws(token.replace("Bearer", ""))
                     .getBody()
                     .getSubject();
