@@ -16,7 +16,7 @@ import java.util.Base64;
  **/
 public class SecurityCipher {
     @Value("${user.passwordDecryptKey}")
-    private static final String KEYVALUE = "";
+    private static final String KEYVALUE = "wqweeewwewewe";
     private static SecretKeySpec secretKey;
     private static byte[] key  = new byte[2];
 
