@@ -21,6 +21,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,7 +51,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setSubject(((UserEntity) authentication.getPrincipal()).getEmail())
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
-                .signWith(SignatureAlgorithm.HS512, "uhhudwquhwdquhdqwuhdqwuhdqwhuuhduhdwuhdqwuhdwquhdqwuhdqwudqwhuqdwuhqdwuhqduhqwduhquwqduhwqduhqdwhudqwuudqwdaaaaaaaaaaw".getBytes())
+                .signWith(SignatureAlgorithm.HS512, "uhhudwquhwdquhdqwuhdqwuhdqwhuuhduhdwuhdqwuhdwquhdqwuhdqwudqwhuqdwuhqdwuhqduhqwduhquwqduhwqduhqdwhudqwuudqwdaaaaaaaaaaw".getBytes(Charset.forName("UTF-8")))
                 .compact();
         response.addHeader("Authorization", "Bearer " + token);
         AuthToken authToken = new AuthToken();
