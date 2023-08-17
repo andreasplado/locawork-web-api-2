@@ -25,7 +25,6 @@ import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-    private CustomUserDetailsService userDataService;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -33,7 +32,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
-        this.userDataService = ctx.getBean(CustomUserDetailsService.class);
         setFilterProcessesUrl("/api/login");
     }
 
