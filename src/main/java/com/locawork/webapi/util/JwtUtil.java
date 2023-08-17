@@ -29,11 +29,6 @@ public class JwtUtil {
     private int jwtExpirationInMs;
     private int refreshExpirationDateInMs;
 
-    @Value("${jwt.secret}")
-    public void setJwtSecret(String secret) {
-        this.secret = secret;
-    }
-
     @Value("${jwt.expirationDateInMs}")
     public void setJwtExpirationInMs(int jwtExpirationInMs) {
         this.jwtExpirationInMs = jwtExpirationInMs;
