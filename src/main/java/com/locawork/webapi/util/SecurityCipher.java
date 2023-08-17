@@ -15,9 +15,9 @@ import java.util.Base64;
  * @Date: 30.12.2019:09:46, Pzt
  **/
 public class SecurityCipher {
-    private static final String KEYVALUE = "secureKey";
-    private static SecretKeySpec secretKey;
     @Value("${user.passwordDecryptKey}")
+    private static final String KEYVALUE = "";
+    private static SecretKeySpec secretKey;
     private static byte[] key;
 
     private SecurityCipher() {
