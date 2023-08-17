@@ -26,18 +26,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Service
 public class JwtUtil {
     private String secret = "eafoiuhwfejorgjioioeiojeajiegiosssstssswssjgesjji";
-    private int jwtExpirationInMs;
-    private int refreshExpirationDateInMs;
-
-    @Value("${jwt.expirationDateInMs}")
-    public void setJwtExpirationInMs(int jwtExpirationInMs) {
-        this.jwtExpirationInMs = jwtExpirationInMs;
-    }
-
-    @Value("${jwt.refreshExpirationDateInMs}")
-    public void setRefreshExpirationDateInMs(int refreshExpirationDateInMs) {
-        this.refreshExpirationDateInMs = refreshExpirationDateInMs;
-    }
+    private int jwtExpirationInMs = 120000000;
+    private int refreshExpirationDateInMs = 9000000;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
