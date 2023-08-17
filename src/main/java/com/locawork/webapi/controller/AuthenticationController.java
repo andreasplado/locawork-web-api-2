@@ -15,6 +15,7 @@ import com.locawork.webapi.service.CustomUserDetailsService;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import com.locawork.webapi.util.JwtUtil;
+import com.locawork.webapi.util.SecurityCipher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -88,7 +89,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), passwordEncoder.encode(authenticationRequest.getPassword()));
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
         System.out.println("Authenticating...");
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
