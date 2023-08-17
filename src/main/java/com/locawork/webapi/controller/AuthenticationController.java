@@ -86,7 +86,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), encoder.encode(authenticationRequest.getPassword()));
+        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         System.out.println("Authenticating...");
         if(userExists){
             int userId = userDataService.findId(authenticationRequest.getEmail());
