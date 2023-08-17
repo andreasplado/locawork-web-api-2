@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.locawork.webapi.config.DummyAuthenticationManager;
 import com.locawork.webapi.dao.entity.SettingsEntity;
+import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthenticationRequest;
 import com.locawork.webapi.model.AuthenticationResponse;
 import com.locawork.webapi.service.CustomUserDetailsService;
@@ -89,34 +90,30 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
-        boolean userExists = userDataService.userAuthenticated(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
+        UserEntity user = userDataService.findByEmail(authenticationRequest.getEmail());
         System.out.println("Authenticating...");
-        if(userExists){
-            int userId = userDataService.findId(authenticationRequest.getEmail());
-            SettingsEntity settings = settingsService.getUserSettings(userId);
-
+        if(user != null){
             System.out.println("User exists");
-            String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
-
-
-            UsernamePasswordAuthenticationToken authReq
+            boolean isPasswordCorrect = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
+            if(isPasswordCorrect){
+                System.out.println("User pass is correct");
+                int userId = userDataService.findId(authenticationRequest.getEmail());
+                SettingsEntity settings = settingsService.getUserSettings(userId);
+                String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
+                UsernamePasswordAuthenticationToken authReq
                     = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
-            Authentication auth = authenticationManager.authenticate(authReq);
+                Authentication auth = authenticationManager.authenticate(authReq);
+                SecurityContext securityContext = SecurityContextHolder.getContext();
+                securityContext.setAuthentication(auth);
+                HttpSession session = request.getSession(true);
+                session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            securityContext.setAuthentication(auth);
-
-
-            HttpSession session = request.getSession(true);
-            session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
-
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("user_id", "" + userId);
-            responseHeaders.set("Authorization", token);
-            responseHeaders.set("Firebase_token" ,"lol");
-            responseHeaders.set("email", authenticationRequest.getEmail());
-            responseHeaders.set("Radius", "" + settings.getRadius());
-
+                HttpHeaders responseHeaders = new HttpHeaders();
+                responseHeaders.set("user_id", "" + userId);
+                responseHeaders.set("Authorization", token);
+                responseHeaders.set("Firebase_token" ,"lol");
+                responseHeaders.set("email", authenticationRequest.getEmail());
+                responseHeaders.set("Radius", "" + settings.getRadius());
             return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
         }else{
             return new ResponseEntity<>("You have no access to locawork!",
