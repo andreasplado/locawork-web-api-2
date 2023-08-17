@@ -95,13 +95,13 @@ public class AuthenticationController {
         if(user != null){
             System.out.println("User exists");
             boolean isPasswordCorrect = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
-            if(isPasswordCorrect){
+            if(isPasswordCorrect) {
                 System.out.println("User pass is correct");
                 int userId = userDataService.findId(authenticationRequest.getEmail());
                 SettingsEntity settings = settingsService.getUserSettings(userId);
                 String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
                 UsernamePasswordAuthenticationToken authReq
-                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
+                        = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
                 Authentication auth = authenticationManager.authenticate(authReq);
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 securityContext.setAuthentication(auth);
@@ -111,16 +111,17 @@ public class AuthenticationController {
                 HttpHeaders responseHeaders = new HttpHeaders();
                 responseHeaders.set("user_id", "" + userId);
                 responseHeaders.set("Authorization", token);
-                responseHeaders.set("Firebase_token" ,"lol");
+                responseHeaders.set("Firebase_token", "lol");
                 responseHeaders.set("email", authenticationRequest.getEmail());
                 responseHeaders.set("Radius", "" + settings.getRadius());
-            return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
+                return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
+            }
         }else{
-            return new ResponseEntity<>("You have no access to locawork!",
+            return new ResponseEntity<>("User does not exist!",
                     HttpStatus.UNAUTHORIZED);
         }
-
-
+        return new ResponseEntity<>("Wrong details!",
+                HttpStatus.UNAUTHORIZED);
     }
 
     @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
