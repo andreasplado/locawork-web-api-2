@@ -3,38 +3,26 @@ package com.locawork.webapi.controller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.locawork.webapi.WebApiApplication;
 import com.locawork.webapi.config.DummyAuthenticationManager;
 import com.locawork.webapi.dao.entity.SettingsEntity;
-import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.model.AuthenticationRequest;
 import com.locawork.webapi.model.AuthenticationResponse;
+import com.locawork.webapi.service.CustomUserDetailsService;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
-import com.locawork.webapi.service.UserAuthService;
 import com.locawork.webapi.util.JwtUtil;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +48,7 @@ public class AuthenticationController {
     private SettingsService settingsService;
 
     @Autowired
-    private UserAuthService userAuthService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -104,7 +92,7 @@ public class AuthenticationController {
             SettingsEntity settings = settingsService.getUserSettings(userId);
 
             System.out.println("User exists");
-            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
+            String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
 
 
             UsernamePasswordAuthenticationToken authReq
