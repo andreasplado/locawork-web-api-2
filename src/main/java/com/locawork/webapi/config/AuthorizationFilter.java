@@ -1,5 +1,6 @@
 package com.locawork.webapi.config;
 
+import com.locawork.webapi.util.JwtUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,12 +45,10 @@ public class AuthorizationFilter extends BasicAuthenticationFilter  {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-            byte[] byteSecret = secret.getBytes();
-            String user = Jwts.parser().setSigningKey(byteSecret)
-                    .parseClaimsJws(token.replace("Bearer", ""))
-                    .getBody()
-                    .getSubject();
-            if (user != null) {
+            JwtUtil jwtUtil = new JwtUtil();
+            String user = jwtUtil.getUsernameFromToken(token);
+            boolean isTokenValidated = jwtUtil.validateToken(token);
+            if (user != null && isTokenValidated) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
             return null;

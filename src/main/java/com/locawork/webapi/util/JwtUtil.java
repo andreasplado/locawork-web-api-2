@@ -27,6 +27,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 public class JwtUtil {
 
     private String secret;
+    @Value("${jwt.expirationDateInMs}")
     private int jwtExpirationInMs;
     private int refreshExpirationDateInMs;
 
