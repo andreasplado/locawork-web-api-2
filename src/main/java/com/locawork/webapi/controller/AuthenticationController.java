@@ -100,7 +100,7 @@ public class AuthenticationController {
 
 
             UsernamePasswordAuthenticationToken authReq
-                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), passwordEncoder.encode(authenticationRequest.getPassword()));
+                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
             Authentication auth = authenticationManager.authenticate(authReq);
 
             SecurityContext securityContext = SecurityContextHolder.getContext();
