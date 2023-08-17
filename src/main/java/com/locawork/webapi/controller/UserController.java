@@ -6,10 +6,8 @@ import com.locawork.webapi.data.Note;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
-import com.locawork.webapi.util.SecurityCipher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.web.bind.annotation.*;
 
