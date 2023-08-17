@@ -101,7 +101,7 @@ public class AuthenticationController {
                 SettingsEntity settings = settingsService.getUserSettings(userId);
                 String token = jwtUtil.generateToken(customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail()));
                 UsernamePasswordAuthenticationToken authReq
-                        = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), SecurityCipher.decrypt(authenticationRequest.getPassword()));
+                        = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), passwordEncoder.encode(authenticationRequest.getPassword()));
                 Authentication auth = authenticationManager.authenticate(authReq);
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 securityContext.setAuthentication(auth);
