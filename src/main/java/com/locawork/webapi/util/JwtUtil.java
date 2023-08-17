@@ -25,7 +25,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Service
 public class JwtUtil {
-    private String secret = "eafoiuhwfejorgjioioeiojeajiegio0+iw4+w9jgesjji";
+    private String secret = "eafoiuhwfejorgjioioeiojeajiegiosssstssswssjgesjji";
     private int jwtExpirationInMs;
     private int refreshExpirationDateInMs;
 
