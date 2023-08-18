@@ -53,6 +53,8 @@ public class JobApplicationController {
         Optional<UserEntity> applierUserEntity = userDataService.findUserById(jobEntity.get().getApplyerId());
 
 
+        System.out.println("Too id: " + jobEntity.get().getId() + "Too postitaja id: " + jobPosterUserEntity.get().getId() + "Kandideerija id: " + applierUserEntity.get().getId());
+
         if (jobApplicationEntities.size() == 0) {
             jobApplicationService.save(jobApplicationEntity);
             responseModel.setMessage("You successfully applied to the job");
