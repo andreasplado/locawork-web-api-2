@@ -1,10 +1,16 @@
 package com.locawork.webapi.controller;
 
+import com.locawork.webapi.config.firebase.FCMService;
 import com.locawork.webapi.dao.entity.JobApplicationEntity;
+import com.locawork.webapi.dao.entity.JobEntity;
+import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.dto.JobApplicationDTO;
 import com.locawork.webapi.dto.MyApplicationDTO;
+import com.locawork.webapi.model.PushNotificationRequest;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.JobApplicationService;
+import com.locawork.webapi.service.JobService;
+import com.locawork.webapi.service.UserDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/jobapplications")
@@ -24,15 +32,51 @@ public class JobApplicationController {
     Logger logger = LoggerFactory.getLogger(JobApplicationController.class);
 
     @Autowired
+    private JobService jobService;
+
+    @Autowired
     private JobApplicationService jobApplicationService;
+
+    @Autowired
+    private FCMService fcmService;
+
+    @Autowired
+    private UserDataService userDataService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody JobApplicationEntity jobApplicationEntity) {
         List<JobApplicationEntity> jobApplicationEntities = jobApplicationService.existsJobByUserId(jobApplicationEntity.getUserId(), jobApplicationEntity.getJob());
         ResponseModel responseModel = new ResponseModel();
+
+        JobEntity jobEntity = jobService.findSingleById(jobApplicationEntity.getJob());
+        UserEntity jobPosterUserEntity = userDataService.findUserById(jobEntity.getUserId());
+        UserEntity applierUserEntity = userDataService.findUserById(jobEntity.getApplyerId());
+
+
         if (jobApplicationEntities.size() == 0) {
             jobApplicationService.save(jobApplicationEntity);
             responseModel.setMessage("You successfully applied to the job");
+
+
+            Map<String, String> data = new HashMap<>();
+            data.put("title", "Locawork have some news!");
+            data.put("sound", "default");
+            data.put("icon", "ic_launcher");
+            data.put("to", jobPosterUserEntity.getFirebaseToken());
+            data.put("notification", jobPosterUserEntity.getFullname() + "applied to yout work!");
+
+            PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
+            pushNotificationRequest.setMessage("Somebody applied to your work");
+            pushNotificationRequest.setTopic("applied_work");
+            pushNotificationRequest.setMessage(jobPosterUserEntity.getFullname() + "applied to yout work!");
+            pushNotificationRequest.setToken(applierUserEntity.getFirebaseToken());
+            try {
+                fcmService.sendMessage(data, pushNotificationRequest);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             responseModel.setMessage("You already applied to job!");
         }
