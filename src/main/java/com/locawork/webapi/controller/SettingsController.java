@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/settings")
@@ -34,7 +35,7 @@ public class SettingsController {
     @RequestMapping(value = "/get-user-settings", method = RequestMethod.GET)
     public ResponseEntity<?> getSettings(@RequestParam Integer userId) {
         SettingsEntity settings = settingsService.getUserSettings(userId);
-        UserEntity user = userDataService.findUserById(userId);
+        Optional<UserEntity> user = userDataService.findUserById(userId);
         UserSettings userSettings = new UserSettings();
         userSettings.setUserId(settings.getUserId());
         userSettings.setAskPermissionsBeforeDeletingAJob(settings.getAskPermissionsBeforeDeletingAJob());
@@ -42,12 +43,12 @@ public class SettingsController {
         userSettings.setCurrency(settings.getCurrency());
         userSettings.setViewByDefault(settings.getViewByDefault());
         userSettings.setShowInformationOnStartup(settings.getShowInformationOnStartup());
-        userSettings.setEmail(user.getEmail());
-        userSettings.setFullname(user.getFullname());
-        userSettings.setUpdatedAt(user.getUpdatedAt());
-        userSettings.setContact(user.getContact());
+        userSettings.setEmail(user.get().getEmail());
+        userSettings.setFullname(user.get().getFullname());
+        userSettings.setUpdatedAt(user.get().getUpdatedAt());
+        userSettings.setContact(user.get().getContact());
         userSettings.setRadius(settings.getRadius());
-        userSettings.setRole(user.getRole());
+        userSettings.setRole(user.get().getRole());
         userSettings.setBiometric(settings.isBiometric());
 
         return ResponseEntity.ok(userSettings);
