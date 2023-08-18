@@ -1,7 +1,5 @@
 package com.locawork.webapi.dao.entity;
 
-package com.locawork.webapi.dao.entity;
-
 import javax.persistence.*;
 import java.util.Date;
 
