@@ -28,7 +28,7 @@ public class FCMInitializer {
                     .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())).build();
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
-                logger.info("Firebase application has been initialized");
+                logger.info("Firebase application for LOCWORK has been initialized");
             }
         } catch (IOException e) {
             logger.error(e.getMessage());
