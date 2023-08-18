@@ -52,7 +52,7 @@ public class JobApplicationController {
         System.out.println("Jobentity OK");
         Optional<UserEntity> jobPosterUserEntity = userDataService.findUserById(jobEntity.get().getUserId());
         System.out.println("jobPosterUserEntity OK");
-        Optional<UserEntity> applierUserEntity = userDataService.findUserById(jobEntity.get().getApplyerId());
+        Optional<UserEntity> applierUserEntity = userDataService.findUserById(jobApplicationEntity.getUserId());
         System.out.println("applierUserEntity OK");
 
 
