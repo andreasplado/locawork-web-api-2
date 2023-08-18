@@ -159,4 +159,11 @@ public class UserController {
 
         return ResponseEntity.ok(memberRole);
     }
+
+    @RequestMapping(value = "/get-user-firebase-token", method = RequestMethod.GET)
+    public ResponseEntity<String> setRole(@RequestParam Integer userId) {
+        String firebaseToken = userDataService.getUserFirebaseToken(userId);
+
+        return ResponseEntity.ok(firebaseToken);
+    }
 }
