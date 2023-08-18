@@ -49,11 +49,8 @@ public class JobApplicationController {
         ResponseModel responseModel = new ResponseModel();
 
         Optional<JobEntity> jobEntity = jobService.findById(jobApplicationEntity.getJob());
-        System.out.println("Jobentity OK");
         Optional<UserEntity> jobPosterUserEntity = userDataService.findUserById(jobEntity.get().getUserId());
-        System.out.println("jobPosterUserEntity OK");
         Optional<UserEntity> applierUserEntity = userDataService.findUserById(jobApplicationEntity.getUserId());
-        System.out.println("applierUserEntity OK");
 
 
         System.out.println("Too id: " + jobEntity.get().getId() + "Too postitaja id: " + jobPosterUserEntity.get().getId() + "Kandideerija id: " + applierUserEntity.get().getId());
@@ -73,7 +70,7 @@ public class JobApplicationController {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setMessage("Somebody applied to your work");
             pushNotificationRequest.setTopic("jobapplication");
-            pushNotificationRequest.setMessage(jobPosterUserEntity.get().getEmail() + " applied to your work!");
+            pushNotificationRequest.setMessage(applierUserEntity.get().getEmail() + " applied to your work!");
             pushNotificationRequest.setToken(applierUserEntity.get().getFirebaseToken());
             try {
                 fcmService.sendMessage(data, pushNotificationRequest);
