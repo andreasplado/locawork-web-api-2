@@ -144,6 +144,12 @@ public class JobController {
         }
     }
 
+    @RequestMapping(value = "/does-exists", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> getMyApplications(@RequestParam Integer id) {
+        boolean doesExists = jobService.exists(id);
+        return ResponseEntity.ok(doesExists);
+    }
+
     @RequestMapping(value = "/get-my-upcoming-work", method = RequestMethod.GET)
     public ResponseEntity<?> getAppliedJobsByGooogleAccount(@RequestParam Integer userId) {
         List<JobEntity> jobs = jobService.findUpcomingWork(userId);

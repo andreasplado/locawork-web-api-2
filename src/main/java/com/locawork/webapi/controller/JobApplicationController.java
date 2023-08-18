@@ -138,6 +138,14 @@ public class JobApplicationController {
         return ResponseEntity.ok(jobApplicationEntity);
     }
 
+    @RequestMapping(value = "/cancel-confiremd-application", method = RequestMethod.PUT)
+    public ResponseEntity<?> cancelConfiremdApplciations(@RequestParam Integer applicationId) {
+        JobApplicationDTO jobApplicationEntity = jobApplicationService.findJobApplication(applicationId);
+
+
+        return ResponseEntity.ok(jobApplicationEntity);
+    }
+
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> apply(@RequestParam Integer userId, @RequestParam Integer applyerId) {
         jobApplicationService.deleteUserJobApplications(userId);
