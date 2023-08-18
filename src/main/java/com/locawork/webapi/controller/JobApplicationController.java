@@ -62,14 +62,14 @@ public class JobApplicationController {
             data.put("title", "Locawork have some news!");
             data.put("sound", "default");
             data.put("icon", "ic_launcher");
-            data.put("to", jobPosterUserEntity.getFirebaseToken());
-            data.put("notification", jobPosterUserEntity.getFullname() + "applied to yout work!");
+            data.put("to", jobPosterUserEntity.get().getFirebaseToken());
+            data.put("notification", jobPosterUserEntity.get().getFullname() + "applied to yout work!");
 
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setMessage("Somebody applied to your work");
             pushNotificationRequest.setTopic("applied_work");
-            pushNotificationRequest.setMessage(jobPosterUserEntity.getFullname() + "applied to yout work!");
-            pushNotificationRequest.setToken(applierUserEntity.getFirebaseToken());
+            pushNotificationRequest.setMessage(jobPosterUserEntity.get().getFullname() + "applied to yout work!");
+            pushNotificationRequest.setToken(applierUserEntity.get().getFirebaseToken());
             try {
                 fcmService.sendMessage(data, pushNotificationRequest);
             } catch (InterruptedException e) {
