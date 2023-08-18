@@ -48,9 +48,9 @@ public class JobApplicationController {
         List<JobApplicationEntity> jobApplicationEntities = jobApplicationService.existsJobByUserId(jobApplicationEntity.getUserId(), jobApplicationEntity.getJob());
         ResponseModel responseModel = new ResponseModel();
 
-        JobEntity jobEntity = jobService.findSingleById(jobApplicationEntity.getJob());
-        UserEntity jobPosterUserEntity = userDataService.findUserById(jobEntity.getUserId());
-        UserEntity applierUserEntity = userDataService.findUserById(jobEntity.getApplyerId());
+        Optional<JobEntity> jobEntity = jobService.findById(jobApplicationEntity.getJob());
+        UserEntity jobPosterUserEntity = userDataService.findUserById(jobEntity.get().getUserId());
+        UserEntity applierUserEntity = userDataService.findUserById(jobEntity.get().getApplyerId());
 
 
         if (jobApplicationEntities.size() == 0) {
