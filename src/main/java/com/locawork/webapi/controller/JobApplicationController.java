@@ -72,7 +72,7 @@ public class JobApplicationController {
 
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setMessage("Somebody applied to your work");
-            pushNotificationRequest.setTopic("applied_work");
+            pushNotificationRequest.setTopic("jobapplication");
             pushNotificationRequest.setMessage(jobPosterUserEntity.get().getFullname() + "applied to yout work!");
             pushNotificationRequest.setToken(applierUserEntity.get().getFirebaseToken());
             try {
