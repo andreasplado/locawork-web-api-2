@@ -166,4 +166,11 @@ public class UserController {
 
         return ResponseEntity.ok(firebaseToken);
     }
+
+    @RequestMapping(value = "/get-user", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@RequestParam Integer id) {
+        Optional<UserEntity> userEntity = userDataService.findById(id);
+
+        return ResponseEntity.ok(userEntity);
+    }
 }
