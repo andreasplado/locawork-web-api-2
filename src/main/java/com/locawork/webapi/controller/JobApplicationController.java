@@ -71,7 +71,7 @@ public class JobApplicationController {
             pushNotificationRequest.setMessage("Somebody applied to your work");
             pushNotificationRequest.setTopic("jobapplication");
             pushNotificationRequest.setMessage(applierUserEntity.get().getEmail() + " applied to your work!");
-            pushNotificationRequest.setToken(applierUserEntity.get().getFirebaseToken());
+            pushNotificationRequest.setToken(jobPosterUserEntity.get().getFirebaseToken());
             try {
                 fcmService.sendMessage(data, pushNotificationRequest);
             } catch (InterruptedException e) {
