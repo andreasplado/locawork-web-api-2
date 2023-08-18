@@ -49,8 +49,11 @@ public class JobApplicationController {
         ResponseModel responseModel = new ResponseModel();
 
         Optional<JobEntity> jobEntity = jobService.findById(jobApplicationEntity.getJob());
+        System.out.println("Jobentity OK");
         Optional<UserEntity> jobPosterUserEntity = userDataService.findUserById(jobEntity.get().getUserId());
+        System.out.println("jobPosterUserEntity OK");
         Optional<UserEntity> applierUserEntity = userDataService.findUserById(jobEntity.get().getApplyerId());
+        System.out.println("applierUserEntity OK");
 
 
         System.out.println("Too id: " + jobEntity.get().getId() + "Too postitaja id: " + jobPosterUserEntity.get().getId() + "Kandideerija id: " + applierUserEntity.get().getId());
