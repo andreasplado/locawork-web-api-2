@@ -17,7 +17,7 @@ public interface IUserService {
     boolean existByEmail(String googleAccountId);
     UserEntity findByEmail(String email);
     int findId(String email);
-    UserEntity findUserById(Integer id);
+    Optional<UserEntity> findUserById(Integer id);
     String getUserFirebaseToken(Integer id);
     void updateUserFirebaseToken(String firebaseToken, Integer id);
     void updateUserRole(String role, Integer id);

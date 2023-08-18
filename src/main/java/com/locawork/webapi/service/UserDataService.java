@@ -65,7 +65,7 @@ public class UserDataService implements IUserService {
     }
 
     @Override
-    public UserEntity findUserById(Integer id) {
+    public Optional<UserEntity> findUserById(Integer id) {
         return repository.findUserById(id);
     }
 

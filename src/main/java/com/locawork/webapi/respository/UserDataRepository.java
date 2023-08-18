@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
 @Repository
 public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT CASE WHEN COUNT(u)> 0 then true else false end FROM users u WHERE u.email=?1", nativeQuery = true)
@@ -25,7 +28,7 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     int findId(@Param("username") String username);
 
     @Query(value="SELECT u.* FROM users u WHERE u.id=?1", nativeQuery = true)
-    UserEntity findUserById(@Param("id") Integer userId);
+    Optional<UserEntity> findUserById(@Param("id") Integer userId);
 
     @Query(value="SELECT u.firebase_token FROM users u WHERE u.id=?1", nativeQuery = true)
     String getUserFirebaseToken(@Param("id") Integer userId);
