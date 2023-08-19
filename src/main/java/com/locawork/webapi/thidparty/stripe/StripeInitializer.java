@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 @Service
 public class StripeInitializer {
 
-    @Value("${app.stripe.api.key}")
+    @Value("${app.stripe.secret.key}")
     private String stripeApiKey;
 
     Logger logger = LoggerFactory.getLogger(StripeInitializer.class);
