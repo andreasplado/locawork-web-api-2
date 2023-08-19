@@ -183,52 +183,37 @@ public class UserController {
         return ResponseEntity.ok(userEntity);
     }
 
-    @RequestMapping(value = "/subscribe-for-removing-ads-copy", method = RequestMethod.POST)
-    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id, @RequestBody @Valid CreatePayment createPayment) throws StripeException {
-        Optional<UserEntity> userEntity = userDataService.findById(id);
-
-        // Set your secret key. Remember to switch to your live secret key in production.
-        // See your keys here: https://dashboard.stripe.com/apikeys
-        Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
-
-        PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                        .setAmount(1099L)
-                        .setCurrency("usd")
-                        .addPaymentMethodType("card")
-                        .build();
-        System.out.println("Makstud");
-
-        PaymentIntent intent = PaymentIntent.create(params);
-        String clientSecret = intent.getClientSecret();
-        // Pass the client secret to the client
-        return ResponseEntity.ok(clientSecret);
-    }
-
     @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
     public ResponseEntity<?> subscribeUserById(@RequestBody PayingToken payingToken) throws StripeException {
         Optional<UserEntity> userEntity = userDataService.findById(payingToken.getUserId());
+        ResponseModel responseModel = new ResponseModel();
 
-        // Set your secret key. Remember to switch to your live secret key in production.
-        // See your keys here: https://dashboard.stripe.com/apikeys
-        Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
+        if(userEntity.isPresent()) {
+            // Set your secret key. Remember to switch to your live secret key in production.
+            // See your keys here: https://dashboard.stripe.com/apikeys
+            Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
 
-        // Token is created using Stripe Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-        String token = payingToken.getToken();
+            // Token is created using Stripe Checkout or Elements!
+            // Get the payment token ID submitted by the form:
+            String token = payingToken.getToken();
 
-        ChargeCreateParams params =
-                ChargeCreateParams.builder()
-                        .setAmount(999L)
-                        .setCurrency("usd")
-                        .setDescription("Removing adds")
-                        .setSource(token)
-                        .build();
+            ChargeCreateParams params =
+                    ChargeCreateParams.builder()
+                            .setAmount(999L)
+                            .setCurrency("usd")
+                            .setDescription("Removing adds")
+                            .setSource(token)
+                            .build();
 
-        Charge charge = Charge.create(params);
-        Long  amount = charge.getAmount();
+            Charge charge = Charge.create(params);
+            Long amount = charge.getAmount();
 
-        // Pass the client secret to the client
-        return ResponseEntity.ok("Makstud " + amount);
+            // Pass the client secret to the client
+            userDataService.removeUserAdds(payingToken.getUserId());
+            responseModel.setMessage("Adds removed");
+        }else{
+            responseModel.setMessage("User not found for an order");
+        }
+        return ResponseEntity.ok(responseModel);
     }
 }

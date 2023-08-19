@@ -85,6 +85,11 @@ public class UserDataService implements IUserService {
     }
 
     @Override
+    public void removeUserAdds(Integer id) {
+        repository.setUserAdds(false, id);
+    }
+
+    @Override
     public String memberRole(Integer id) {
         if(repository.existsById(id)){
             return repository.getMemberRole(id);
