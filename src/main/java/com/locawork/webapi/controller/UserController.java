@@ -3,10 +3,12 @@ package com.locawork.webapi.controller;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.data.Note;
+import com.locawork.webapi.dto.CreatePayment;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -178,7 +181,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
-    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id) {
+    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id, @RequestBody @Valid CreatePayment createPayment) throws StripeException {
         Optional<UserEntity> userEntity = userDataService.findById(id);
 
         // Set your secret key. Remember to switch to your live secret key in production.
