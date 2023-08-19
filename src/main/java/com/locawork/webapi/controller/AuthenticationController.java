@@ -112,7 +112,7 @@ public class AuthenticationController {
                 responseHeaders.set("email", authenticationRequest.getEmail());
                 responseHeaders.set("Radius", "" + settings.getRadius());
                 if(user.getAddsRemoved()) {
-                    responseHeaders.set("Is_without_adds", "0");
+                    responseHeaders.set("Is_without_adds", "1");
                 }else{
                     responseHeaders.set("Is_without_adds", "0");
                 }
