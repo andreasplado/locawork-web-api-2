@@ -86,7 +86,7 @@ public class UserDataService implements IUserService {
 
     @Override
     public void removeUserAdds(Integer id) {
-        repository.setUserAdds(false, id);
+        repository.setUserAdds(true, id);
     }
 
     @Override
