@@ -113,7 +113,7 @@ public class AuthenticationController {
                 responseHeaders.set("Radius", "" + settings.getRadius());
                 if(user.getAddsRemoved()) {
                     responseHeaders.set("Is_without_adds", "0");
-                }else if(){
+                }else{
                     responseHeaders.set("Is_without_adds", "0");
                 }
                 return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
