@@ -189,7 +189,7 @@ public class UserController {
 
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
-        //Stripe.apiKey = "sk_test_pjdpPizIjqvq5MF7tJvb7mZO";
+        Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
 
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
