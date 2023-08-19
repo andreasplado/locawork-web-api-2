@@ -38,6 +38,7 @@ public class UserDataService implements IUserService {
         user.setIsAccountNonLocked(true);
         user.setEnabled(true);
         user.setCreatedAt(new Date());
+        user.setAddsRemoved(false);
         return repository.save(user);
     }
 
