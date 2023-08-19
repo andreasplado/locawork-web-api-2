@@ -201,7 +201,7 @@ public class UserController {
                     ChargeCreateParams.builder()
                             .setAmount(999L)
                             .setCurrency("usd")
-                            .setDescription("Removing adds")
+                            .setDescription("Removing adds for " + userEntity.get().getEmail())
                             .setSource(token)
                             .build();
 
