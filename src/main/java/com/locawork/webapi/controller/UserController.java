@@ -198,6 +198,6 @@ public class UserController {
         PaymentIntent intent = PaymentIntent.create(params);
         String clientSecret = intent.getClientSecret();
         // Pass the client secret to the client
-        return ResponseEntity.ok(userEntity);
+        return ResponseEntity.ok(clientSecret);
     }
 }
