@@ -206,8 +206,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
-    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id, @RequestBody PayingToken payingToken) throws StripeException {
-        Optional<UserEntity> userEntity = userDataService.findById(id);
+    public ResponseEntity<?> subscribeUserById(@RequestBody PayingToken payingToken) throws StripeException {
+        Optional<UserEntity> userEntity = userDataService.findById(payingToken.getUserId());
 
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
@@ -229,6 +229,6 @@ public class UserController {
         Long  amount = charge.getAmount();
 
         // Pass the client secret to the client
-        return ResponseEntity.ok("Makstud" + amount);
+        return ResponseEntity.ok("Makstud " + amount);
     }
 }
