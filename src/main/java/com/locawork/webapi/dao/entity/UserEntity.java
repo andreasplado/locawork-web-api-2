@@ -39,6 +39,14 @@ public class UserEntity {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "membership")
+    private String membership;
+    @Column(name = "adds_removed")
+    private Boolean addsRemoved;
+
+    @Column(name = "registred_membership")
+    private Date registredMembership;
+
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -56,6 +64,9 @@ public class UserEntity {
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
+
+    public UserEntity() {
+    }
 
     public Integer getId() {
         return id;
@@ -175,5 +186,29 @@ public class UserEntity {
 
     public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
         isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    public String getMembership() {
+        return membership;
+    }
+
+    public Date getRegistredMembership() {
+        return registredMembership;
+    }
+
+    public void setRegistredMembership(Date registredMembership) {
+        this.registredMembership = registredMembership;
+    }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
+
+    public Boolean getAddsRemoved() {
+        return addsRemoved;
+    }
+
+    public void setAddsRemoved(Boolean addsRemoved) {
+        this.addsRemoved = addsRemoved;
     }
 }

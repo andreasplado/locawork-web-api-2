@@ -6,6 +6,9 @@ import com.locawork.webapi.data.Note;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
+import com.stripe.Stripe;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -171,6 +174,27 @@ public class UserController {
     public ResponseEntity<?> getUser(@RequestParam Integer id) {
         Optional<UserEntity> userEntity = userDataService.findById(id);
 
+        return ResponseEntity.ok(userEntity);
+    }
+
+    @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
+    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id) {
+        Optional<UserEntity> userEntity = userDataService.findById(id);
+
+        // Set your secret key. Remember to switch to your live secret key in production.
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        Stripe.apiKey = "sk_test_pjdpPizIjqvq5MF7tJvb7mZO";
+
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(1099L)
+                        .setCurrency("usd")
+                        .addPaymentMethodType("card")
+                        .build();
+
+        PaymentIntent intent = PaymentIntent.create(params);
+        String clientSecret = intent.getClientSecret();
+        // Pass the client secret to the client
         return ResponseEntity.ok(userEntity);
     }
 }
