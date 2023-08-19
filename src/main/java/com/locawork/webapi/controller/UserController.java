@@ -197,6 +197,7 @@ public class UserController {
                         .setCurrency("usd")
                         .addPaymentMethodType("card")
                         .build();
+        System.out.println("Makstud");
 
         PaymentIntent intent = PaymentIntent.create(params);
         String clientSecret = intent.getClientSecret();
