@@ -4,12 +4,15 @@ import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.data.Note;
 import com.locawork.webapi.dto.CreatePayment;
+import com.locawork.webapi.dto.PayingToken;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
 import com.stripe.model.PaymentIntent;
+import com.stripe.param.ChargeCreateParams;
 import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -180,13 +183,13 @@ public class UserController {
         return ResponseEntity.ok(userEntity);
     }
 
-    @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
+    @RequestMapping(value = "/subscribe-for-removing-ads-copy", method = RequestMethod.POST)
     public ResponseEntity<?> subscribeUserById(@RequestParam Integer id, @RequestBody @Valid CreatePayment createPayment) throws StripeException {
         Optional<UserEntity> userEntity = userDataService.findById(id);
 
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
-        Stripe.apiKey = "sk_test_pjdpPizIjqvq5MF7tJvb7mZO";
+        //Stripe.apiKey = "sk_test_pjdpPizIjqvq5MF7tJvb7mZO";
 
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
@@ -199,5 +202,32 @@ public class UserController {
         String clientSecret = intent.getClientSecret();
         // Pass the client secret to the client
         return ResponseEntity.ok(clientSecret);
+    }
+
+    @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
+    public ResponseEntity<?> subscribeUserById(@RequestParam Integer id, @RequestBody PayingToken payingToken) throws StripeException {
+        Optional<UserEntity> userEntity = userDataService.findById(id);
+
+        // Set your secret key. Remember to switch to your live secret key in production.
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
+
+        // Token is created using Stripe Checkout or Elements!
+        // Get the payment token ID submitted by the form:
+        String token = payingToken.getToken();
+
+        ChargeCreateParams params =
+                ChargeCreateParams.builder()
+                        .setAmount(999L)
+                        .setCurrency("usd")
+                        .setDescription("Removing adds")
+                        .setSource(token)
+                        .build();
+
+        Charge charge = Charge.create(params);
+        Long  amount = charge.getAmount();
+
+        // Pass the client secret to the client
+        return ResponseEntity.ok("Makstud" + amount);
     }
 }
