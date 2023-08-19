@@ -1,4 +1,4 @@
-package com.locawork.webapi.config.firebase;
+package com.locawork.webapi.thidparty.firebase;
 
 public enum NotificationParameter {
     SOUND("default"),

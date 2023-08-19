@@ -1,4 +1,4 @@
-package com.locawork.webapi.config.firebase;
+package com.locawork.webapi.thidparty.firebase;
 
 import com.locawork.webapi.model.PushNotificationRequest;
 import com.google.firebase.messaging.*;

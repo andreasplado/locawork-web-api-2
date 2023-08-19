@@ -1,6 +1,6 @@
 package com.locawork.webapi.controller;
 
-import com.locawork.webapi.config.firebase.FCMService;
+import com.locawork.webapi.thidparty.firebase.FCMService;
 import com.locawork.webapi.dao.entity.JobApplicationEntity;
 import com.locawork.webapi.dao.entity.JobEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
