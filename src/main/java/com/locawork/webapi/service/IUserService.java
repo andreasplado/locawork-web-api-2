@@ -20,7 +20,7 @@ public interface IUserService {
     Optional<UserEntity> findUserById(Integer id);
     String getUserFirebaseToken(Integer id);
     void updateUserFirebaseToken(String firebaseToken, Integer id);
-    void updateUserRole(String role, Integer id);
+    void updateUserStatus(String role, Integer id);
 
     void removeUserAdds(Integer id);
     String memberRole(Integer id);

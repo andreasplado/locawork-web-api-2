@@ -81,8 +81,8 @@ public class UserDataService implements IUserService {
     }
 
     @Override
-    public void updateUserRole(String role, Integer id) {
-        repository.updateUserRole(role, id);
+    public void updateUserStatus(String role, Integer id) {
+        repository.updateUserStatus(role, id);
     }
 
     @Override
