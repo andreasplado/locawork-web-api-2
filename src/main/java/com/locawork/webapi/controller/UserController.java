@@ -198,7 +198,7 @@ public class UserController {
             // See your keys here: https://dashboard.stripe.com/apikeys
             Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
 
-            if (userEntity.get().getCustomerId().isEmpty()) {
+            if (userEntity.get().getCustomerId() == null) {
                 String token = addingJobDTO.getToken();
                 // Create a Customer:
                 CustomerCreateParams customerParams =
