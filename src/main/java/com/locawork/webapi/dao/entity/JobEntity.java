@@ -58,12 +58,13 @@ public class JobEntity {
 
     }
 
-    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude) {
+    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude, Integer userId) {
         this.setTitle(title);
         this.setDescription(description);
         this.setSalary(salary);
         this.setLongitude(longitude);
         this.setLatitude(latitude);
+        this.setUserId(userId);
         this.setCreatedAt(new Date());
     }
 

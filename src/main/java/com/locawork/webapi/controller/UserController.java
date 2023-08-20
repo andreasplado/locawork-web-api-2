@@ -229,7 +229,7 @@ public class UserController {
                 ChargeCreateParams chargeParams2 =
                         ChargeCreateParams.builder()
                                 .setAmount(200L)
-                                .setCurrency("usd")
+                                .setCurrency("eur")
                                 .setCustomer(userEntity.get().getCustomerId()) // Previously stored, then retrieved
                                 .build();
 
@@ -242,7 +242,8 @@ public class UserController {
                         addingJobDTO.getDescription(),
                         addingJobDTO.getSalary(),
                         addingJobDTO.getLongitude(),
-                        addingJobDTO.getLatitude()
+                        addingJobDTO.getLatitude(),
+                        addingJobDTO.getUserId()
                 );
 
                 jobService.save(job);
