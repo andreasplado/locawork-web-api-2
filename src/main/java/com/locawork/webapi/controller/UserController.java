@@ -222,7 +222,7 @@ public class UserController {
 
 
                 // YOUR CODE: Save the customer ID and other info in a database for later.
-                userEntity.get().setCustomerId(customer.getId();
+                userEntity.get().setCustomerId(customer.getId());
                 userDataService.save(userEntity.get());
             }else {
                 // When it's time to charge the customer again, retrieve the customer ID.
