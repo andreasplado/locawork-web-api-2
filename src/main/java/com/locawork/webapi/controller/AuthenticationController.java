@@ -111,6 +111,7 @@ public class AuthenticationController {
                 responseHeaders.set("Firebase_token", "lol");
                 responseHeaders.set("email", authenticationRequest.getEmail());
                 responseHeaders.set("Radius", "" + settings.getRadius());
+                responseHeaders.set("Status", settings.getStatus());
                 if(user.getAddsRemoved()) {
                     responseHeaders.set("Is_without_adds", "1");
                 }else{
