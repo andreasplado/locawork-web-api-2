@@ -225,6 +225,16 @@ public class UserController {
                 // YOUR CODE: Save the customer ID and other info in a database for later.
                 settingsEntity.setCustomerId(customer.getId());
                 settingsService.save(settingsEntity);
+                JobEntity job = new JobEntity(
+                        addingJobDTO.getJobTitle(),
+                        addingJobDTO.getDescription(),
+                        addingJobDTO.getSalary(),
+                        addingJobDTO.getLongitude(),
+                        addingJobDTO.getLatitude(),
+                        addingJobDTO.getUserId()
+                );
+
+                jobService.save(job);
             }else {
                 // When it's time to charge the customer again, retrieve the customer ID.
                 ChargeCreateParams chargeParams2 =
