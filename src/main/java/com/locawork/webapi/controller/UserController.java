@@ -191,14 +191,15 @@ public class UserController {
     @RequestMapping(value = "/pay-for-giving-work", method = RequestMethod.POST)
     public ResponseEntity<?> subscribeUserById(@RequestBody AddingJobDTO addingJobDTO) throws StripeException {
         Optional<UserEntity> userEntity = userDataService.findById(addingJobDTO.getUserId());
-        ResponseModel responseModel = new ResponseModel();
 
+        ResponseModel responseModel = new ResponseModel();
         if (userEntity.isPresent()) {
+            SettingsEntity settingsEntity = settingsService.getUserSettings(addingJobDTO.getUserId());
             // Set your secret key. Remember to switch to your live secret key in production.
             // See your keys here: https://dashboard.stripe.com/apikeys
             Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
 
-            if (userEntity.get().getCustomerId() == null) {
+            if (settingsEntity.getCustomerId() == null) {
                 String token = addingJobDTO.getToken();
                 // Create a Customer:
                 CustomerCreateParams customerParams =
@@ -222,8 +223,8 @@ public class UserController {
 
 
                 // YOUR CODE: Save the customer ID and other info in a database for later.
-                //userEntity.get().setCustomerId(customer.getId());
-                //userDataService.save(userEntity.get());
+                settingsEntity.setCustomerId(customer.getId());
+                settingsService.save(settingsEntity);
             }else {
                 // When it's time to charge the customer again, retrieve the customer ID.
                 ChargeCreateParams chargeParams2 =

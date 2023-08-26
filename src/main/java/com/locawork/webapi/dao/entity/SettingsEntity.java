@@ -37,6 +37,9 @@ public class SettingsEntity {
     @Column(name = "is_biometric")
     private boolean isBiometric;
 
+    @Column(name = "customer_id")
+    private String customerId;
+
     @Column(name = "member_role")
     private String memberRole;
 
@@ -185,5 +188,13 @@ public class SettingsEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }
