@@ -56,34 +56,6 @@ public class AuthenticationController {
     private  BCryptPasswordEncoder passwordEncoder;
 
 
-   /*@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request)
-            throws Exception {
-        try {
-            String token = jwtUtil.generateToken(userAuthService.loadUserByUsername(authenticationRequest.getEmail()));
-
-
-            UsernamePasswordAuthenticationToken authReq
-                    = new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-            Authentication auth = authenticationManager.authenticate(authReq);
-
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            HttpSession session = request.getSession(true);
-            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-        final UserDetails userDetails = userAuthService.loadUserByUsername(authenticationRequest.getEmail());
-
-        final String token = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(token));
-    }*/
-
-
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletRequest request){
         UserEntity user = userDataService.findByEmail(authenticationRequest.getEmail());
