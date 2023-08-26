@@ -231,7 +231,7 @@ public class UserController {
                         ChargeCreateParams.builder()
                                 .setAmount(200L)
                                 .setCurrency("eur")
-                                .setCustomer(userEntity.get().getCustomerId()) // Previously stored, then retrieved
+                                .setCustomer(settingsEntity.getCustomerId()) // Previously stored, then retrieved
                                 .build();
 
                 Charge charge2 = Charge.create(chargeParams2);
