@@ -25,7 +25,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/users/signup",
             "/api/login",
-            "/privay-policy",
+            "/privacy-policy",
             "/logout",
     };
 
@@ -40,6 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
                 .antMatchers(HttpMethod.POST,"/auth/authenticate").permitAll()
+                .antMatchers(HttpMethod.POST,"/privacy-policy").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
