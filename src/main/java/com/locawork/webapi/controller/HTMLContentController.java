@@ -19,6 +19,7 @@ import com.stripe.param.CustomerCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +27,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/privacy-policy")
+@Controller
+@RequestMapping("/docs")
 public class HTMLContentController {
 
 
 
-    @GetMapping
+    @RequestMapping("/privacy-policy")
+    @ResponseBody
     public String getAll(Model model) {
         return "privacy_policy";
     }
