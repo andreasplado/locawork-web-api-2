@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
@@ -31,11 +32,11 @@ import java.util.Optional;
 @RequestMapping("/docs")
 public class HTMLContentController {
 
-
-
     @RequestMapping("/privacy-policy")
     @ResponseBody
-    public String getAll(Model model) {
-        return "privacy_policy.html";
+    public ModelAndView getAll(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("privacy_policy.html");
+        return modelAndView;
     }
 }
