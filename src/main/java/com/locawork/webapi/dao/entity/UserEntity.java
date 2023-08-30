@@ -47,9 +47,6 @@ public class UserEntity {
     @Column(name = "registred_membership")
     private Date registredMembership;
 
-    @Column(name = "customer_id")
-    private String customerId;
-
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -213,13 +210,5 @@ public class UserEntity {
 
     public void setAddsRemoved(Boolean addsRemoved) {
         this.addsRemoved = addsRemoved;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 }

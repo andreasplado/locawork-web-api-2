@@ -191,14 +191,15 @@ public class UserController {
     @RequestMapping(value = "/pay-for-giving-work", method = RequestMethod.POST)
     public ResponseEntity<?> subscribeUserById(@RequestBody AddingJobDTO addingJobDTO) throws StripeException {
         Optional<UserEntity> userEntity = userDataService.findById(addingJobDTO.getUserId());
-        ResponseModel responseModel = new ResponseModel();
 
+        ResponseModel responseModel = new ResponseModel();
         if (userEntity.isPresent()) {
+            SettingsEntity settingsEntity = settingsService.getUserSettings(addingJobDTO.getUserId());
             // Set your secret key. Remember to switch to your live secret key in production.
             // See your keys here: https://dashboard.stripe.com/apikeys
-            Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
+            Stripe.apiKey = "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";
 
-            if (userEntity.get().getCustomerId() == null) {
+            if (settingsEntity.getCustomerId() == null) {
                 String token = addingJobDTO.getToken();
                 // Create a Customer:
                 CustomerCreateParams customerParams =
@@ -222,15 +223,25 @@ public class UserController {
 
 
                 // YOUR CODE: Save the customer ID and other info in a database for later.
-                userEntity.get().setCustomerId(customer.getId());
-                userDataService.save(userEntity.get());
+                settingsEntity.setCustomerId(customer.getId());
+                settingsService.save(settingsEntity);
+                JobEntity job = new JobEntity(
+                        addingJobDTO.getJobTitle(),
+                        addingJobDTO.getDescription(),
+                        addingJobDTO.getSalary(),
+                        addingJobDTO.getLongitude(),
+                        addingJobDTO.getLatitude(),
+                        addingJobDTO.getUserId()
+                );
+
+                jobService.save(job);
             }else {
                 // When it's time to charge the customer again, retrieve the customer ID.
                 ChargeCreateParams chargeParams2 =
                         ChargeCreateParams.builder()
                                 .setAmount(200L)
                                 .setCurrency("eur")
-                                .setCustomer(userEntity.get().getCustomerId()) // Previously stored, then retrieved
+                                .setCustomer(settingsEntity.getCustomerId()) // Previously stored, then retrieved
                                 .build();
 
                 Charge charge2 = Charge.create(chargeParams2);
@@ -263,7 +274,7 @@ public class UserController {
         if (userEntity.isPresent()) {
             // Set your secret key. Remember to switch to your live secret key in production.
             // See your keys here: https://dashboard.stripe.com/apikeys
-            Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
+            Stripe.apiKey = "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";
 
             // Token is created using Stripe Checkout or Elements!
             // Get the payment token ID submitted by the form:

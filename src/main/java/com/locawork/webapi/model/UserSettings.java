@@ -27,6 +27,8 @@ public class UserSettings {
 
     private String contact;
 
+    private String customerId;
+
     private Date createdAt;
 
     private Date updatedAt;
@@ -133,5 +135,13 @@ public class UserSettings {
 
     public void setBiometric(boolean biometric) {
         isBiometric = biometric;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }
