@@ -111,8 +111,14 @@ public class SettingsController {
     public ResponseEntity<?> updateBiometric(@RequestParam Integer userId, @RequestParam Boolean value) {
         ResponseModel responseModel = new ResponseModel();
 
-        settingsService.updateBiometric(userId, value);
-        responseModel.setMessage("You updated your biometric!");
+        Optional<UserEntity> user = userDataService.findById(userId);
+
+        if(user.isPresent()){
+            settingsService.updateBiometric(userId, value);
+            return ResponseEntity.ok(user);
+        }
+
+        responseModel.setMessage("User does not exist!");
 
         return ResponseEntity.ok(responseModel);
     }
