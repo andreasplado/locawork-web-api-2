@@ -101,7 +101,6 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
-        // From the HttpRequest get the claims
         DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
 
         Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
