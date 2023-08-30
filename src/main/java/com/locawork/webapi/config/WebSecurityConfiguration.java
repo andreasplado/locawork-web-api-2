@@ -39,8 +39,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
-                .antMatchers(HttpMethod.POST,"/auth/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST,"/docs/privacy-policy").permitAll()
+                .antMatchers(HttpMethod.POST,"/auth/authenticate").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), getApplicationContext()))
@@ -54,6 +54,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().regexMatchers("/users/signup");
         web.ignoring().regexMatchers("/auth/authenticate");
+        web.ignoring().regexMatchers("/docs/privacy-policy");
     }
 
     @Override
