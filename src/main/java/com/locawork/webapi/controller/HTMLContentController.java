@@ -36,6 +36,6 @@ public class HTMLContentController {
     @RequestMapping("/privacy-policy")
     @ResponseBody
     public String getAll(Model model) {
-        return "privacy_policy";
+        return "privacy_policy.html";
     }
 }
