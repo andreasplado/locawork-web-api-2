@@ -76,14 +76,10 @@ public class SettingsController {
         ResponseModel responseModel = new ResponseModel();
         settingsService.updateRadius(userId, radius);
         if(userDataService.exists(userId)){
-            responseModel.setMessage("You updated");
-            responseModel.setValid(true);
-            responseModel.setRadius(radius);
+            responseModel.setMessage("You updated your radius");
             return ResponseEntity.ok(responseModel);
         }else {
             responseModel.setMessage("You failed");
-            responseModel.setValid(false);
-            responseModel.setRadius(radius);
             return ResponseEntity.ok(responseModel);
         }
     }
