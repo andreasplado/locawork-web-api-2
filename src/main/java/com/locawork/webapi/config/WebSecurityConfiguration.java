@@ -55,6 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().regexMatchers("/users/signup");
         web.ignoring().regexMatchers("/auth/authenticate");
         web.ignoring().regexMatchers("/docs/privacy-policy");
+        web.ignoring().regexMatchers("/comments*");
     }
 
     @Override
