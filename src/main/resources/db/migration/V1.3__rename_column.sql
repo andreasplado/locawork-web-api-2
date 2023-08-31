@@ -1,2 +1,0 @@
-ALTER TABLE users
-RENAME COLUMN is_non_locked TO is_account_non_locked
