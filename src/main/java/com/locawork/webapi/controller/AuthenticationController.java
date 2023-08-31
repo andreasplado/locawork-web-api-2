@@ -89,7 +89,7 @@ public class AuthenticationController {
                 }else{
                     responseHeaders.set("Is_without_adds", "0");
                 }
-                return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
+                return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token, user));
             }
         }else{
             return new ResponseEntity<>("User does not exist!",
