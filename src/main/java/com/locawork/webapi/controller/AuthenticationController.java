@@ -106,7 +106,7 @@ public class AuthenticationController {
         Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
         JwtUtil jwtUtil = new JwtUtil();
         String token = jwtUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        return ResponseEntity.ok(new AuthenticationResponse(token, null));
     }
 
     public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
