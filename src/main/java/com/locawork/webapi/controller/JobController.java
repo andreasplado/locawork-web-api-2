@@ -38,8 +38,17 @@ public class JobController {
     @Autowired
     private JobCategoryService jobCategoryService;
 
-    @GetMapping
-    public ResponseEntity<HashMap<String, Object>> getAll() {
+
+    @RequestMapping(value = "/all-jobs", method = RequestMethod.GET)
+    public ResponseEntity<List<JobEntity>> getAll() {
+        List<JobEntity> jobs = jobService.findAll();
+
+        return new ResponseEntity<>(jobs, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/get-all-jobs-with-categories", method = RequestMethod.GET)
+    public ResponseEntity<HashMap<String, Object>> getAllWithCategories() {
         List<JobEntity> jobs = jobService.findAll();
         List<JobCategoryEntity> categories = jobCategoryService.findAll();
         HashMap<String, Object> combined = new HashMap<>();
