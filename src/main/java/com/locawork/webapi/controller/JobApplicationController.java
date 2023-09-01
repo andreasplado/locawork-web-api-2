@@ -43,6 +43,13 @@ public class JobApplicationController {
     @Autowired
     private UserDataService userDataService;
 
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        List<JobApplicationEntity> jobApplicationEntities = jobApplicationService.findAll();
+        return ResponseEntity.ok(jobApplicationEntities);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody JobApplicationEntity jobApplicationEntity) {
         List<JobApplicationEntity> jobApplicationEntities = jobApplicationService.existsJobByUserId(jobApplicationEntity.getUserId(), jobApplicationEntity.getJob());
