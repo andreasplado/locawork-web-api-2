@@ -51,6 +51,11 @@ public class UserDataService implements IUserService {
     }
 
     @Override
+    public List<UserEntity> findByKeyword(String keyword) {
+        return repository.findByKeyword(keyword);
+    }
+
+    @Override
     public boolean existByEmail(String email){
         return repository.existsByEmail(email);
     }

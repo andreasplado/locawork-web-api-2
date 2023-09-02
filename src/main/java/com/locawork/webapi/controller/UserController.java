@@ -71,6 +71,14 @@ public class UserController {
         return ResponseEntity.ok(userEntity);
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ResponseEntity<?> create(@RequestParam String keyword) {
+
+        List<UserEntity> userEntityList = userDataService.findByKeyword(keyword);
+
+        return ResponseEntity.ok(userEntityList);
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody UserEntity user) {
         if (!userDataService.existByEmail(user.getEmail())) {

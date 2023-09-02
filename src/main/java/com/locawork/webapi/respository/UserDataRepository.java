@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -63,4 +64,6 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM users u WHERE u.email=?1 AND u.password=?2", nativeQuery = true)
     boolean userAuthenticated(@Param("email") String email, @Param("password") String password);
 
+    @Query(value="SELECT u.* FROM users u WHERE u.email LIKE '%?1%' OR u.fullname LIKE '%?1%'", nativeQuery = true)
+    List<UserEntity> findByKeyword(@Param("keyword") String keyword);
 }
