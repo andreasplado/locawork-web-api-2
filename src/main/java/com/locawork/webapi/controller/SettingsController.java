@@ -8,6 +8,7 @@ import com.locawork.webapi.model.UserSettings;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,17 @@ public class SettingsController {
 
             return ResponseEntity.ok(responseModel);
         }
+    }
+
+    @RequestMapping(value = "/update-user-settings", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateUserSettings(@RequestParam Integer userId, @RequestBody SettingsEntity settingsEntity) {
+        ResponseModel responseModel = new ResponseModel();
+        if(settingsService.getUserSettings(userId) != null){
+            settingsService.saveUserSettings(userId, settingsEntity);
+            return ResponseEntity.ok(responseModel);
+        }
+
+        return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
 
 

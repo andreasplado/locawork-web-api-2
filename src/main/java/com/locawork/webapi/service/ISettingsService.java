@@ -7,6 +7,8 @@ import java.util.List;
 public interface ISettingsService {
 
     SettingsEntity save(SettingsEntity settingsEntity);
+
+    SettingsEntity saveUserSettings(Integer userId, SettingsEntity settingsEntity);
     boolean exists(Integer userId);
     List<SettingsEntity> findAll();
     SettingsEntity getUserSettings(Integer userId);
