@@ -37,7 +37,7 @@ public class SettingsService implements ISettingsService {
         settingsEntityTemp.setShowInformationOnStartup(settingsEntity.getShowInformationOnStartup());
         settingsEntityTemp
                 .setAskPermissionsBeforeDeletingAJob(settingsEntity.getAskPermissionsBeforeDeletingAJob());
-
+        return repository.save(settingsEntityTemp);
     }
 
     @Override
