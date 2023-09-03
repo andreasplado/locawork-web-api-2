@@ -25,7 +25,7 @@ public class SettingsService implements ISettingsService {
 
     @Override
     public SettingsEntity saveUserSettings(Integer userId, SettingsEntity settingsEntity) {
-        SettingsEntity settingsEntityTemp = repository.findUserSettings();
+        SettingsEntity settingsEntityTemp = repository.findUserSettings(userId);
         settingsEntityTemp.setUpdatedAt(new Date());
         settingsEntityTemp.setBiometric(settingsEntity.isBiometric());
         settingsEntityTemp.setMemberRole(settingsEntity.getMemberRole());
