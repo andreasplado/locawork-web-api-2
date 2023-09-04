@@ -34,6 +34,9 @@ public class JobEntity {
     @Column(name = "payroll")
     private String payroll;
 
+    @Column(name = "hours_to_work")
+    private Integer hoursToWork;
+
     @Column(name = "salary")
     private Double salary;
 
@@ -189,6 +192,14 @@ public class JobEntity {
 
     public void setPayroll(String payroll) {
         this.payroll = payroll;
+    }
+
+    public Integer getHoursToWork() {
+        return hoursToWork;
+    }
+
+    public void setHoursToWork(Integer hoursToWork) {
+        this.hoursToWork = hoursToWork;
     }
 }
 
