@@ -33,7 +33,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity userEntity = userRepository.findByEmail(username);
         if(userEntity != null) {
             User user = new User(userEntity.getEmail(), bCryptPasswordEncoder.encode(userEntity.getPassword()), authorities);
-            System.out.println("user : " + user.getUsername());
             return user;
         }else{
             return null;
