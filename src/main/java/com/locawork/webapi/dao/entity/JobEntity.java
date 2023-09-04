@@ -31,6 +31,9 @@ public class JobEntity {
     @Column(name = "category_id")
     private Integer categoryId;
 
+    @Column(name = "payroll")
+    private String payroll;
+
     @Column(name = "salary")
     private Double salary;
 
@@ -178,6 +181,14 @@ public class JobEntity {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public String getPayroll() {
+        return payroll;
+    }
+
+    public void setPayroll(String payroll) {
+        this.payroll = payroll;
     }
 }
 
