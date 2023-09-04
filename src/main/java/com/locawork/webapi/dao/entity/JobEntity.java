@@ -35,7 +35,7 @@ public class JobEntity {
     private String payroll;
 
     @Column(name = "hours_to_work")
-    private Integer hoursToWork;
+    private Double hoursToWork;
 
     @Column(name = "salary")
     private Double salary;
@@ -64,13 +64,15 @@ public class JobEntity {
 
     }
 
-    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude, Integer userId) {
+    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude, String payroll, Double hoursToWork, Integer userId) {
         this.setTitle(title);
         this.setDescription(description);
         this.setSalary(salary);
         this.setLongitude(longitude);
         this.setLatitude(latitude);
         this.setUserId(userId);
+        this.setPayroll(payroll);
+        this.setHoursToWork(hoursToWork);
         this.setCreatedAt(new Date());
     }
 
@@ -194,11 +196,11 @@ public class JobEntity {
         this.payroll = payroll;
     }
 
-    public Integer getHoursToWork() {
+    public Double getHoursToWork() {
         return hoursToWork;
     }
 
-    public void setHoursToWork(Integer hoursToWork) {
+    public void setHoursToWork(Double hoursToWork) {
         this.hoursToWork = hoursToWork;
     }
 }

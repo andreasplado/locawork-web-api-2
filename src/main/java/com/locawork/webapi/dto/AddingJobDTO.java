@@ -15,8 +15,11 @@ public class AddingJobDTO {
 
     private Double longitude;
 
-    private Date updatedAt;
+    private String payroll;
 
+    private Double hoursToWork;
+
+    private Date updatedAt;
 
     private Integer userId;
 
@@ -102,5 +105,21 @@ public class AddingJobDTO {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Double getHoursToWork() {
+        return hoursToWork;
+    }
+
+    public void setHoursToWork(Double hoursToWork) {
+        this.hoursToWork = hoursToWork;
+    }
+
+    public String getPayroll() {
+        return payroll;
+    }
+
+    public void setPayroll(String payroll) {
+        this.payroll = payroll;
     }
 }

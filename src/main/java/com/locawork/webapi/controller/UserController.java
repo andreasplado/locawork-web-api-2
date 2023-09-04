@@ -239,6 +239,8 @@ public class UserController {
                         addingJobDTO.getSalary(),
                         addingJobDTO.getLongitude(),
                         addingJobDTO.getLatitude(),
+                        addingJobDTO.getPayroll(),
+                        addingJobDTO.getHoursToWork(),
                         addingJobDTO.getUserId()
                 );
 
@@ -262,6 +264,8 @@ public class UserController {
                         addingJobDTO.getSalary(),
                         addingJobDTO.getLongitude(),
                         addingJobDTO.getLatitude(),
+                        addingJobDTO.getPayroll(),
+                        addingJobDTO.getHoursToWork(),
                         addingJobDTO.getUserId()
                 );
 
