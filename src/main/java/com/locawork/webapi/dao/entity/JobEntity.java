@@ -1,5 +1,6 @@
 package com.locawork.webapi.dao.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -48,6 +49,12 @@ public class JobEntity {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    @Column(name = "work_start_time")
+    private LocalDateTime workStarted;
+
+    @Column(name = "work_end_time")
+    private LocalDateTime workEnded;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -214,6 +221,22 @@ public class JobEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDateTime getWorkStarted() {
+        return workStarted;
+    }
+
+    public void setWorkStarted(LocalDateTime workStarted) {
+        this.workStarted = workStarted;
+    }
+
+    public LocalDateTime getWorkEnded() {
+        return workEnded;
+    }
+
+    public void setWorkEnded(LocalDateTime workEnded) {
+        this.workEnded = workEnded;
     }
 }
 

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -65,8 +67,14 @@ public class JobController {
 
 
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> startWork(@RequestParam Integer applyerId) {
-        jobService.startWork(applyerId);
+    public ResponseEntity<ResponseModel> startWork(@RequestParam String startTime, @RequestParam Integer applyerId) {
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
+        //String text = "2011-10-02 18:48:05.123";
+
+        startTime.replace("&"," ");
+        LocalDateTime convertedEndTime = LocalDateTime.parse(startTime, formatter);
+        jobService.startWork(applyerId, convertedEndTime);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
 
@@ -74,8 +82,14 @@ public class JobController {
     }
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> endWork(@RequestParam Integer applyerId) {
-        jobService.endWork(applyerId);
+    public ResponseEntity<ResponseModel> endWork(@RequestParam String endTime,@RequestParam Integer applyerId) {
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
+        //String text = "2011-10-02 18:48:05.123";
+
+        endTime.replace("&"," ");
+        LocalDateTime convertedEndTime = LocalDateTime.parse(endTime, formatter);
+        jobService.endWork(applyerId, convertedEndTime);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 

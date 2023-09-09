@@ -4,6 +4,9 @@ import com.locawork.webapi.dao.entity.JobEntity;
 import com.locawork.webapi.respository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,13 +22,13 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public void startWork(int applyerId) {
-        repository.startWork(applyerId);
+    public void startWork(int applyerId, LocalDateTime startTime) {
+        repository.startWork(applyerId, startTime);
     }
 
     @Override
-    public void endWork(int applyerId) {
-        repository.endWork(applyerId);
+    public void endWork(int applyerId, LocalDateTime endTime) {
+        repository.endWork(applyerId, endTime);
     }
 
     @Override

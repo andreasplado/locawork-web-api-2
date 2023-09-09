@@ -2,14 +2,16 @@ package com.locawork.webapi.service;
 
 import com.locawork.webapi.dao.entity.JobEntity;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface IJobService {
 
     List<JobEntity> findAll();
-    void startWork(int applyerId);
-    void endWork(int applyerId);
+    void startWork(int applyerId, LocalDateTime startTime);
+    void endWork(int applyerId, LocalDateTime endTime);
     List<JobEntity> findMyDoneWork(int userId);
     List<JobEntity> findAvailableJobsWithUserToken(Double longitude, Double latitude, Double distance, Integer userId);
     List<JobEntity> findUpcomingWork(Integer userId);
