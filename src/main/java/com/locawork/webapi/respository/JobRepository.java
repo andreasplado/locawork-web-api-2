@@ -34,8 +34,14 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE jobs SET is_done=true WHERE applyer_id=?1", nativeQuery = true)
-    void applyToJob(@Param("applyer_id") int applyerId);
+    @Query(value="UPDATE jobs SET is_done=true AND status='working' WHERE applyer_id=?1", nativeQuery = true)
+    void startWork(@Param("applyer_id") int applyerId);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE jobs SET is_done=true AND status='done' WHERE applyer_id=?1", nativeQuery = true)
+    void endWork(@Param("applyer_id") int applyerId);
+
 
 
     @Query(value="SELECT j.id, j.title, j.user_id, j.description, j.category_id, j.salary, j.latitude, j.longitude, j.is_done, u.firebase_token from jobs j " +

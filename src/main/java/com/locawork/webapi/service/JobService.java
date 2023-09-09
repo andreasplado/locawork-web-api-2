@@ -19,8 +19,13 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public void applyToJob(int applyerId) {
-        repository.applyToJob(applyerId);
+    public void startWork(int applyerId) {
+        repository.startWork(applyerId);
+    }
+
+    @Override
+    public void endWork(int applyerId) {
+        repository.endWork(applyerId);
     }
 
     @Override

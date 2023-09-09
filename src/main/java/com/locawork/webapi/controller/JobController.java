@@ -65,10 +65,19 @@ public class JobController {
 
 
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> apply(@RequestParam Integer applyerId) {
-        jobService.applyToJob(applyerId);
+    public ResponseEntity<ResponseModel> startWork(@RequestParam Integer applyerId) {
+        jobService.startWork(applyerId);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
+
+        return ResponseEntity.ok(responseModel);
+    }
+
+    @RequestMapping(value = "/end-work", method = RequestMethod.POST)
+    public ResponseEntity<ResponseModel> endWork(@RequestParam Integer applyerId) {
+        jobService.endWork(applyerId);
+        ResponseModel responseModel = new ResponseModel();
+        responseModel.setMessage("You ended work!");
 
         return ResponseEntity.ok(responseModel);
     }

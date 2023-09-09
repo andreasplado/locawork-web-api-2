@@ -34,6 +34,9 @@ public class JobEntity {
     @Column(name = "payroll")
     private String payroll;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "hours_to_work")
     private Double hoursToWork;
 
@@ -73,6 +76,7 @@ public class JobEntity {
         this.setUserId(userId);
         this.setPayroll(payroll);
         this.setHoursToWork(hoursToWork);
+        this.setStatus("idle");
         this.setCreatedAt(new Date());
     }
 
@@ -202,6 +206,14 @@ public class JobEntity {
 
     public void setHoursToWork(Double hoursToWork) {
         this.hoursToWork = hoursToWork;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 
