@@ -70,7 +70,7 @@ public class JobController {
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> startWork(@RequestParam Integer startTime, @RequestParam Integer applyerId) {
 
-        jobService.startWork(applyerId, new Timestamp(startTime));
+        jobService.startWork(applyerId, startTime);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
 
