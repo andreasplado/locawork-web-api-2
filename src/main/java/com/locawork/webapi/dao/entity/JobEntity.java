@@ -51,10 +51,10 @@ public class JobEntity {
     private Double longitude;
 
     @Column(name = "work_start_time")
-    private LocalDateTime workStarted;
+    private LocalDateTime workStartTime;
 
     @Column(name = "work_end_time")
-    private LocalDateTime workEnded;
+    private LocalDateTime workEndTime;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -223,20 +223,20 @@ public class JobEntity {
         this.status = status;
     }
 
-    public LocalDateTime getWorkStarted() {
-        return workStarted;
+    public LocalDateTime getWorkStartTime() {
+        return workStartTime;
     }
 
-    public void setWorkStarted(LocalDateTime workStarted) {
-        this.workStarted = workStarted;
+    public void setWorkStartTime(LocalDateTime workStartTime) {
+        this.workStartTime = workStartTime;
     }
 
-    public LocalDateTime getWorkEnded() {
-        return workEnded;
+    public LocalDateTime getWorkEndTime() {
+        return workEndTime;
     }
 
-    public void setWorkEnded(LocalDateTime workEnded) {
-        this.workEnded = workEnded;
+    public void setWorkEndTime(LocalDateTime workEndTime) {
+        this.workEndTime = workEndTime;
     }
 }
 

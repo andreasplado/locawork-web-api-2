@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -67,14 +68,9 @@ public class JobController {
 
 
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> startWork(@RequestParam String startTime, @RequestParam Integer applyerId) {
-        DateTimeFormatter formatter
-                = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
-        //String text = "2011-10-02 18:48:05.123";
+    public ResponseEntity<ResponseModel> startWork(@RequestParam Integer startTime, @RequestParam Integer applyerId) {
 
-        startTime.replace("&"," ");
-        LocalDateTime convertedEndTime = LocalDateTime.parse(startTime, formatter);
-        jobService.startWork(applyerId, convertedEndTime);
+        jobService.startWork(applyerId, new Timestamp(startTime));
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
 
@@ -82,14 +78,8 @@ public class JobController {
     }
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> endWork(@RequestParam String endTime,@RequestParam Integer applyerId) {
-        DateTimeFormatter formatter
-                = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
-        //String text = "2011-10-02 18:48:05.123";
-
-        endTime.replace("&"," ");
-        LocalDateTime convertedEndTime = LocalDateTime.parse(endTime, formatter);
-        jobService.endWork(applyerId, convertedEndTime);
+    public ResponseEntity<ResponseModel> endWork(@RequestParam Integer endTime, @RequestParam Integer applyerId) {
+        jobService.endWork(applyerId, new Timestamp(endTime));
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 
