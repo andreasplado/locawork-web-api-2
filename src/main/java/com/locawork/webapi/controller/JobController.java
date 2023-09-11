@@ -79,7 +79,7 @@ public class JobController {
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> endWork(@RequestParam Integer endTime, @RequestParam Integer applyerId) {
-        jobService.endWork(applyerId, new Timestamp(endTime));
+        jobService.endWork(applyerId, endTime);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 
