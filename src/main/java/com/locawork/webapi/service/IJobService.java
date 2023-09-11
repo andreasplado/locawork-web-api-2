@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface IJobService {
 
     List<JobEntity> findAll();
-    void startWork(long applyerId, int startTime);
-    void endWork(long applyerId, int endTime);
+    void startWork(String startTime, int applyerId);
+    void endWork(String endTime, int applyerId);
     List<JobEntity> findMyDoneWork(int userId);
     List<JobEntity> findAvailableJobsWithUserToken(Double longitude, Double latitude, Double distance, Integer userId);
     List<JobEntity> findUpcomingWork(Integer userId);

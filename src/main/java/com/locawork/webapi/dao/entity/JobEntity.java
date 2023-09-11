@@ -53,10 +53,10 @@ public class JobEntity {
     private Double longitude;
 
     @Column(name = "work_start_time")
-    private long workStartTime;
+    private String workStartTime;
 
     @Column(name = "work_end_time")
-    private long workEndTime;
+    private String workEndTime;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -225,19 +225,19 @@ public class JobEntity {
         this.status = status;
     }
 
-    public long getWorkStartTime() {
+    public String getWorkStartTime() {
         return workStartTime;
     }
 
-    public void setWorkStartTime(long workStartTime) {
+    public void setWorkStartTime(String workStartTime) {
         this.workStartTime = workStartTime;
     }
 
-    public long getWorkEndTime() {
+    public String getWorkEndTime() {
         return workEndTime;
     }
 
-    public void setWorkEndTime(int workEndTime) {
+    public void setWorkEndTime(String workEndTime) {
         this.workEndTime = workEndTime;
     }
 }

@@ -2,14 +2,14 @@ package com.locawork.webapi.data;
 
 public class EndTimeDTO {
 
-    private int endTime;
+    private String endTime;
     private int applyerId;
 
-    public int getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
