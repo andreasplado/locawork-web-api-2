@@ -1,5 +1,7 @@
 package com.locawork.webapi.dao.entity;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
@@ -51,10 +53,10 @@ public class JobEntity {
     private Double longitude;
 
     @Column(name = "work_start_time")
-    private LocalDateTime workStartTime;
+    private Timestamp workStartTime;
 
     @Column(name = "work_end_time")
-    private LocalDateTime workEndTime;
+    private Timestamp workEndTime;
 
     @Column(name = "created_at")
     private Date createdAt;
