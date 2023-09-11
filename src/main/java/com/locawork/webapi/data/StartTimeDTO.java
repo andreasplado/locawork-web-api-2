@@ -2,14 +2,14 @@ package com.locawork.webapi.data;
 
 public class StartTimeDTO {
 
-    private int startTime;
+    private long startTime;
     private int applyerId;
 
-    public int getStartTime() {
+    public long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 
