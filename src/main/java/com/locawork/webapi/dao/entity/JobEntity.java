@@ -225,19 +225,19 @@ public class JobEntity {
         this.status = status;
     }
 
-    public Timestamp getWorkStartTime() {
+    public int getWorkStartTime() {
         return workStartTime;
     }
 
-    public void setWorkStartTime(Timestamp workStartTime) {
+    public void setWorkStartTime(int workStartTime) {
         this.workStartTime = workStartTime;
     }
 
-    public Timestamp getWorkEndTime() {
+    public int getWorkEndTime() {
         return workEndTime;
     }
 
-    public void setWorkEndTime(Timestamp workEndTime) {
+    public void setWorkEndTime(int workEndTime) {
         this.workEndTime = workEndTime;
     }
 }
