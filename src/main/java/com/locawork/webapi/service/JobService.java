@@ -28,7 +28,7 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public void endWork(int applyerId, Timestamp endTime) {
+    public void endWork(int applyerId, int endTime) {
         repository.endWork(applyerId, endTime);
     }
 

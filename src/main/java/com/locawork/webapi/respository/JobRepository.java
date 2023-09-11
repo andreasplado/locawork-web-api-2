@@ -37,12 +37,12 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
     @Modifying
     @Transactional
     @Query(value="UPDATE jobs SET is_done=true, status='working', work_start_time=?2 WHERE applyer_id=?1", nativeQuery = true)
-    void startWork(@Param("applyer_id") int applyerId, @Param("end_time")Timestamp endTime);
+    void startWork(@Param("applyer_id") int applyerId, @Param("end_time")int endTime);
 
     @Modifying
     @Transactional
     @Query(value="UPDATE jobs SET is_done=true, status='done', work_end_time=?2 WHERE applyer_id=?1", nativeQuery = true)
-    void endWork(@Param("applyer_id") int applyerId, @Param("end_time") Timestamp endTime);
+    void endWork(@Param("applyer_id") int applyerId, @Param("end_time") int endTime);
 
 
 
