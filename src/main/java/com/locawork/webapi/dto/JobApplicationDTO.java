@@ -12,8 +12,8 @@ public interface JobApplicationDTO {
     Double getSalary();
     Double getLatitude();
     Double getLongitude();
-    Date getcreated_at();
-    Date getUpdated_at();
+    Date getCreatedAt();
+    Date getUpdatedAt();
     Integer getJob_id();
     String getContact();
 }
