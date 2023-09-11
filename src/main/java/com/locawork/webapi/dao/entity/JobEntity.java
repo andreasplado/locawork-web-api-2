@@ -53,10 +53,10 @@ public class JobEntity {
     private Double longitude;
 
     @Column(name = "work_start_time")
-    private Timestamp workStartTime;
+    private int workStartTime;
 
     @Column(name = "work_end_time")
-    private Timestamp workEndTime;
+    private int workEndTime;
 
     @Column(name = "created_at")
     private Date createdAt;

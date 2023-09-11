@@ -23,7 +23,7 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public void startWork(int applyerId, Timestamp startTime) {
+    public void startWork(int applyerId, int startTime) {
         repository.startWork(applyerId, startTime);
     }
 
