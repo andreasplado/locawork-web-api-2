@@ -2,7 +2,9 @@ package com.locawork.webapi.controller;
 
 import com.locawork.webapi.dao.entity.JobCategoryEntity;
 import com.locawork.webapi.dao.entity.JobEntity;
+import com.locawork.webapi.data.EndTimeDTO;
 import com.locawork.webapi.dto.JobApplicationDTO;
+import com.locawork.webapi.data.StartTimeDTO;
 import com.locawork.webapi.model.MainData;
 import com.locawork.webapi.model.ResponseModel;
 import com.locawork.webapi.service.JobApplicationService;
@@ -14,9 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -68,9 +67,9 @@ public class JobController {
 
 
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> startWork(@RequestParam Integer startTime, @RequestParam Integer applyerId) {
+    public ResponseEntity<ResponseModel> startWork(@RequestBody StartTimeDTO startTimeDTO) {
 
-        jobService.startWork(startTime, applyerId);
+        jobService.startWork(startTimeDTO.getStartTime(), startTimeDTO.getApplyerId());
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
 
@@ -78,8 +77,8 @@ public class JobController {
     }
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> endWork(@RequestParam Integer endTime, @RequestParam Integer applyerId) {
-        jobService.endWork(endTime, applyerId);
+    public ResponseEntity<ResponseModel> endWork(@RequestBody EndTimeDTO endTimeDTO) {
+        jobService.endWork(endTimeDTO.getEndTime(), endTimeDTO.getApplyerId());
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 
