@@ -70,7 +70,7 @@ public class JobController {
     @RequestMapping(value = "/start-work", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> startWork(@RequestParam Integer startTime, @RequestParam Integer applyerId) {
 
-        jobService.startWork(applyerId, startTime);
+        jobService.startWork(startTime, applyerId);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You started work!");
 
@@ -79,7 +79,7 @@ public class JobController {
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> endWork(@RequestParam Integer endTime, @RequestParam Integer applyerId) {
-        jobService.endWork(applyerId, endTime);
+        jobService.endWork(endTime, applyerId);
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 
