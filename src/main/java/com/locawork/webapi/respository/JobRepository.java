@@ -31,7 +31,7 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
     @Query(value="SELECT j.* from jobs j " +
             "INNER JOIN users u ON j.user_id = u.id " +
-            "WHERE j.applyer_id=?1 AND j.is_done=true", nativeQuery = true)
+            "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL", nativeQuery = true)
     List<JobEntity> findMyDoneWork(@Param("userId") Integer userId);
 
     @Modifying
