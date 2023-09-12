@@ -78,7 +78,7 @@ public class JobController {
 
     @RequestMapping(value = "/end-work", method = RequestMethod.POST)
     public ResponseEntity<ResponseModel> endWork(@RequestBody EndTimeDTO endTimeDTO) {
-        jobService.endWork(endTimeDTO.getEndTime(), endTimeDTO.getApplyerId());
+        jobService.endWork(endTimeDTO.getEndTime(), endTimeDTO.getApplyerId(), endTimeDTO.getJobId());
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You ended work!");
 
