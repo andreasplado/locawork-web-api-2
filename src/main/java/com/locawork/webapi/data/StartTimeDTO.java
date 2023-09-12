@@ -4,6 +4,7 @@ public class StartTimeDTO {
 
     private String startTime;
     private int applyerId;
+    private int jobId;
 
     public String getStartTime() {
         return startTime;
@@ -19,5 +20,13 @@ public class StartTimeDTO {
 
     public void setApplyerId(int applyerId) {
         this.applyerId = applyerId;
+    }
+
+    public int getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
     }
 }
