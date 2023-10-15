@@ -70,7 +70,7 @@ public class UserController {
         user.setEnabled(true);
         user.setCreatedAt(new Date());
         user.setIdCode(user.getIdCode());
-        if(!user.getCompanyName().equals("") && !user.getCompanyRegNumber().equals("")){
+        if(user.getCompanyName() != null && user.getCompanyRegNumber() != null){
             user.setCompanyName(user.getCompanyName());
             user.setCompanyRegNumber(user.getCompanyRegNumber());
         }
