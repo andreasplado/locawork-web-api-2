@@ -90,6 +90,7 @@ public class AuthenticationController {
                 responseHeaders.set("Radius", "" + settings.getRadius());
                 responseHeaders.set("Company_reg_number", "" + user.getCompany_reg_number());
                 responseHeaders.set("Company_name", "" + user.getCompany_name());
+                responseHeaders.set("Id_Code", "" + user.getIdCode());
                 responseHeaders.set("Status", settings.getStatus());
                 if(user.getAddsRemoved()) {
                     responseHeaders.set("Is_without_adds", "1");
