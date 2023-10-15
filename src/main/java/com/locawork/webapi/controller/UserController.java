@@ -120,7 +120,7 @@ public class UserController {
             return ResponseEntity.ok("");
         }
 
-        userDataService.updateUserRole(userRole, id);
+        userDataService.updateUserStatus(userRole, id);
 
         return ResponseEntity.ok(userRole);
     }
