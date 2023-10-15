@@ -1,7 +1,5 @@
 package com.locawork.webapi.dao.entity;
 
-import com.locawork.webapi.util.AttributeEncryptor;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -69,10 +67,10 @@ public class UserEntity {
     private String idCode;
 
     @Column(name = "company_name")
-    private String companyName;
+    private String company_name;
 
     @Column(name = "company_reg_number")
-    private String companyRegNumber;
+    private String company_reg_number;
 
     public UserEntity() {
     }
@@ -205,20 +203,20 @@ public class UserEntity {
         this.idCode = idCode;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getCompany_name() {
+        return company_name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 
-    public String getCompanyRegNumber() {
-        return companyRegNumber;
+    public String getCompany_reg_number() {
+        return company_reg_number;
     }
 
-    public void setCompanyRegNumber(String companyRegNumber) {
-        this.companyRegNumber = companyRegNumber;
+    public void setCompany_reg_number(String company_reg_number) {
+        this.company_reg_number = company_reg_number;
     }
     public String getMembership() {
         return membership;

@@ -71,8 +71,8 @@ public class UserController {
         user.setEnabled(true);
         user.setCreatedAt(new Date());
         user.setIdCode(user.getIdCode());
-        user.setCompanyName(user.getCompanyName());
-        user.setCompanyRegNumber(user.getCompanyRegNumber());
+        user.setCompany_name(user.getCompany_name());
+        user.setCompany_reg_number(user.getCompany_reg_number());
 
 
         if(!userDataService.existByEmail(user.getEmail())){
