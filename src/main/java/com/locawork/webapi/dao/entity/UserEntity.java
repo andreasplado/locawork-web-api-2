@@ -197,27 +197,27 @@ public class UserEntity {
         isCredentialsNonExpired = credentialsNonExpired;
     }
 
-    public Boolean getIdCode() {
+    public String getIdCode() {
         return idCode;
     }
 
-    public void setIdCode(Boolean idCode) {
+    public void setIdCode(String idCode) {
         this.idCode = idCode;
     }
 
-    public Boolean getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(Boolean companyName) {
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public Boolean getCompanyRegNumber() {
+    public String getCompanyRegNumber() {
         return companyRegNumber;
     }
 
-    public void setCompanyRegNumber(Boolean companyRegNumber) {
+    public void setCompanyRegNumber(String companyRegNumber) {
         this.companyRegNumber = companyRegNumber;
     }
     public String getMembership() {

@@ -96,7 +96,7 @@ public class UserController {
             settingsEntity.setViewByDefault("available");
             settingsEntity.setAskPermissionsBeforeDeletingAJob(true);
             user.setIdCode(user.getIdCode());
-            if (user.getCompanyName() && user.getCompanyRegNumber()) {
+            if (!user.getCompanyName().equals("") && !user.getCompanyRegNumber().equals("")) {
                 user.setCompanyName(user.getCompanyName());
                 user.setCompanyRegNumber(user.getCompanyRegNumber());
             }
