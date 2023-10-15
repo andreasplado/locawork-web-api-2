@@ -64,7 +64,7 @@ public class UserEntity {
     private Boolean isEnabled;
 
     @Column(name = "id_code")
-    private String idCode;
+    private String id_code;
 
     @Column(name = "company_name")
     private String company_name;
@@ -196,11 +196,11 @@ public class UserEntity {
     }
 
     public String getId_code() {
-        return idCode;
+        return id_code;
     }
 
     public void setId_code(String idCode) {
-        this.idCode = idCode;
+        this.id_code = idCode;
     }
 
     public String getCompany_name() {
