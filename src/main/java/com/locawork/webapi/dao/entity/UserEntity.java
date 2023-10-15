@@ -57,6 +57,15 @@ public class UserEntity {
     @Column(name = "is_enabled")
     private Boolean isEnabled;
 
+    @Column(name = "id_code")
+    private Boolean idCode;
+
+    @Column(name = "company_name")
+    private Boolean companyName;
+
+    @Column(name = "company_reg_number")
+    private Boolean companyRegNumber;
+
     public Integer getId() {
         return id;
     }
@@ -175,5 +184,29 @@ public class UserEntity {
 
     public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
         isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    public Boolean getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(Boolean idCode) {
+        this.idCode = idCode;
+    }
+
+    public Boolean getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(Boolean companyName) {
+        this.companyName = companyName;
+    }
+
+    public Boolean getCompanyRegNumber() {
+        return companyRegNumber;
+    }
+
+    public void setCompanyRegNumber(Boolean companyRegNumber) {
+        this.companyRegNumber = companyRegNumber;
     }
 }

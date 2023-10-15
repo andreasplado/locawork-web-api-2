@@ -69,6 +69,12 @@ public class UserController {
         user.setLocked(false);
         user.setEnabled(true);
         user.setCreatedAt(new Date());
+        user.setIdCode(user.getIdCode());
+        if(user.getCompanyName() && user.getCompanyRegNumber()){
+            user.setCompanyName(user.getCompanyName());
+            user.setCompanyRegNumber(user.setCompanyRegNumber());
+        }
+
 
         if(!userDataService.existByEmail(user.getEmail())){
             userDataService.save(user);
