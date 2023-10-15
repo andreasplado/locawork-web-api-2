@@ -37,11 +37,17 @@ public class SettingsEntity {
     @Column(name = "is_biometric")
     private boolean isBiometric;
 
+    @Column(name = "customer_id")
+    private String customerId;
+
     @Column(name = "member_role")
     private String memberRole;
 
     @Column(name = "member_start_time")
     private Date memberStartTime;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "currency")
     private String currency;
@@ -91,6 +97,7 @@ public class SettingsEntity {
     protected void prePersist() {
         if (this.createdAt == null) createdAt = new Date();
         if (this.updatedAt == null) updatedAt = new Date();
+        if (this.status == null) status = "job_seeker";
     }
 
     @PreUpdate
@@ -173,5 +180,21 @@ public class SettingsEntity {
 
     public void setMemberStartTime(Date memberStartTime) {
         this.memberStartTime = memberStartTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

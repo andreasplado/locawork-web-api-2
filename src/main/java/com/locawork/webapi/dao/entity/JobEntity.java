@@ -1,5 +1,8 @@
 package com.locawork.webapi.dao.entity;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -31,6 +34,15 @@ public class JobEntity {
     @Column(name = "category_id")
     private Integer categoryId;
 
+    @Column(name = "payroll")
+    private String payroll;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "hours_to_work")
+    private Double hoursToWork;
+
     @Column(name = "salary")
     private Double salary;
 
@@ -39,6 +51,12 @@ public class JobEntity {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    @Column(name = "work_start_time")
+    private String workStartTime;
+
+    @Column(name = "work_end_time")
+    private String workEndTime;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -58,12 +76,16 @@ public class JobEntity {
 
     }
 
-    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude) {
+    public JobEntity(String title, String description, Double salary, Double longitude, Double latitude, String payroll, Double hoursToWork, Integer userId) {
         this.setTitle(title);
         this.setDescription(description);
         this.setSalary(salary);
         this.setLongitude(longitude);
         this.setLatitude(latitude);
+        this.setUserId(userId);
+        this.setPayroll(payroll);
+        this.setHoursToWork(hoursToWork);
+        this.setStatus("idle");
         this.setCreatedAt(new Date());
     }
 
@@ -177,6 +199,46 @@ public class JobEntity {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public String getPayroll() {
+        return payroll;
+    }
+
+    public void setPayroll(String payroll) {
+        this.payroll = payroll;
+    }
+
+    public Double getHoursToWork() {
+        return hoursToWork;
+    }
+
+    public void setHoursToWork(Double hoursToWork) {
+        this.hoursToWork = hoursToWork;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getWorkStartTime() {
+        return workStartTime;
+    }
+
+    public void setWorkStartTime(String workStartTime) {
+        this.workStartTime = workStartTime;
+    }
+
+    public String getWorkEndTime() {
+        return workEndTime;
+    }
+
+    public void setWorkEndTime(String workEndTime) {
+        this.workEndTime = workEndTime;
     }
 }
 

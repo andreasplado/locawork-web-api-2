@@ -5,8 +5,10 @@ import com.locawork.webapi.respository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,14 +18,28 @@ public class UserDataService implements IUserService {
     @Autowired
     private UserDataRepository repository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public List<UserEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public UserEntity save(UserEntity userEntity) {
-        return repository.save(userEntity);
+    public UserEntity save(UserEntity user) {
+        user.setEmail(user.getEmail());
+        user.setPassword(bCryptPasswordEncoder
+                .encode(user.getPassword()));
+        user.setContact(user.getContact());
+        user.setRole("ROLE_ADMIN");
+        user.setExpired(true);
+        user.setCredentialsNonExpired(true);
+        user.setIsAccountNonLocked(true);
+        user.setEnabled(true);
+        user.setCreatedAt(new Date());
+        user.setAddsRemoved(false);
+        return repository.save(user);
     }
 
     @Override
@@ -35,13 +51,13 @@ public class UserDataService implements IUserService {
     }
 
     @Override
-    public boolean existByEmail(String email){
-        return repository.existsByEmail(email);
+    public List<UserEntity> findByKeyword(String keyword) {
+        return repository.findByKeyword(keyword);
     }
 
     @Override
-    public UserEntity saveUser(UserEntity userEntity) {
-        return null;
+    public boolean existByEmail(String email){
+        return repository.existsByEmail(email);
     }
 
     @Override
@@ -55,7 +71,7 @@ public class UserDataService implements IUserService {
     }
 
     @Override
-    public UserEntity findUserById(Integer id) {
+    public Optional<UserEntity> findUserById(Integer id) {
         return repository.findUserById(id);
     }
 
@@ -70,8 +86,13 @@ public class UserDataService implements IUserService {
     }
 
     @Override
-    public void updateUserRole(String role, Integer id) {
-        repository.updateUserRole(role, id);
+    public void updateUserStatus(String role, Integer id) {
+        repository.updateUserStatus(role, id);
+    }
+
+    @Override
+    public void removeUserAdds(Integer id) {
+        repository.setUserAdds(true, id);
     }
 
     @Override

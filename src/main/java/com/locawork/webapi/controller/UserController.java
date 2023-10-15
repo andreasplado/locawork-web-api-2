@@ -1,11 +1,21 @@
 package com.locawork.webapi.controller;
 
+import com.locawork.webapi.dao.entity.JobEntity;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.data.Note;
+import com.locawork.webapi.dto.PayingToken;
+import com.locawork.webapi.dto.AddingJobDTO;
 import com.locawork.webapi.model.ResponseModel;
+import com.locawork.webapi.service.JobService;
 import com.locawork.webapi.service.SettingsService;
 import com.locawork.webapi.service.UserDataService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.Customer;
+import com.stripe.param.ChargeCreateParams;
+import com.stripe.param.CustomerCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -25,6 +35,10 @@ public class UserController {
     @Autowired
     private SettingsService settingsService;
 
+    @Autowired
+    private JobService jobService;
+
+
     @GetMapping
     public ResponseEntity<?> getAll() {
         List<UserEntity> userEntities = userDataService.findAll();
@@ -39,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestParam String userId){
+    public ResponseEntity<?> logout(@RequestParam String userId) {
         Note note = new Note();
         note.setMessage("You logged out successfully");
         new InMemoryTokenStore().findTokensByClientId(userId).clear();
@@ -48,7 +62,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody UserEntity userEntity) {
-        if(!userDataService.existByEmail(userEntity.getEmail())){
+        if (!userDataService.existByEmail(userEntity.getEmail())) {
             userDataService.save(userEntity);
         }
 
@@ -57,26 +71,18 @@ public class UserController {
         return ResponseEntity.ok(userEntity);
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ResponseEntity<?> create(@RequestParam String keyword) {
+
+        List<UserEntity> userEntityList = userDataService.findByKeyword(keyword);
+
+        return ResponseEntity.ok(userEntityList);
+    }
+
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody UserEntity user)
-    {
-        user.setEmail(user.getEmail());
-        user.setPassword(user.getPassword());
-        user.setContact(user.getContact());
-        user.setRole("admin");
-        user.setExpired(true);
-        user.setCredentialsNonExpired(true);
-        user.setLocked(false);
-        user.setEnabled(true);
-        user.setCreatedAt(new Date());
-        user.setIdCode(user.getIdCode());
-        if(user.getCompanyName() && user.getCompanyRegNumber()){
-            user.setCompanyName(user.getCompanyName());
-            user.setCompanyRegNumber(user.setCompanyRegNumber());
-        }
-
-
-        if(!userDataService.existByEmail(user.getEmail())){
+    public ResponseEntity<?> signUp(@RequestBody UserEntity user) {
+        if (!userDataService.existByEmail(user.getEmail())) {
+            user.setPassword(user.getPassword());
             userDataService.save(user);
 
             int userId = userDataService.findId(user.getEmail());
@@ -89,8 +95,13 @@ public class UserController {
             settingsEntity.setRadius(0.0);
             settingsEntity.setViewByDefault("available");
             settingsEntity.setAskPermissionsBeforeDeletingAJob(true);
+            user.setIdCode(user.getIdCode());
+            if (user.getCompanyName() && user.getCompanyRegNumber()) {
+                user.setCompanyName(user.getCompanyName());
+                user.setCompanyRegNumber(user.getCompanyRegNumber());
+            }
             settingsService.save(settingsEntity);
-        }else{
+        } else {
             Note note = new Note();
             note.setMessage("User with this email already exists!");
             return ResponseEntity.ok(note);
@@ -120,7 +131,7 @@ public class UserController {
             return ResponseEntity.ok("");
         }
 
-        userDataService.updateUserRole(userRole, id);
+        userDataService.updateUserStatus(userRole, id);
 
         return ResponseEntity.ok(userRole);
     }
@@ -155,8 +166,9 @@ public class UserController {
         userDataService.delete(id);
         return ResponseEntity.ok(userEntity);
     }
+
     @RequestMapping(value = "/does-exists", method = RequestMethod.GET)
-        public ResponseEntity<Boolean> getMyApplications(@RequestParam String email) {
+    public ResponseEntity<Boolean> getMyApplications(@RequestParam String email) {
         boolean userExists = userDataService.existByEmail(email);
         return ResponseEntity.ok(userExists);
     }
@@ -173,5 +185,135 @@ public class UserController {
         String memberRole = userDataService.memberRole(userId);
 
         return ResponseEntity.ok(memberRole);
+    }
+
+    @RequestMapping(value = "/get-user-firebase-token", method = RequestMethod.GET)
+    public ResponseEntity<String> setRole(@RequestParam Integer userId) {
+        String firebaseToken = userDataService.getUserFirebaseToken(userId);
+
+        return ResponseEntity.ok(firebaseToken);
+    }
+
+    @RequestMapping(value = "/get-user", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@RequestParam Integer id) {
+        Optional<UserEntity> userEntity = userDataService.findById(id);
+
+        return ResponseEntity.ok(userEntity);
+    }
+
+    @RequestMapping(value = "/pay-for-giving-work", method = RequestMethod.POST)
+    public ResponseEntity<?> subscribeUserById(@RequestBody AddingJobDTO addingJobDTO) throws StripeException {
+        Optional<UserEntity> userEntity = userDataService.findById(addingJobDTO.getUserId());
+
+        ResponseModel responseModel = new ResponseModel();
+        if (userEntity.isPresent()) {
+            SettingsEntity settingsEntity = settingsService.getUserSettings(addingJobDTO.getUserId());
+            // Set your secret key. Remember to switch to your live secret key in production.
+            // See your keys here: https://dashboard.stripe.com/apikeys
+            Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
+
+            if (settingsEntity.getCustomerId() == null) {
+                String token = addingJobDTO.getToken();
+                // Create a Customer:
+                CustomerCreateParams customerParams =
+                        CustomerCreateParams.builder()
+                                .setSource(token)
+                                .setEmail(addingJobDTO.getEmail())
+                                .setDescription("ADDED WORK: " + userEntity.get().getEmail())
+                                .build();
+
+                Customer customer = Customer.create(customerParams);
+
+                // Charge the Customer instead of the card:
+                ChargeCreateParams chargeParams =
+                        ChargeCreateParams.builder()
+                                .setAmount(200L)
+                                .setCurrency("eur")
+                                .setCustomer(customer.getId())
+                                .build();
+
+                Charge charge = Charge.create(chargeParams);
+
+
+                // YOUR CODE: Save the customer ID and other info in a database for later.
+                settingsEntity.setCustomerId(customer.getId());
+                settingsService.save(settingsEntity);
+                JobEntity job = new JobEntity(
+                        addingJobDTO.getJobTitle(),
+                        addingJobDTO.getDescription(),
+                        addingJobDTO.getSalary(),
+                        addingJobDTO.getLongitude(),
+                        addingJobDTO.getLatitude(),
+                        addingJobDTO.getPayroll(),
+                        addingJobDTO.getHoursToWork(),
+                        addingJobDTO.getUserId()
+                );
+
+                jobService.save(job);
+            }else {
+                // When it's time to charge the customer again, retrieve the customer ID.
+                ChargeCreateParams chargeParams2 =
+                        ChargeCreateParams.builder()
+                                .setAmount(200L)
+                                .setCurrency("eur")
+                                .setCustomer(settingsEntity.getCustomerId()) // Previously stored, then retrieved
+                                .build();
+
+                Charge charge2 = Charge.create(chargeParams2);
+
+                // Pass the client secret to the client
+                //post_work
+                JobEntity job = new JobEntity(
+                        addingJobDTO.getJobTitle(),
+                        addingJobDTO.getDescription(),
+                        addingJobDTO.getSalary(),
+                        addingJobDTO.getLongitude(),
+                        addingJobDTO.getLatitude(),
+                        addingJobDTO.getPayroll(),
+                        addingJobDTO.getHoursToWork(),
+                        addingJobDTO.getUserId()
+                );
+
+                jobService.save(job);
+                responseModel.setMessage("Work given");
+            }
+        } else {
+            responseModel.setMessage("User not found for an order");
+        }
+        return ResponseEntity.ok(responseModel);
+    }
+
+    @RequestMapping(value = "/subscribe-for-removing-ads", method = RequestMethod.POST)
+    public ResponseEntity<?> subscribeUserById(@RequestBody PayingToken payingToken) throws StripeException {
+        Optional<UserEntity> userEntity = userDataService.findById(payingToken.getUserId());
+        ResponseModel responseModel = new ResponseModel();
+
+        if (userEntity.isPresent()) {
+            // Set your secret key. Remember to switch to your live secret key in production.
+            // See your keys here: https://dashboard.stripe.com/apikeys
+            Stripe.apiKey = "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";
+
+            // Token is created using Stripe Checkout or Elements!
+            // Get the payment token ID submitted by the form:
+            String token = payingToken.getToken();
+
+            ChargeCreateParams params =
+                    ChargeCreateParams.builder()
+                            .setAmount(999L)
+                            .setCurrency("usd")
+                            .setDescription("REMOVING ADD: " + userEntity.get().getEmail())
+                            .setSource(token)
+                            .build();
+
+            Charge charge = Charge.create(params);
+            Long amount = charge.getAmount();
+
+            // Pass the client secret to the client
+            userDataService.removeUserAdds(payingToken.getUserId());
+            responseModel.setMessage("Adds removed");
+        } else {
+            responseModel.setMessage("User not found for an order");
+        }
+        return ResponseEntity.ok(responseModel);
     }
 }

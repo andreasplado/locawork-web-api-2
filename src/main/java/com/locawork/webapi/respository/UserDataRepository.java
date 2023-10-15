@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT CASE WHEN COUNT(u)> 0 then true else false end FROM users u WHERE u.email=?1", nativeQuery = true)
@@ -25,7 +29,7 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     int findId(@Param("username") String username);
 
     @Query(value="SELECT u.* FROM users u WHERE u.id=?1", nativeQuery = true)
-    UserEntity findUserById(@Param("id") Integer userId);
+    Optional<UserEntity> findUserById(@Param("id") Integer userId);
 
     @Query(value="SELECT u.firebase_token FROM users u WHERE u.id=?1", nativeQuery = true)
     String getUserFirebaseToken(@Param("id") Integer userId);
@@ -37,8 +41,13 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE users SET role=?1 WHERE id=?2", nativeQuery = true)
-    void updateUserRole(@Param("role") String role, @Param("id") Integer id);
+    @Query(value="UPDATE users SET adds_removed=?1 WHERE id=?2", nativeQuery = true)
+    void setUserAdds(@Param("addsRemoved") Boolean addsRemoved, @Param("id") Integer userId);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE settings SET status=?1 WHERE id=?2", nativeQuery = true)
+    void updateUserStatus(@Param("status") String status, @Param("id") Integer id);
 
 
     @Modifying
@@ -52,7 +61,9 @@ public interface UserDataRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT u.password FROM users u WHERE u.email=?1", nativeQuery = true)
     String getUserPassword(@Param("id") String username);
 
-    @Query(value="SELECT COUNT(u.id) = 1 FROM users u WHERE u.email= :email AND u.password= :password", nativeQuery = true)
+    @Query(value="SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM users u WHERE u.email=?1 AND u.password=?2", nativeQuery = true)
     boolean userAuthenticated(@Param("email") String email, @Param("password") String password);
 
+    @Query(value="SELECT u.* FROM users u WHERE u.email LIKE %?1% OR u.fullname LIKE %?1%", nativeQuery = true)
+    List<UserEntity> findByKeyword(@Param("keyword") String keyword);
 }

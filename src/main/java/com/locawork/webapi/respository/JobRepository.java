@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -29,13 +31,19 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
     @Query(value="SELECT j.* from jobs j " +
             "INNER JOIN users u ON j.user_id = u.id " +
-            "WHERE j.applyer_id=?1 AND j.is_done=true", nativeQuery = true)
+            "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL", nativeQuery = true)
     List<JobEntity> findMyDoneWork(@Param("userId") Integer userId);
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE jobs SET is_done=true WHERE applyer_id=?1", nativeQuery = true)
-    void applyToJob(@Param("applyer_id") int applyerId);
+    @Query(value="UPDATE jobs SET is_done=true, status='working', work_start_time=?1 WHERE applyer_id=?2 AND id=?3", nativeQuery = true)
+    void startWork(@Param("work_start_time")String startTime, @Param("applyer_id") int applyerId, @Param("id") int id);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE jobs SET is_done=true, status='done', work_end_time=?1 WHERE applyer_id=?2 AND id=?3", nativeQuery = true)
+    void endWork(@Param("work_end_time")String endTime, @Param("applyer_id") int applyerId, @Param("id") int id);
+
 
 
     @Query(value="SELECT j.id, j.title, j.user_id, j.description, j.category_id, j.salary, j.latitude, j.longitude, j.is_done, u.firebase_token from jobs j " +

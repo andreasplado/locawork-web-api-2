@@ -39,6 +39,14 @@ public class UserEntity {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "membership")
+    private String membership;
+    @Column(name = "adds_removed")
+    private Boolean addsRemoved;
+
+    @Column(name = "registred_membership")
+    private Date registredMembership;
+
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -51,8 +59,8 @@ public class UserEntity {
     @Column(name = "is_credentials_none_expired")
     private Boolean isCredentialsNonExpired;
 
-    @Column(name = "is_non_locked")
-    private Boolean isNonLocked;
+    @Column(name = "is_account_non_locked")
+    private Boolean isAccountNonLocked;
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
@@ -65,6 +73,9 @@ public class UserEntity {
 
     @Column(name = "company_reg_number")
     private Boolean companyRegNumber;
+
+    public UserEntity() {
+    }
 
     public Integer getId() {
         return id;
@@ -162,12 +173,12 @@ public class UserEntity {
         isExpired = expired;
     }
 
-    public Boolean getLocked() {
-        return isNonLocked;
+    public Boolean getIsAccountNonLocked() {
+        return isAccountNonLocked;
     }
 
-    public void setLocked(Boolean locked) {
-        isNonLocked = locked;
+    public void setIsAccountNonLocked(Boolean locked) {
+        isAccountNonLocked = locked;
     }
 
     public Boolean getEnabled() {
@@ -208,5 +219,28 @@ public class UserEntity {
 
     public void setCompanyRegNumber(Boolean companyRegNumber) {
         this.companyRegNumber = companyRegNumber;
+    }
+    public String getMembership() {
+        return membership;
+    }
+
+    public Date getRegistredMembership() {
+        return registredMembership;
+    }
+
+    public void setRegistredMembership(Date registredMembership) {
+        this.registredMembership = registredMembership;
+    }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
+
+    public Boolean getAddsRemoved() {
+        return addsRemoved;
+    }
+
+    public void setAddsRemoved(Boolean addsRemoved) {
+        this.addsRemoved = addsRemoved;
     }
 }

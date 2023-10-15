@@ -1,16 +1,12 @@
 package com.locawork.webapi.controller;
 
+import com.locawork.webapi.dao.entity.CommentsEntity;
 import com.locawork.webapi.dao.entity.JobCategoryEntity;
 import com.locawork.webapi.dao.entity.JobEntity;
-import com.locawork.webapi.data.EndTimeDTO;
 import com.locawork.webapi.dto.JobApplicationDTO;
-import com.locawork.webapi.data.StartTimeDTO;
 import com.locawork.webapi.model.MainData;
 import com.locawork.webapi.model.ResponseModel;
-import com.locawork.webapi.service.JobApplicationService;
-import com.locawork.webapi.service.JobCategoryService;
-import com.locawork.webapi.service.JobService;
-import com.locawork.webapi.service.UserDataService;
+import com.locawork.webapi.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/jobs")
-public class JobController {
+@RequestMapping("/comments")
+public class CommentsController {
 
     private static String KEY_JOBS = "jobs";
     private static String KEY_CATEGORIES = "categories";
@@ -40,60 +36,37 @@ public class JobController {
     @Autowired
     private JobCategoryService jobCategoryService;
 
+    @Autowired
+    private CommentsService commentsService;
 
-    @RequestMapping(value = "/all-jobs", method = RequestMethod.GET)
-    public ResponseEntity<List<JobEntity>> getAll() {
-        List<JobEntity> jobs = jobService.findAll();
+    @GetMapping
+        public ResponseEntity<List<CommentsEntity>> getAll() {
+        List<CommentsEntity>  commentsEntities = commentsService.findAll();
 
-        return new ResponseEntity<>(jobs, HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/get-all-jobs-with-categories", method = RequestMethod.GET)
-    public ResponseEntity<HashMap<String, Object>> getAllWithCategories() {
-        List<JobEntity> jobs = jobService.findAll();
-        List<JobCategoryEntity> categories = jobCategoryService.findAll();
-        HashMap<String, Object> combined = new HashMap<>();
-
-        combined.put(KEY_JOBS, jobs);
-        combined.put(KEY_CATEGORIES, categories);
-
-        if (combined.isEmpty()) {
+        if (commentsEntities.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(combined, HttpStatus.OK);
+        return new ResponseEntity<>(commentsEntities, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/start-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> startWork(@RequestBody StartTimeDTO startTimeDTO) {
+    @RequestMapping(value = "/post-comment", method = RequestMethod.POST)
+    public ResponseEntity<CommentsEntity> apply(@RequestBody CommentsEntity commentsEntity) {
+        commentsService.save(commentsEntity);
 
-        jobService.startWork(startTimeDTO.getStartTime(), startTimeDTO.getApplyerId(), startTimeDTO.getJobId());
-        ResponseModel responseModel = new ResponseModel();
-        responseModel.setMessage("You started work!");
-
-        return ResponseEntity.ok(responseModel);
+        return ResponseEntity.ok(commentsEntity);
     }
 
-    @RequestMapping(value = "/end-work", method = RequestMethod.POST)
-    public ResponseEntity<ResponseModel> endWork(@RequestBody EndTimeDTO endTimeDTO) {
-        jobService.endWork(endTimeDTO.getEndTime(), endTimeDTO.getApplyerId(), endTimeDTO.getJobId());
-        ResponseModel responseModel = new ResponseModel();
-        responseModel.setMessage("You ended work!");
-
-        return ResponseEntity.ok(responseModel);
+    @RequestMapping(value = "/get-all-comments", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllComments() {
+        List<CommentsEntity> commentsEntities = commentsService.findAll();
+        return ResponseEntity.ok(commentsEntities);
     }
 
-    @RequestMapping(value = "/get-available-jobs", method = RequestMethod.GET)
-    public ResponseEntity<?> getUserOffers(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double distance, @RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findAvailableJobsWithUserToken(latitude, longitude, distance, userId);
-        return ResponseEntity.ok(jobs);
-    }
-
-    @RequestMapping(value = "/getalljobsbylocation", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllJobsByLocation(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double distance) {
-        List<JobEntity> jobs = jobService.findAllNearestJobs(latitude, longitude, distance);
+    @RequestMapping(value = "/get-job-comments", method = RequestMethod.GET)
+    public ResponseEntity<?> getJobComments(@RequestParam Integer jobId) {
+        List<JobEntity> jobs = commentsService.findAllByJobId(jobId);
 
         return ResponseEntity.ok(jobs);
     }
