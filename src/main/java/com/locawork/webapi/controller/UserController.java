@@ -1,5 +1,6 @@
 package com.locawork.webapi.controller;
 
+import com.google.gson.Gson;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
 import com.locawork.webapi.data.Note;
@@ -75,6 +76,7 @@ public class UserController {
 
 
         if(!userDataService.existByEmail(user.getEmail())){
+            System.out.println(new Gson().toJson(user));
             userDataService.save(user);
 
             int userId = userDataService.findId(user.getEmail());
