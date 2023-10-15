@@ -72,7 +72,7 @@ public class UserController {
         user.setIdCode(user.getIdCode());
         if(!user.getCompanyName().equals("") && !user.getCompanyRegNumber().equals("")){
             user.setCompanyName(user.getCompanyName());
-            user.setCompanyRegNumber(user.setCompanyRegNumber());
+            user.setCompanyRegNumber(user.getCompanyRegNumber());
         }
 
 
