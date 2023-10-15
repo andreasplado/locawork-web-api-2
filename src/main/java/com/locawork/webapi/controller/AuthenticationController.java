@@ -7,6 +7,10 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.locawork.webapi.config.DummyAuthenticationManager;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
@@ -77,12 +81,15 @@ public class AuthenticationController {
                 HttpSession session = request.getSession(true);
                 session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
+
                 HttpHeaders responseHeaders = new HttpHeaders();
                 responseHeaders.set("user_id", "" + userId);
                 responseHeaders.set("Authorization", token);
-                responseHeaders.set("Firebase_token", "lol");
+                responseHeaders.set("Firebase_token", "" + user.getFirebaseToken());
                 responseHeaders.set("email", authenticationRequest.getEmail());
                 responseHeaders.set("Radius", "" + settings.getRadius());
+                responseHeaders.set("Company_reg_number", "" + user.getCompany_reg_number());
+                responseHeaders.set("Company_name", "" + user.getCompany_name());
                 responseHeaders.set("Status", settings.getStatus());
                 if(user.getAddsRemoved()) {
                     responseHeaders.set("Is_without_adds", "1");
