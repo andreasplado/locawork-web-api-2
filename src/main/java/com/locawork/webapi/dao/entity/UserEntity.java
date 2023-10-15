@@ -195,11 +195,11 @@ public class UserEntity {
         isCredentialsNonExpired = credentialsNonExpired;
     }
 
-    public String getIdCode() {
+    public String getId_code() {
         return idCode;
     }
 
-    public void setIdCode(String idCode) {
+    public void setId_code(String idCode) {
         this.idCode = idCode;
     }
 

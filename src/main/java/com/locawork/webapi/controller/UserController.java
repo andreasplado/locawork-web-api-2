@@ -70,7 +70,7 @@ public class UserController {
         user.setIsAccountNonLocked(false);
         user.setEnabled(true);
         user.setCreatedAt(new Date());
-        user.setIdCode(user.getIdCode());
+        user.setId_code(user.getId_code());
         user.setCompany_name(user.getCompany_name());
         user.setCompany_reg_number(user.getCompany_reg_number());
 

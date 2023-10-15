@@ -7,10 +7,6 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.locawork.webapi.config.DummyAuthenticationManager;
 import com.locawork.webapi.dao.entity.SettingsEntity;
 import com.locawork.webapi.dao.entity.UserEntity;
@@ -90,7 +86,7 @@ public class AuthenticationController {
                 responseHeaders.set("Radius", "" + settings.getRadius());
                 responseHeaders.set("Company_reg_number", "" + user.getCompany_reg_number());
                 responseHeaders.set("Company_name", "" + user.getCompany_name());
-                responseHeaders.set("Id_Code", "" + user.getIdCode());
+                responseHeaders.set("Id_Code", "" + user.getId_code());
                 responseHeaders.set("Status", settings.getStatus());
                 if(user.getAddsRemoved()) {
                     responseHeaders.set("Is_without_adds", "1");
