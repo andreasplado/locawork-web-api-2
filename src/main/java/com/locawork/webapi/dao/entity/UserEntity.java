@@ -66,13 +66,13 @@ public class UserEntity {
     private Boolean isEnabled;
 
     @Column(name = "id_code")
-    private Boolean idCode;
+    private String idCode;
 
     @Column(name = "company_name")
-    private Boolean companyName;
+    private String companyName;
 
     @Column(name = "company_reg_number")
-    private Boolean companyRegNumber;
+    private String companyRegNumber;
 
     public UserEntity() {
     }
