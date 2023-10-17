@@ -158,13 +158,14 @@ public class JobApplicationController {
         jobApplicationService.deleteUserJobApplications(userId);
         jobApplicationService.update(userId, applyerId);
         Optional<UserEntity> user = userDataService.findById(userId);
+        Optional<UserEntity> applyer = userDataService.findById(userId);
 
         Map<String, String> data = new HashMap<>();
         data.put("title", "Locawork have some news!");
         data.put("sound", "default");
         data.put("icon", "ic_launcher");
         data.put("to", user.get().getFirebaseToken());
-        data.put("notification", user.get().getFullname() + "chose you to work!");
+        data.put("notification", applyer.get().getFullname() + " chose you to work!");
 
         PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
         pushNotificationRequest.setTopic("job_executor_selected");
