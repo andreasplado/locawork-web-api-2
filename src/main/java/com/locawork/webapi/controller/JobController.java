@@ -195,6 +195,42 @@ public class JobController {
         return ResponseEntity.ok(jobs);
     }
 
+    @RequestMapping(value = "/getmydonework/today", method = RequestMethod.GET)
+    public ResponseEntity<?> getMyDoneWorkToday(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findMyDoneWorkToday(userId);
+
+        if (jobs.isEmpty()) {
+            ResponseModel responseModel = new ResponseModel();
+            responseModel.setMessage("You have no jobs found!");
+        }
+
+        return ResponseEntity.ok(jobs);
+    }
+
+    @RequestMapping(value = "/getmydonework/this-week", method = RequestMethod.GET)
+    public ResponseEntity<?> getMyDoneWorkThisWeek(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findMyDoneWorkThisWeek(userId);
+
+        if (jobs.isEmpty()) {
+            ResponseModel responseModel = new ResponseModel();
+            responseModel.setMessage("You have no jobs found!");
+        }
+
+        return ResponseEntity.ok(jobs);
+    }
+
+    @RequestMapping(value = "/getmydonework/this-month", method = RequestMethod.GET)
+    public ResponseEntity<?> getMyDoneWorkThisMonth(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findMyDoneWorkThisMonth(userId);
+
+        if (jobs.isEmpty()) {
+            ResponseModel responseModel = new ResponseModel();
+            responseModel.setMessage("You have no jobs found!");
+        }
+
+        return ResponseEntity.ok(jobs);
+    }
+
     @RequestMapping(value = "/get-main-data", method = RequestMethod.GET)
     public ResponseEntity<MainData> getMainData(@RequestParam Integer userId) {
         List<JobEntity> applyedJobs = jobService.findUpcomingWork(userId);

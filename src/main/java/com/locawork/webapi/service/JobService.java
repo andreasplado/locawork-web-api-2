@@ -36,6 +36,20 @@ public class JobService implements IJobService {
     public List<JobEntity> findMyDoneWork(int userId) {
         return repository.findMyDoneWork(userId);
     }
+    @Override
+    public List<JobEntity> findMyDoneWorkToday(int userId) {
+        return repository.findMyDoneWorkToday(userId);
+    }
+
+    @Override
+    public List<JobEntity> findMyDoneWorkThisWeek(Integer userId) {
+        return repository.findMyDoneWorkThisWeek(userId);
+    }
+
+    @Override
+    public List<JobEntity> findMyDoneWorkThisMonth(Integer userId) {
+        return repository.findMyDoneWorkThisMonth(userId);
+    }
 
     @Override
     public List<JobEntity> findAvailableJobsWithUserToken(Double latitude, Double longitude, Double distance, Integer userId) {

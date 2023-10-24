@@ -34,6 +34,22 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
             "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL", nativeQuery = true)
     List<JobEntity> findMyDoneWork(@Param("userId") Integer userId);
 
+
+    @Query(value="SELECT j.* from jobs j " +
+            "INNER JOIN users u ON j.user_id = u.id " +
+            "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL AND j.created_at >= now()::date + interval '1h'", nativeQuery = true)
+    List<JobEntity> findMyDoneWorkToday(@Param("userId") Integer userId);
+
+    @Query(value="SELECT j.* from jobs j " +
+            "INNER JOIN users u ON j.user_id = u.id " +
+            "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL AND j.created_at BETWEEN NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 " +
+            "AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER", nativeQuery = true)
+    List<JobEntity> findMyDoneWorkThisWeek(Integer userId);
+
+    @Query(value="SELECT j.* from jobs j " +
+            "INNER JOIN users u ON j.user_id = u.id " +
+            "WHERE j.applyer_id=?1 AND j.is_done=true AND j.work_end_time IS NOT NULL AND date_trunc('month', j.created_at) = date_trunc('month', current_timestamp)", nativeQuery = true)
+    List<JobEntity> findMyDoneWorkThisMonth(Integer userId);
     @Modifying
     @Transactional
     @Query(value="UPDATE jobs SET is_done=true, status='working', work_start_time=?1 WHERE applyer_id=?2 AND id=?3", nativeQuery = true)

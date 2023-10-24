@@ -24,4 +24,9 @@ public interface IJobService {
     Optional<JobEntity> findById(Integer id);
     JobEntity findSingleById(Integer id);
     boolean exists(Integer id);
+
+    List<JobEntity> findMyDoneWorkToday(int userId);
+    List<JobEntity> findMyDoneWorkThisWeek(Integer userId);
+
+    List<JobEntity> findMyDoneWorkThisMonth(Integer userId);
 }
