@@ -157,6 +157,28 @@ public class JobApplicationController {
     public ResponseEntity<ResponseModel> apply(@RequestParam Integer userId, @RequestParam Integer applyerId) {
         jobApplicationService.deleteUserJobApplications(userId);
         jobApplicationService.update(userId, applyerId);
+        Optional<UserEntity> user = userDataService.findById(userId);
+        Optional<UserEntity> applyer = userDataService.findById(userId);
+
+        Map<String, String> data = new HashMap<>();
+        data.put("title", "Locawork have some news!");
+        data.put("sound", "default");
+        data.put("icon", "ic_launcher");
+        data.put("to", user.get().getFirebaseToken());
+        data.put("notification", applyer.get().getFullname() + " chose you to work!");
+
+        PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
+        pushNotificationRequest.setTopic("job_executor_selected");
+        pushNotificationRequest.setMessage(user.get().getEmail() + " chose you to work!");
+        pushNotificationRequest.setToken(user.get().getFirebaseToken());
+        try {
+            fcmService.sendMessage(data, pushNotificationRequest);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
         ResponseModel responseModel = new ResponseModel();
         responseModel.setMessage("You applied to job!");
 
