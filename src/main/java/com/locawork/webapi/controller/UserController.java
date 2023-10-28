@@ -278,7 +278,7 @@ public class UserController {
         if (userEntity.isPresent()) {
             // Set your secret key. Remember to switch to your live secret key in production.
             // See your keys here: https://dashboard.stripe.com/apikeys
-            Stripe.apiKey = "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";
+            Stripe.apiKey = "sk_test_51MMv4oIgrx0ENKDzG1KcXLfyu7JNPVnXZVHuoZHAv3ajoIE5k9UfWtTESaz6zU70VhgNzFbug4Pp6hgUWXFwE8Uf00veqxUuaZ";
 
             // Token is created using Stripe Checkout or Elements!
             // Get the payment token ID submitted by the form:
