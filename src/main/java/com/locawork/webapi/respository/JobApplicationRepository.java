@@ -70,6 +70,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplicationEn
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE job_applications SET reason_quitting_job=?1 WHERE job_id=?3", nativeQuery = true)
+    @Query(value="UPDATE job_applications SET reason_quitting_job=?1 WHERE job_id=?2", nativeQuery = true)
     void cantGoToWork(@Param("reason")String reason, @Param("jobId")Integer jobId);
 }
