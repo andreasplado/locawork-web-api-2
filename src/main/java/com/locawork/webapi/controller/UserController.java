@@ -155,6 +155,12 @@ public class UserController {
         return ResponseEntity.ok(note);
     }
 
+    @RequestMapping(value = "/get-user", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@RequestParam Integer userId) {
+
+        return ResponseEntity.ok(userDataService.findUserById(userId));
+    }
+
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         Optional<UserEntity> userEntity = userDataService.findById(id);
