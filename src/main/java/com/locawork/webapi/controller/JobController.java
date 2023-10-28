@@ -132,7 +132,8 @@ public class JobController {
         }
     }
 
-    @RequestMapping(value = "registerjob/{id}", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "registerjob/cant-go{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> registerjob(@PathVariable("id") Integer id, @RequestBody JobEntity jobEntity) {
 
         if (jobService.exists(id)) {

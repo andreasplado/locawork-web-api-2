@@ -27,4 +27,6 @@ public interface IJobApplicationService {
     void deleteAllByJobId(Integer id);
 
     List<JobApplicationDTO> findCandidatesWithFilter(Integer userId, String filter);
+
+    void cantGoToJob(Integer jobId, Integer applyerId, String reason);
 }

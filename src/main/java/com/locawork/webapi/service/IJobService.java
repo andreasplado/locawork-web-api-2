@@ -1,5 +1,6 @@
 package com.locawork.webapi.service;
 
+import com.locawork.webapi.dao.entity.JobApplicationEntity;
 import com.locawork.webapi.dao.entity.JobEntity;
 
 import java.sql.Timestamp;
