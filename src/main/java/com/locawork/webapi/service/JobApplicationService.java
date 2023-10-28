@@ -106,11 +106,4 @@ public class JobApplicationService implements IJobApplicationService {
         return jobApplicationRepository.findCandidatesWithFilter(userId, filter);
     }
 
-    @Override
-    public void cantGoToJob(Integer jobId, Integer userId, String reason) {
-        System.out.println("userId: " + userId);
-        System.out.println("jobId: " + jobId);
-        jobApplicationRepository.cantGoToWork(reason, jobId);
-    }
-
 }
