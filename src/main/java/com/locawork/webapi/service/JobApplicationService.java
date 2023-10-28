@@ -107,8 +107,8 @@ public class JobApplicationService implements IJobApplicationService {
     }
 
     @Override
-    public void cantGoToJob(Integer jobId, Integer applyerId, String reason) {
-        jobApplicationRepository.cantGoToWork(reason, applyerId, jobId);
+    public void cantGoToJob(Integer jobId, Integer userId, String reason) {
+        jobApplicationRepository.cantGoToWork(reason, userId, jobId);
     }
 
 }
