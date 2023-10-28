@@ -66,6 +66,6 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
     @Query(value="SELECT j.* from jobs j " +
             "INNER JOIN job_applications ja ON j.id = ja.job_id " +
-            "WHERE j.applyer_id=?1 AND j.is_done=false AND ja.reason_quitting_job=null", nativeQuery = true)
+            "WHERE j.applyer_id=?1 AND j.is_done=false AND ja.reason_quitting_job=''", nativeQuery = true)
     List<JobEntity> findUpdcomingWork(@Param("userId") Integer userId);
 }
