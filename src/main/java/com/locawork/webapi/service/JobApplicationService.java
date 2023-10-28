@@ -110,7 +110,7 @@ public class JobApplicationService implements IJobApplicationService {
     public void cantGoToJob(Integer jobId, Integer userId, String reason) {
         System.out.println("userId: " + userId);
         System.out.println("jobId: " + jobId);
-        jobApplicationRepository.cantGoToWork(reason, userId, jobId);
+        jobApplicationRepository.cantGoToWork(reason, jobId);
     }
 
 }
