@@ -72,6 +72,7 @@ public class JobApplicationEntity {
     protected void prePersist() {
         if (this.createdAt == null) createdAt = new Date();
         if (this.updatedAt == null) updatedAt = new Date();
+        if (this.reasonQuittingJob == null) reasonQuittingJob = "";
     }
 
     @PreUpdate
