@@ -58,6 +58,9 @@ public class JobEntity {
     @Column(name = "work_end_time")
     private String workEndTime;
 
+    @Column(name = "reason_quitting_job")
+    private String reasonQuittingJob;
+
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -117,6 +120,7 @@ public class JobEntity {
     protected void prePersist() {
         if (this.createdAt == null) createdAt = new Date();
         if (this.updatedAt == null) updatedAt = new Date();
+        if (this.reasonQuittingJob == null) reasonQuittingJob = "";
     }
 
     @PreUpdate
@@ -239,6 +243,14 @@ public class JobEntity {
 
     public void setWorkEndTime(String workEndTime) {
         this.workEndTime = workEndTime;
+    }
+
+    public String getReasonQuittingJob() {
+        return reasonQuittingJob;
+    }
+
+    public void setReasonQuittingJob(String reasonQuittingJob) {
+        this.reasonQuittingJob = reasonQuittingJob;
     }
 }
 
