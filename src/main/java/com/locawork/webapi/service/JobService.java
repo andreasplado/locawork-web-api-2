@@ -5,9 +5,6 @@ import com.locawork.webapi.respository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +55,7 @@ public class JobService implements IJobService {
 
     @Override
     public List<JobEntity> findUpcomingWork(Integer userId) {
-        return repository.findByUserId(userId);
+        return repository.findUpdcomingWork(userId);
     }
 
     @Override
