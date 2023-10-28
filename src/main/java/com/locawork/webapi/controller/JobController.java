@@ -104,13 +104,29 @@ public class JobController {
         return ResponseEntity.ok(job);
     }
 
-    @RequestMapping(value = "/getjobsbyaccount", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll(@RequestParam Integer userId) {
+    @RequestMapping(value = "/get-undone-posted-jobs", method = RequestMethod.GET)
+    public ResponseEntity<?> getPostedUndoneJobs(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
+
+
+        return ResponseEntity.ok(jobs);
+    }
+    @RequestMapping(value = "/get-done-posted-jobs", method = RequestMethod.GET)
+    public ResponseEntity<?> getPostedDoneJobs(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
+
+
+        return ResponseEntity.ok(jobs);
+    }
+
+    @RequestMapping(value = "/get-all-posted-jobs", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllPostedJobs(@RequestParam Integer userId) {
         List<JobEntity> jobs = jobService.findAllPostedJobs(userId);
 
 
         return ResponseEntity.ok(jobs);
     }
+
 
 
     @RequestMapping(method = RequestMethod.POST)

@@ -1,7 +1,6 @@
 package com.locawork.webapi.controller;
 
 import com.locawork.webapi.dao.entity.CommentsEntity;
-import com.locawork.webapi.dao.entity.JobCategoryEntity;
 import com.locawork.webapi.dao.entity.JobEntity;
 import com.locawork.webapi.dto.JobApplicationDTO;
 import com.locawork.webapi.model.MainData;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,13 +76,22 @@ public class CommentsController {
         return ResponseEntity.ok(job);
     }
 
-    @RequestMapping(value = "/getjobsbyaccount", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-undone-posted-jobs", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findAllPostedJobs(userId);
+        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
 
 
         return ResponseEntity.ok(jobs);
     }
+
+    @RequestMapping(value = "/get-done-posted-jobs", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
+
+
+        return ResponseEntity.ok(jobs);
+    }
+
 
 
     @RequestMapping(method = RequestMethod.POST)

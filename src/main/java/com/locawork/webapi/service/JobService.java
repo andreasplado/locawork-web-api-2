@@ -33,6 +33,17 @@ public class JobService implements IJobService {
     public List<JobEntity> findMyDoneWork(int userId) {
         return repository.findMyDoneWork(userId);
     }
+
+    @Override
+    public List<JobEntity> findMyUnddoneWork(int userId) {
+        return repository.findMyUnDonePostedJobs(userId);
+    }
+
+    @Override
+    public List<JobEntity> findMyAllWork(int userId) {
+        return repository.findMyDoneWork(userId);
+    }
+
     @Override
     public List<JobEntity> findMyDoneWorkToday(int userId) {
         return repository.findMyDoneWorkToday(userId);
@@ -69,8 +80,18 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public List<JobEntity> findAllPostedJobs(Integer userId){
-        return repository.findPostedJobs(userId);
+    public List<JobEntity> findUnDonePostedJobs(Integer userId){
+        return repository.findMyUnDonePostedJobs(userId);
+    }
+
+    @Override
+    public List<JobEntity> findDonePostedJobs(Integer userId) {
+        return repository.findMyDonePostedJobs(userId);
+    }
+
+    @Override
+    public List<JobEntity> findAllPostedJobs(Integer userId) {
+        return repository.findAllPostedJobs(userId);
     }
 
     @Override
