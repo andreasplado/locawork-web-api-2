@@ -55,7 +55,7 @@ public class JobService implements IJobService {
 
     @Override
     public List<JobEntity> findUpcomingWork(Integer userId) {
-        return repository.findUpdcomingWork(userId);
+        return repository.findUpcomingWork(userId);
     }
 
     @Override
