@@ -76,22 +76,6 @@ public class CommentsController {
         return ResponseEntity.ok(job);
     }
 
-    @RequestMapping(value = "/get-undone-posted-jobs", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll(@RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
-
-
-        return ResponseEntity.ok(jobs);
-    }
-
-    @RequestMapping(value = "/get-done-posted-jobs", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll(@RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
-
-
-        return ResponseEntity.ok(jobs);
-    }
-
 
 
     @RequestMapping(method = RequestMethod.POST)
