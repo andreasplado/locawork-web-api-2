@@ -113,7 +113,7 @@ public class JobController {
     }
     @RequestMapping(value = "/get-done-posted-jobs", method = RequestMethod.GET)
     public ResponseEntity<?> getPostedDoneJobs(@RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
+        List<JobEntity> jobs = jobService.findDonePostedJobs(userId);
 
 
         return ResponseEntity.ok(jobs);
