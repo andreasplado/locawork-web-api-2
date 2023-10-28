@@ -248,4 +248,10 @@ public class JobController {
         jobService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/cant-go-to-work", method = RequestMethod.PUT)
+    public ResponseEntity<?> cantGoToWork(@RequestParam Integer jobId, @RequestParam String reason) {
+        jobService.cantGoToJob(jobId, reason);
+        return ResponseEntity.ok(jobService.findById(jobId));
+    }
 }

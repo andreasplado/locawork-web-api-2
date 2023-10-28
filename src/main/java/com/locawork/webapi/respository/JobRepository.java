@@ -67,4 +67,9 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
     @Query(value="SELECT j.* from jobs j " +
             "WHERE j.applyer_id=?1 AND j.is_done=false AND j.reason_quitting_job=''", nativeQuery = true)
     List<JobEntity> findUpcomingWork(@Param("userId") Integer userId);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE jobs SET reason_quitting_job=?1 WHERE job_id=?2", nativeQuery = true)
+    void cantGoToWork(@Param("reason")String reason, @Param("jobId")Integer jobId);
 }

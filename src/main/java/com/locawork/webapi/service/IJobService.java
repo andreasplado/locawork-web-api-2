@@ -30,4 +30,5 @@ public interface IJobService {
     List<JobEntity> findMyDoneWorkThisWeek(Integer userId);
 
     List<JobEntity> findMyDoneWorkThisMonth(Integer userId);
+    void cantGoToJob(Integer jobId, String reason);
 }

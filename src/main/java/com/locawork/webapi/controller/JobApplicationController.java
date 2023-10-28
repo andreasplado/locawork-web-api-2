@@ -216,10 +216,4 @@ public class JobApplicationController {
             return ResponseEntity.ok(responseModel);
         }
     }
-
-    @RequestMapping(value = "/cant-go-to-work", method = RequestMethod.PUT)
-    public ResponseEntity<?> cantGoToWork(@RequestParam Integer userId, @RequestParam Integer jobId, @RequestParam String reason) {
-        jobApplicationService.cantGoToJob(jobId, userId, reason);
-        return ResponseEntity.ok(jobService.findById(jobId));
-    }
 }

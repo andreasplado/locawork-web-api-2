@@ -67,9 +67,4 @@ public interface JobApplicationRepository extends JpaRepository<JobApplicationEn
             " INNER JOIN users u ON ja.user_id = u.id" +
             " WHERE j.user_id=?1 AND ja.is_approved=FALSE AND j.title=?2", nativeQuery = true)
     List<JobApplicationDTO> findCandidatesWithFilter(Integer userId, String filter);
-
-    @Modifying
-    @Transactional
-    @Query(value="UPDATE job_applications SET reason_quitting_job=?1 WHERE job_id=?2", nativeQuery = true)
-    void cantGoToWork(@Param("reason")String reason, @Param("jobId")Integer jobId);
 }

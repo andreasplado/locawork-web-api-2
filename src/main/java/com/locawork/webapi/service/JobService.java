@@ -49,6 +49,11 @@ public class JobService implements IJobService {
     }
 
     @Override
+    public void cantGoToJob(Integer jobId, String reason) {
+        repository.cantGoToWork(reason, jobId);
+    }
+
+    @Override
     public List<JobEntity> findAvailableJobsWithUserToken(Double latitude, Double longitude, Double distance, Integer userId) {
         return repository.findAvailableJobs(latitude, longitude, distance, userId);
     }
