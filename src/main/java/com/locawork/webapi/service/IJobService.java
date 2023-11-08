@@ -15,8 +15,9 @@ public interface IJobService {
     List<JobEntity> findMyAllWork(int userId);
     List<JobEntity> findAvailableJobsWithUserToken(Double longitude, Double latitude, Double distance, Integer userId);
     List<JobEntity> findUpcomingWork(Integer userId);
-    List<JobEntity> findUnDonePostedJobs(Integer userId);
+    List<JobEntity> getNotChosenCandidateJobs(Integer userId);
     List<JobEntity> findDonePostedJobs(Integer userId);
+    List<JobEntity> findWorkInProgressPostedJobs(Integer userId);
     List<JobEntity> findAllPostedJobs(Integer userId);
     List<JobEntity> findAllNearestJobs(Double latitude, Double longitude, Double distance);
     JobEntity save (JobEntity jobEntity);

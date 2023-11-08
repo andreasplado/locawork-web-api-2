@@ -36,7 +36,7 @@ public class JobService implements IJobService {
 
     @Override
     public List<JobEntity> findMyUnddoneWork(int userId) {
-        return repository.findMyUnDonePostedJobs(userId);
+        return repository.findNotChosenCandidateJobs(userId);
     }
 
     @Override
@@ -80,13 +80,18 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public List<JobEntity> findUnDonePostedJobs(Integer userId){
-        return repository.findMyUnDonePostedJobs(userId);
+    public List<JobEntity> getNotChosenCandidateJobs(Integer userId){
+        return repository.findNotChosenCandidateJobs(userId);
     }
 
     @Override
     public List<JobEntity> findDonePostedJobs(Integer userId) {
         return repository.findMyDonePostedJobs(userId);
+    }
+
+    @Override
+    public List<JobEntity> findWorkInProgressPostedJobs(Integer userId) {
+        return repository.findMyWorkInProgressPostedJobs(userId);
     }
 
     @Override

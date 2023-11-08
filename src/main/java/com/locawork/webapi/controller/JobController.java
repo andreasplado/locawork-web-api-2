@@ -104,10 +104,9 @@ public class JobController {
         return ResponseEntity.ok(job);
     }
 
-    @RequestMapping(value = "/get-undone-posted-jobs", method = RequestMethod.GET)
-    public ResponseEntity<?> getPostedUndoneJobs(@RequestParam Integer userId) {
-        List<JobEntity> jobs = jobService.findUnDonePostedJobs(userId);
-
+    @RequestMapping(value = "/get-not-chosen-candidate", method = RequestMethod.GET)
+    public ResponseEntity<?> getNotChosenCandidate(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.getNotChosenCandidateJobs(userId);
 
         return ResponseEntity.ok(jobs);
     }
@@ -115,6 +114,12 @@ public class JobController {
     public ResponseEntity<?> getPostedDoneJobs(@RequestParam Integer userId) {
         List<JobEntity> jobs = jobService.findDonePostedJobs(userId);
 
+        return ResponseEntity.ok(jobs);
+    }
+
+    @RequestMapping(value = "/get-work-in-progresss-jobs", method = RequestMethod.GET)
+    public ResponseEntity<?> getWorkInProgressJobs(@RequestParam Integer userId) {
+        List<JobEntity> jobs = jobService.findWorkInProgressPostedJobs(userId);
 
         return ResponseEntity.ok(jobs);
     }
@@ -122,7 +127,6 @@ public class JobController {
     @RequestMapping(value = "/get-all-posted-jobs", method = RequestMethod.GET)
     public ResponseEntity<?> getAllPostedJobs(@RequestParam Integer userId) {
         List<JobEntity> jobs = jobService.findAllPostedJobs(userId);
-
 
         return ResponseEntity.ok(jobs);
     }
